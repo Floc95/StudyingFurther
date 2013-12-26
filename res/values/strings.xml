@@ -9,7 +9,7 @@
   
     <string name="image_content_description">Un Android avec un chien</string>
     <string name="create_account">Créer un compte</string>
-    <string name="email">Adresse email</string>
+    <string name="email">Votre ID</string>
     <string name="password">Mot de passe</string>
     <string name="connect">Se connecter</string>
     <string name="title_activity_login_display">LoginDisplayActivity</string>
