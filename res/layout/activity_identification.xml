@@ -34,7 +34,8 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:id="@+id/username" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +52,8 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:id="@+id/password" />
     
     <!-- android:id="@+acountcreation/connect" --> 
     <Button
@@ -61,7 +63,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="@string/connect" 
-        android:onClick="validation"
+        android:onClick="SeConnecter"
         />
 
 </LinearLayout>
