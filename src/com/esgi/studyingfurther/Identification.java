@@ -43,7 +43,7 @@ public class Identification extends Activity {
     public boolean Authentification(String ID, String Password)
     {
         String username= ((EditText) findViewById(R.id.username)).getText().toString();
-        String Pass= ((EditText) findViewById(R.id.username)).getText().toString();
+        String Pass= ((EditText) findViewById(R.id.password)).getText().toString();
       Log.v("info",Pass+":"+username);
 
          if(ID.equals(username) && Password.equals(Pass))
