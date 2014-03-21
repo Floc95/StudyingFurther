@@ -34,6 +34,12 @@
             android:name="com.esgi.studyingfurther.Affichageitem"
             android:label="@string/title_activity_affichageitem" >
         </activity>
+        <activity
+            android:name="com.esgi.studyingfurther.Inscription"
+            android:label="Inscription">
+
+        </activity>
+
     </application>
 
 </manifest>
