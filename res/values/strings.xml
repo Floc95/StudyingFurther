@@ -15,5 +15,10 @@
     <string name="hint_mail">"Ici : L'adresse email de l'utilisateur"</string>
     <string name="hint_pass">"Ici : Le mot de passe de l'utilisateur"</string>
     <string name="title_activity_affichageitem">Affichageitem</string>
+    <string name="RetapezPW">Retapez vôtre password</string>
+    <string name="Email">E-mail</string>
+    <string name="DateDN">Date de naissance</string>
+    <string name="Prenom">Prénom</string>
+    <string name="Nom">Nom</string>
 
 </resources>
