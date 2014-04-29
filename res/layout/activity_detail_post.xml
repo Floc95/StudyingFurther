@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:text="name" />
+
+        <Button
+            android:id="@+id/download"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="32dp"
+            android:layout_height="31dp"
+            android:text="3" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="contenu" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/android" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listviewperso"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_weight="0.96"
+        android:divider="#000"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="true"
+        android:scrollbarStyle="insideInset"
+        android:scrollingCache="false"
+        android:stackFromBottom="false"
+        android:transcriptMode="normal" 
+        android:dividerHeight="1px">
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" >
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="send" />
+    </LinearLayout>
+
+</LinearLayout>
