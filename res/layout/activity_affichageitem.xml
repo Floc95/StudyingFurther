@@ -1,39 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    >
- 
-    <ImageView
-		android:id="@+id/img"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-	   	android:layout_gravity="center_vertical"
-	   	android:padding="10dp"
-		/>
- 
-	<LinearLayout 
-	    android:orientation="vertical"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	   	android:layout_gravity="center_vertical"
-	   	android:paddingLeft="10px"
-	    android:layout_weight="1"
-	    >
- 
-	    <TextView android:id="@+id/titre"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         android:textSize="16px"
-	         android:textStyle="bold"
-	         />
- 
-	    <TextView android:id="@+id/description"
-	         android:layout_width="fill_parent"
-	         android:layout_height="fill_parent"
-	         />
- 
-    </LinearLayout>
- 
-</LinearLayout>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:shrinkColumns="*"  android:stretchColumns="*" android:background="#ffffff">
+
+    <!-- Row 1 with single column -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:background="#d3d3d3"
+        android:textColor="#000000"
+        >
+
+        <TextView
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/title"
+            android:textSize="18dp" android:text="Title"  android:layout_span="9"
+            android:padding="18dip"
+           />
+
+    </TableRow>
+
+    <!-- Row 2 with 2 columns -->
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="#d3d3d3"
+        android:textColor="#000000"
+        >
+
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_weight="1"
+            android:padding="20dip"
+
+            />
+
+        <TextView
+            android:id="@+id/news" android:text=".........................."
+            android:layout_weight="1"
+            android:padding="20dip"
+            android:layout_column="8" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:background="#d3d3d3"
+        android:textColor="#000000"
+        >
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/modifier"
+            android:onClick="Modification"
+            android:gravity="left"
+            />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/write"
+            android:onClick="Write"
+            android:gravity="left"
+            />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/imageButton"
+            android:background="@drawable/publier"
+            android:onClick="Pub"
+            android:gravity="left"
+            />
+
+        <TextView
+            android:id="@+id/heurPub" android:text="00:00"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+
+        >
+        <TextView
+            android:layout_weight="1"
+            android:gravity="right"/>
+</TableRow>
+
+
+</TableLayout>

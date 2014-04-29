@@ -14,28 +14,31 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.esgi.studyingfurther.NewsFeed"
+            android:name=".vl.NewsFeed"
             android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.esgi.studyingfurther.MainActivity"
-            android:label="@string/title_activity_main" >
-        </activity>
-        <activity
-            android:name="com.esgi.studyingfurther.Identification"
-            android:label="@string/title_activity_identification" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
-            android:name="com.esgi.studyingfurther.Affichageitem"
+            android:name=".vl.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".vl.Identification"
+            android:label="@string/title_activity_identification" >
+
+        </activity>
+        <activity
+            android:name=".vl.Affichageitem"
             android:label="@string/title_activity_affichageitem" >
         </activity>
         <activity
-            android:name="com.esgi.studyingfurther.Inscription"
+            android:name=".vl.Inscription"
             android:label="Inscription">
 
         </activity>
