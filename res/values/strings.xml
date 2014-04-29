@@ -20,5 +20,7 @@
     <string name="DateDN">Date de naissance</string>
     <string name="Prenom">Prénom</string>
     <string name="Nom">Nom</string>
+    <string name="title_activity_gerer_class">GererClass</string>
+    <string name="title_activity_parameter">Parameter</string>
 
 </resources>

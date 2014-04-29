@@ -53,8 +53,10 @@
         </activity>
         <activity
             android:name="com.esgi.studyingfurther.GererClass"
-            android:label="@string/title_activity_gerer_class" >
+            android:label="@string/title_activity_gerer_class">
         </activity>
     </application>
 
 </manifest>
+
+

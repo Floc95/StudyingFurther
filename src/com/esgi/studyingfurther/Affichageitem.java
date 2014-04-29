@@ -54,16 +54,16 @@ public class AffichageItem extends Activity {
         addItem("owner3","content3");
         addItem("owner4","content3");
         addItem("owner5","content3");
-        addItem("owner5","content3");
-        addItem("owner5","content3");
-        addItem("owner5","content3");
-        addItem("owner5","content3");
-        addItem("owner5","content3");
-        addItem("owner5","content3");
-        addItem("owner5","content3");
+        addItem("owner6","content3");
+        addItem("owner7","content3");
+        addItem("owner8","content3");
+        addItem("owner9","content3");
+        addItem("owner10","content3");
+        addItem("owner11","content3");
+        addItem("owner12","content3");
 
         HashMap<String, Object> tmp = new HashMap<String, Object>();
-        tmp.put("title", "Comment  "+ listItem.size());
+        tmp.put("title", "Comment  "+ (listItem.size()-1));
         listItem.set(0, tmp);
 
         listItemAdapter = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.activity_affichageitem, new String[]{"image", "title", "text"}, new int[]{R.id.img, R.id.titre, R.id.description});
