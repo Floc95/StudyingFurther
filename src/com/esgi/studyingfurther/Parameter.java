@@ -145,7 +145,7 @@ public class Parameter extends Activity {
         m_Notification = new Notification();
         m_Notification.when = System.currentTimeMillis();
         m_Notification.icon = R.drawable.android;  
-        m_Notification.tickerText = "StudyingFurther";   
+        m_Notification.tickerText = "StudyingFurther";
         m_Notification.defaults = Notification.DEFAULT_ALL;  
         m_Notification.flags = Notification.FLAG_ONGOING_EVENT;
   
