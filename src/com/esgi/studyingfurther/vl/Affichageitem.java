@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
 
 import com.esgi.studyingfurther.R;
 
@@ -22,7 +23,7 @@ public class Affichageitem extends Activity {
 		return true;
 	}
 
-    public  void  Modification()
+    public  void  Modification(View v)
     {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle("Button Modifier");
@@ -32,7 +33,7 @@ public class Affichageitem extends Activity {
 
     }
 
-    public void Pub()
+    public void Pub(View v)
     {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle("Button Publier");
@@ -40,7 +41,7 @@ public class Affichageitem extends Activity {
         adb.setPositiveButton("Ok", null);
         adb.show();
     }
-    public void Write()
+    public void Write(View v)
     {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle("Button Write");

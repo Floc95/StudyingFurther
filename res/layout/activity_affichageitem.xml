@@ -12,12 +12,17 @@
         android:background="#d3d3d3"
         android:textColor="#000000"
         >
+        <ImageView
+            android:id="@+id/list_image"
 
+            />
         <TextView
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/title"
-            android:textSize="18dp" android:text="Title"  android:layout_span="9"
-            android:padding="18dip"
+              android:id="@+id/title"
+            android:textSize="18dp"
+            android:text="Title"
+
            />
+
 
     </TableRow>
 
@@ -31,18 +36,14 @@
         android:textColor="#000000"
         >
 
-        <ImageView
-            android:id="@+id/list_image"
-            android:layout_weight="1"
-            android:padding="20dip"
 
-            />
 
         <TextView
-            android:id="@+id/news" android:text=".........................."
-            android:layout_weight="1"
-            android:padding="20dip"
-            android:layout_column="8" />
+            android:id="@+id/news"
+            android:textSize="30dp"
+            android:text=".........................."
+
+            />
 
     </TableRow>
 
@@ -56,7 +57,7 @@
         <Button
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@drawable/modifier"
             android:onClick="Modification"
             android:gravity="left"
@@ -64,7 +65,7 @@
         <Button
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@drawable/write"
             android:onClick="Write"
             android:gravity="left"
@@ -73,7 +74,7 @@
         <Button
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/imageButton"
             android:background="@drawable/publier"
             android:onClick="Pub"
