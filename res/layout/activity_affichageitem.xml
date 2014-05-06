@@ -2,27 +2,36 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:shrinkColumns="*"  android:stretchColumns="*" android:background="#ffffff">
+    android:shrinkColumns="*"  android:stretchColumns="*" android:background="#ffffff"
+
+    >
 
     <!-- Row 1 with single column -->
     <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="left"
         android:background="#d3d3d3"
         android:textColor="#000000"
+
         >
         <ImageView
             android:id="@+id/list_image"
-
+            android:layout_height="60dp"
+            android:layout_width="60dp"
             />
         <TextView
-              android:id="@+id/title"
+            android:id="@+id/title"
             android:textSize="18dp"
-            android:text="Title"
+            android:text="@string/Title"
+            android:gravity="left"
 
            />
-
+        <TextView
+            android:id="@+id/heurPub" android:text="00:00"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            />
 
     </TableRow>
 
@@ -30,69 +39,62 @@
 
     <TableRow
         android:id="@+id/tableRow1"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         android:background="#d3d3d3"
         android:textColor="#000000"
+
         >
 
 
-
         <TextView
+            android:layout_height="300dp"
             android:id="@+id/news"
-            android:textSize="30dp"
-            android:text=".........................."
-
+            android:textSize="18dp"
+            android:text="@string/Description"
+              android:layout_span="3"
+            android:maxHeight="300dp"
             />
 
     </TableRow>
 
     <TableRow
+
         android:id="@+id/tableRow2"
-        android:layout_height="60dp"
-        android:layout_width="60dp"
         android:background="#d3d3d3"
         android:textColor="#000000"
+
+
         >
-        <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+      <!--  <Button
+
             android:background="@drawable/modifier"
             android:onClick="Modification"
-            android:gravity="left"
-            />
+
+            />-->
+
         <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:background="@drawable/write"
+
+            android:width="10dp"
+            android:height="10dp"
             android:onClick="Write"
-            android:gravity="left"
+
             />
 
         <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+
+            android:width="10dp"
+            android:height="10dp"
             android:id="@+id/imageButton"
-            android:background="@drawable/publier"
+
             android:onClick="Pub"
-            android:gravity="left"
+
             />
 
-        <TextView
-            android:id="@+id/heurPub" android:text="00:00"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:paddingRight="10dp"
-            />
 
     </TableRow>
 
     <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:gravity="center_horizontal"
 
         >

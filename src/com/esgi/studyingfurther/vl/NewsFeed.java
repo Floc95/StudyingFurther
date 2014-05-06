@@ -22,34 +22,33 @@ public class NewsFeed extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_news_feed);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_news_feed);
 
         maListViewPerso = (ListView) findViewById(R.id.listviewperso);
- 
+
 
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
-       HashMap<String, String> map;
+        HashMap<String, String> map;
 
-        for(int i=1;i<20;i++)
-        {
-                map = new HashMap<String, String>();
-                map.put("titre", "Post " + i);
-                map.put("description", "Evenemet " + i);
-                map.put("img", String.valueOf(R.drawable.android));
-                map.put("heurPub", Time.getCurrentTimezone());
-                listItem.add(map);
+        for (int i = 1; i < 20; i++) {
+            map = new HashMap<String, String>();
+            map.put("titre",getResources().getString(R.string.Title));
+            map.put("description",getResources().getString( R.string.Description));
+            map.put("img", String.valueOf(R.drawable.android));
+            map.put("heurPub", Time.MONTH_DAY + ":" + Time.HOUR);
+            listItem.add(map);
 
         }
 
 
- 
-       SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.activity_affichageitem,new String[] {"img", "titre", "description","heurPub"}, new int[] {R.id.list_image, R.id.title, R.id.news,R.id.heurPub});
-       maListViewPerso.setAdapter(mSchedule);
+        SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.activity_affichageitem, new String[]{"img", "titre", "description", "heurPub"}, new int[]{R.id.list_image, R.id.title, R.id.news, R.id.heurPub});
+        maListViewPerso.setAdapter(mSchedule);
+    }
 
  // Action Click
-        maListViewPerso.setOnItemClickListener(new OnItemClickListener() {
+       /* maListViewPerso.setOnItemClickListener(new OnItemClickListener() {
 			@Override
         	@SuppressWarnings("unchecked")
          	public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -61,14 +60,13 @@ public class NewsFeed extends Activity {
         		adb.show();
         	}
         });
-	}
+	}*/
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+//	@Override
+/*	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.news_feed, menu);
 		return true;
-	}
+	}*/
 
 
 }
