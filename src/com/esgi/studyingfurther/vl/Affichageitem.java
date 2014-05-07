@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 
 import com.esgi.studyingfurther.R;
 
@@ -23,31 +24,6 @@ public class Affichageitem extends Activity {
 		return true;
 	}
 
-    public  void  Modification(View v)
-    {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setTitle("Button Modifier");
-        adb.setMessage("Vous avez appuiez sur le button Modifier");
-        adb.setPositiveButton("Ok", null);
-        adb.show();
 
-    }
-
-    public void Pub(View v)
-    {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setTitle("Button Publier");
-        adb.setMessage("Vous avez appuiez sur le button Publier");
-        adb.setPositiveButton("Ok", null);
-        adb.show();
-    }
-    public void Write(View v)
-    {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setTitle("Button Write");
-        adb.setMessage("Vous avez appuiez sur le button Write");
-        adb.setPositiveButton("Ok", null);
-        adb.show();
-    }
 
 }

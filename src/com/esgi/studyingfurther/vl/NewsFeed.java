@@ -37,13 +37,16 @@ public class NewsFeed extends Activity {
             map.put("titre",getResources().getString(R.string.Title));
             map.put("description",getResources().getString( R.string.Description));
             map.put("img", String.valueOf(R.drawable.android));
+            if(i%2==0) {
+                map.put("newspic", String.valueOf(R.drawable.clock));
+            }
             map.put("heurPub", Time.MONTH_DAY + ":" + Time.HOUR);
             listItem.add(map);
 
         }
 
 
-        SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.activity_affichageitem, new String[]{"img", "titre", "description", "heurPub"}, new int[]{R.id.list_image, R.id.title, R.id.news, R.id.heurPub});
+        SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.activity_affichageitem, new String[]{"img", "titre", "description","newspic", "heurPub"}, new int[]{R.id.list_image, R.id.title, R.id.news,R.id.newspic, R.id.heurPub});
         maListViewPerso.setAdapter(mSchedule);
     }
 
@@ -68,5 +71,31 @@ public class NewsFeed extends Activity {
 		return true;
 	}*/
 
+    public  void  Modification(View v)
+    {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle("Button Modifier");
+        adb.setMessage("Vous avez appuiez sur le button Modifier");
+        adb.setPositiveButton("Ok", null);
+        adb.show();
+
+    }
+
+    public void Pub(View v)
+    {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle("Button Publier");
+        adb.setMessage("Vous avez appuiez sur le button Publier");
+        adb.setPositiveButton("Ok", null);
+        adb.show();
+    }
+    public void Write(View v)
+    {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle("Button Write");
+        adb.setMessage("Vous avez appuiez sur le button Write");
+        adb.setPositiveButton("Ok", null);
+        adb.show();
+    }
 
 }
