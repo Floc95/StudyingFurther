@@ -34,9 +34,9 @@ public class Identification extends Activity {
 
     }
 
-	public void SeConnecter(View v){
+	public void seConnecter(View v){
 
-        if(this.Authentification("SIMO","SIMO")==true)
+        if(this.authentification("SIMO","SIMO")==true)
         {
 		Intent intent = new Intent(this, NewsFeed.class);
 		startActivity(intent);
@@ -45,7 +45,7 @@ public class Identification extends Activity {
 
 	}
 
-    public boolean Authentification(String ID, String Password)
+    public boolean authentification(String ID, String Password)
     {
         String username= ((EditText) findViewById(R.id.username)).getText().toString();
         String Pass= ((EditText) findViewById(R.id.password)).getText().toString();
