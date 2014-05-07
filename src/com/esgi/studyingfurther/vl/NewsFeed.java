@@ -38,7 +38,7 @@ public class NewsFeed extends Activity {
             map.put("description",getResources().getString( R.string.Description));
             map.put("img", String.valueOf(R.drawable.android));
             if(i%2==0) {
-                map.put("newspic", String.valueOf(R.drawable.clock));
+                map.put("newspic", String.valueOf(R.drawable.bout));
             }
             map.put("heurPub", Time.MONTH_DAY + ":" + Time.HOUR);
             listItem.add(map);

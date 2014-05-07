@@ -129,15 +129,8 @@
     </TableRow>
 
     <TableRow
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-
-        >
-        <TextView
-            android:layout_weight="1"
-            android:gravity="right"/>
-    </TableRow>
+        android:layout_marginTop="2dp"
+        />
 
 
 
