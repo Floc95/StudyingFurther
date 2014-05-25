@@ -1,0 +1,138 @@
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:shrinkColumns="*"  android:stretchColumns="*" android:background="#ffffff"
+
+    >
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+
+        >
+        <TextView
+            android:layout_weight="1"
+            android:gravity="right"/>
+    </TableRow>
+    <!-- Row 1 with single column -->
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="left"
+        android:background="#d3d3d3"
+        android:textColor="#000000"
+
+        >
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            />
+        <TextView
+            android:id="@+id/title"
+            android:textSize="18dp"
+            android:text="@string/Title"
+            android:gravity="left"
+
+            />
+        <TextClock
+            android:id="@+id/heurPub"
+            android:text="00:00"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            tools:ignore="NewApi" />
+
+    </TableRow>
+
+    <!-- Row 2 with 2 columns -->
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:background="#d3d3d3"
+        android:textColor="#000000"
+
+        >
+
+
+        <TextView
+            android:layout_marginTop="6dp"
+            android:layout_height="150dp"
+            android:id="@+id/news"
+            android:textSize="18dp"
+            android:text="@string/Description"
+            android:layout_span="3"
+            android:maxHeight="150dp"
+            />
+
+
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRow10"
+        android:background="#d3d3d3"
+        android:textColor="#000000"
+
+        >
+
+
+        <ImageView
+            android:id="@+id/newspic"
+            android:layout_span="3"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+
+            />
+
+
+    </TableRow>
+<TableRow
+    android:layout_marginTop="1dp"
+    />
+
+    <TableRow
+
+        android:id="@+id/tableRow2"
+        android:background="#d3d3d3"
+        android:textColor="#000000"
+        android:gravity="center"
+
+        >
+        <ImageButton
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="Write"
+            android:background="@drawable/pencil"
+            android:layout_marginRight="60dp"
+            />
+
+        <ImageButton
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageButton"
+            android:background="@drawable/display"
+            android:onClick="Pub"
+            android:layout_marginRight="100dp"
+            />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/plus"
+            android:background="@drawable/equal"
+            android:onClick="Pub"
+
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="2dp"
+        />
+
+
+
+
+</TableLayout>
