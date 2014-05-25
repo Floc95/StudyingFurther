@@ -39,24 +39,26 @@
         </activity>
         <activity
             android:name="com.esgi.studyingfurther.Inscription"
-            android:label="Inscription">
-
+            android:label="Inscription" >
         </activity>
-
         <activity
             android:name="com.esgi.studyingfurther.Parameter"
             android:label="@string/title_activity_parameter" >
         </activity>
         <activity
             android:name="com.esgi.studyingfurther.ResultActivity"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="com.esgi.studyingfurther.MainActivity" >
         </activity>
         <activity
             android:name="com.esgi.studyingfurther.GererClass"
-            android:label="@string/title_activity_gerer_class">
+            android:label="@string/title_activity_gerer_class" >
+        </activity>
+        <activity
+            android:name="com.esgi.studyingfurther.ItemNewsFeed"
+            android:label="@string/title_activity_item_news_feed" >
         </activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
-
-

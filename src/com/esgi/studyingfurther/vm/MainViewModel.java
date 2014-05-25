@@ -15,7 +15,7 @@ public class MainViewModel {
 		this.feedManager = new FeedManager(factory);
 	}
 	
-	public boolean Authenticate(String login, String password)
+	public boolean authenticate(String login, String password)
 	{
 		User user = this.factory.getUser(login, password);
 		if (user != null)

@@ -2,6 +2,8 @@ package com.esgi.studyingfurther;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -33,7 +35,7 @@ public class AffichageItem extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_post);
-
+      
         myList = (ListView)findViewById(R.id.listviewperso);
         button = (Button)findViewById(R.id.send);
         button.setEnabled(false);
