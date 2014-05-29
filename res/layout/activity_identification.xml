@@ -4,22 +4,21 @@
     android:orientation="vertical" >
 
     <ImageView
-       
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:src="@drawable/identification"
-        android:contentDescription="@string/image_content_description" />
+        android:contentDescription="@string/image_content_description"
+        android:src="@drawable/identification" />
 
-    <!---   android:id="@+acountcreation/createAcount" -->
+    <!-- -   android:id="@+acountcreation/createAcount" -->
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="@string/create_account"
         android:onClick="CreateUser"
-        />
+        android:text="@string/create_account" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,44 +26,44 @@
         android:layout_gravity="center_horizontal"
         android:paddingTop="20dp"
         android:text="@string/email"
-        android:textSize="15sp"
-        android:textColor="#000000" />
-    
-<!--  android:id="@+acountcreation/email" --> 
+        android:textColor="#000000"
+        android:textSize="15sp" />
+
+    <!-- android:id="@+acountcreation/email" -->
+
     <EditText
+        android:id="@+id/username"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
         android:layout_gravity="center"
-        android:id="@+id/username" />
+        android:inputType="textEmailAddress" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="20dp"
-        android:textSize="15sp"
         android:text="@string/password"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="15sp" />
 
-      <!-- android:id="@+acountcreation/password" -->
+    <!-- android:id="@+acountcreation/password" -->
+
     <EditText
-
+        android:id="@+id/password"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:inputType="textPassword"
-        android:id="@+id/password" />
-    
-    <!-- android:id="@+acountcreation/connect" --> 
+        android:inputType="textPassword" />
+
+    <!-- android:id="@+acountcreation/connect" -->
+
     <Button
-   
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="@string/connect" 
         android:onClick="seConnecter"
-        />
+        android:text="@string/connect" />
 
 </LinearLayout>

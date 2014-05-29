@@ -17,10 +17,10 @@ import android.media.JetPlayer;
 import android.util.Log;
 
 import com.esgi.studyingfurther.bl.*;
-import com.esgi.studyingfurther.vm.JSONParser;
+//import com.esgi.studyingfurther.vm.JSONParser;
 
 public class Repository {
-String UrlUser="http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
+    String UrlUser="http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
 	public Repository()
 	{
 	}
@@ -48,14 +48,13 @@ String UrlUser="http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28
 	public void convertJeson(String URL) throws JSONException
 	{
 		 // Creating new JSON Parser
-	    JSONParser jParser = new JSONParser();
+	  //  JSONParser jParser = new JSONParser();
 	    // Getting JSON from URL
-	    JSONObject json = jParser.getJSONFromUrl(URL);
+	   // JSONObject json = jParser.getJSONFromUrl(URL);
 	
 	      // Getting JSON Array
-	      JSONArray  user = json.getJSONArray("nom");
-	      JSONObject c = user.getJSONObject(0);
-	      Log.v("nom",c.toString());
+	
+	  //   Log.v("nom", jParser.getJSONFromUrl(URL));
 	   
 	    	//return json.toString();
 	 
