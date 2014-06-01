@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,9 +24,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 
-	public class JSONParse extends AsyncTask<String, String, JSONObject> {
+	public class JSONParser extends AsyncTask<String, String, HashMap<String, String>> {
 		
 		
 		private ProgressDialog pDialog;
@@ -38,7 +40,7 @@ import android.util.Log;
 		private HashMap<String, String> MapperObjets=null;
 		
 		
-		public JSONParse(Context c,String url)
+		public JSONParser(Context c,String url)
 		{
 			
 			this.MapperObjets=new HashMap<String, String>();
@@ -49,6 +51,7 @@ import android.util.Log;
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+		//	Toast.makeText(this.thiscontext,"Connecting....",Toast.LENGTH_SHORT).show();
 			pDialog = new ProgressDialog(this.thiscontext);
 			pDialog.setMessage("Getting Data ...");
 			pDialog.setIndeterminate(false);
@@ -57,36 +60,37 @@ import android.util.Log;
 		}
 
 		@Override
-		protected JSONObject doInBackground(String... args) {
+		protected HashMap<String, String> doInBackground(String... args) {
 			//JSONParser jParser = new JSONParser();
 			// Getting JSON from URL
-			 jsonobjets = getJSONFromUrl(this.url);
-			//this.Objets=
 			
-			return jsonobjets;
+			 jsonobjets = getJSONFromUrl(this.url);
+			
+		       	this.MapperObjets.clear();
+				for(Iterator<String> iter = jsonobjets.keys();iter.hasNext();) 
+				{
+				    String key = iter.next();
+				    try {
+						Object value = this.jsonobjets.get(key);
+						this.MapperObjets.put(key,value.toString());
+						//Log.i(key,value.toString());
+						//i++;
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				
+			 return this.MapperObjets;
 		}
 
 		@Override
-		protected void onPostExecute(JSONObject obj) {
+		protected void onPostExecute(HashMap<String, String> Mapper) {
+		
 			pDialog.dismiss();
-			this.MapperObjets.clear();
-			for(Iterator<String> iter = jsonobjets.keys();iter.hasNext();) {
-			    String key = iter.next();
-			    try {
-					Object value = this.jsonobjets.get(key);
-					this.MapperObjets.put(key,value.toString());
-					//Log.i(key,value.toString());
-					//i++;
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			//MainActivity mainactivity = (MainActivity) thiscontext;
-     
-		//	this.Objets=(HashMap<String, String>) this.jsonobjets.toJSONArray(names)
-			//Log.i("login_", jsonobjets.toString());
+		    Mapper= this.MapperObjets;
+		   
 			
 		}
 		
@@ -127,6 +131,7 @@ import android.util.Log;
 			    } catch (JSONException e) {
 			      Log.e("JSON Parser", "Error parsing data " + e.toString());
 			    }
+			    
 			    // return JSON String
 			    return jObj;
 			  }

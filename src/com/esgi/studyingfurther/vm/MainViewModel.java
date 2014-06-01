@@ -1,5 +1,7 @@
 package com.esgi.studyingfurther.vm;
 
+import android.util.Log;
+
 import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.bl.User;
 
@@ -18,6 +20,7 @@ public class MainViewModel {
 	public boolean authenticate(String login, String password)
 	{
 		User user = this.factory.getUser(login, password);
+	//	Log.i("User.id",user.getId()+"");
 		if (user != null)
 		{
 			this.currentUser = user;
