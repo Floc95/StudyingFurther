@@ -14,8 +14,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import com.esgi.studyingfurther.MainActivity;
 import com.google.gson.JsonObject;
@@ -27,27 +29,29 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-	public class JSONParser extends AsyncTask<String, String, HashMap<String, String>> {
+	public class JSONParser extends AsyncTask<String, String, JSONArray> {
 		
 		
 		private ProgressDialog pDialog;
 		private Context thiscontext;
 		private String url;
 		static InputStream is = null;
-		static JSONObject jObj = null;
+		static JSONArray jArray = null;
 		static String json = "";
-		JSONObject jsonobjets=null;
-		private HashMap<String, String> MapperObjets=null;
+		JSONObject jsonobjet=null;
+
 		
 		
 		public JSONParser(Context c,String url)
 		{
-			
-			this.MapperObjets=new HashMap<String, String>();
+		
 			this.thiscontext=c;
 			this.url=url;
+			jArray=new JSONArray();
 			
 		}
+		
+		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -57,48 +61,35 @@ import android.widget.Toast;
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
+		
 		}
 
 		@Override
-		protected HashMap<String, String> doInBackground(String... args) {
+		protected JSONArray doInBackground(String... args) {
 			//JSONParser jParser = new JSONParser();
 			// Getting JSON from URL
+			 Log.v("NEWS",this.url);
+			 return getJSONFromUrl(this.url);
 			
-			 jsonobjets = getJSONFromUrl(this.url);
 			
-		       	this.MapperObjets.clear();
-				for(Iterator<String> iter = jsonobjets.keys();iter.hasNext();) 
-				{
-				    String key = iter.next();
-				    try {
-						Object value = this.jsonobjets.get(key);
-						this.MapperObjets.put(key,value.toString());
-						//Log.i(key,value.toString());
-						//i++;
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				
-				
-			 return this.MapperObjets;
 		}
 
 		@Override
-		protected void onPostExecute(HashMap<String, String> Mapper) {
+		protected void onPostExecute(JSONArray jsArray) {
 		
 			pDialog.dismiss();
-		    Mapper= this.MapperObjets;
-		   
+		    
+			 Log.v("NEWS:",jsArray.toString());
+		
 			
 		}
 		
 		
-		  private JSONObject getJSONFromUrl(String url) {
-
+		 private JSONArray getJSONFromUrl(String url) {
+		
 			    // Making HTTP request
 			    try {
+			    	
 			      // defaultHttpClient
 			      DefaultHttpClient httpClient = new DefaultHttpClient();
 			      HttpPost httpPost = new HttpPost(url);
@@ -113,8 +104,7 @@ import android.widget.Toast;
 			      e.printStackTrace();
 			    }
 			    try {
-			      BufferedReader reader = new BufferedReader(new InputStreamReader(
-			          is, "iso-8859-1"), 8);
+			      BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
 			      StringBuilder sb = new StringBuilder();
 			      String line = null;
 			      while ((line = reader.readLine()) != null) {
@@ -122,18 +112,32 @@ import android.widget.Toast;
 			      }
 			      is.close();
 			      json = sb.toString();
+			   //   Log.e("json",json);
 			    } catch (Exception e) {
 			      Log.e("Buffer Error", "Error converting result " + e.toString());
 			    }
 			    // try parse the string to a JSON object
 			    try {
-			      jObj = new JSONObject(json);
+			    	Object json_ = new JSONTokener(json).nextValue();
+			    	
+			    	if (json_ instanceof JSONObject)
+			    	{
+			    		
+			         	
+			    		jArray=new JSONArray().put(0,new JSONObject(json.toString()));
+			    		return jArray;
+			    	}
+			    
+						jArray = new JSONArray(json);
+			    	
+			    	
+			    	
 			    } catch (JSONException e) {
 			      Log.e("JSON Parser", "Error parsing data " + e.toString());
 			    }
 			    
 			    // return JSON String
-			    return jObj;
+			    return jArray;
 			  }
 			  
 	}

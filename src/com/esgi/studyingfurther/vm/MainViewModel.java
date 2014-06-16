@@ -1,5 +1,9 @@
 package com.esgi.studyingfurther.vm;
 
+import java.util.concurrent.ExecutionException;
+
+import org.json.JSONException;
+
 import android.util.Log;
 
 import com.esgi.studyingfurther.bl.Factory;
@@ -17,7 +21,7 @@ public class MainViewModel {
 		this.feedManager = new FeedManager(factory);
 	}
 	
-	public boolean authenticate(String login, String password)
+	public boolean authenticate(String login, String password) throws InterruptedException, ExecutionException, JSONException
 	{
 		User user = this.factory.getUser(login, password);
 	//	Log.i("User.id",user.getId()+"");
@@ -29,5 +33,8 @@ public class MainViewModel {
 	}
 	
 	// Faire toutes les autres méthodes utiles à l'UI : getPosts, comments etc...
-	
+	public int getCurrentUserId()
+	{
+		return this.currentUser.getId();
+	}
 }

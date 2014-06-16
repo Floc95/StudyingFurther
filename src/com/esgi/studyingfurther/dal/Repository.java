@@ -26,53 +26,51 @@ import com.esgi.studyingfurther.vm.JSONParser;
 
 public class Repository {
   //  String UrlUser="http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
-   private String UrlUser = "http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
-	private HashMap<String, String> users;
+   private String UrlAPIIdentification = "http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264";
+   private String UrlAPINews="http://www.your-groups.com/API/GetNewsFeed?key=7e2a3a18cd00ca322f60c28393c43264";
+	private JSONArray user;
+	Context context=null;
+	private JSONArray News;
 	//JSONObject JsonObjectAuthentification =null;
     
     public Repository(Context thiscontext) throws InterruptedException, ExecutionException
 	{
-    	users=new JSONParser(thiscontext,this.UrlUser).execute().get();
+    	this.context=thiscontext;
 	}
 	
-	public User getUser(int id)
+	public User getUser(int id) throws NumberFormatException, JSONException
 	{
 		// TODO getUser
 		// Chargement d'un utilisateur en fonction d'un id
 		// Retourne Null si l'id n'existe pas
 
-		for(int i=1;i<=this.users.size();i++)
-		{
-		
-			if(Integer.parseInt(this.users.get("id"))==id)
+		/*	if(Integer.parseInt(user.getString("id"))==id)
 			{
-				return new User(id, this.users.get("nom"), this.users.get("prenom"), this.users.get("login"), this.users.get("password"), this.users.get("avatar"),Integer.parseInt( this.users.get("statut")));
+				return new User(id, user.getString("nom"), user.getString("prenom"), user.getString("login"), user.getString("password"),user.getString("avatar"),Integer.parseInt( user.getString("statut")));
 				
-			}
-		}
+			}*/
+		
 		return null;
 	}
 	
-	public User getUser(String login, String password)
+	public User getUser(String login, String password) throws InterruptedException, ExecutionException, JSONException
 	{
 		// TODO getUser
 		// Chargement d'un utilisateur en fonction d'un login et d'un mo t de passe
 		// Retourne Null s'il n'existe pas
-	
-			for(String key : users.keySet())
-			{
-				if(key.equals("id"))
+		     String UrlUser=this.UrlAPIIdentification+"&username="+login+"&password="+md5(password)+"";
+		 	Log.v("NEWS","getuser");
+    	    user= new JSONParser(context,UrlUser).execute().get();
+    	    if(user!=null)
+    	    {
+				if(user.getJSONObject(0).getString("login").equals(login) && user.getJSONObject(0).getString("password").equals(md5(password)) )
 				{
-				
-				if(this.users.get("login").equals(login) && this.users.get("password").equals(MD5(password)) )
-				{
-			   // Log.i("login_",key);
-				 return new User(Integer.parseInt(this.users.get("id")), this.users.get("nom"), this.users.get("prenom"), this.users.get("login"), this.users.get("password"), this.users.get("avatar"),Integer.parseInt( this.users.get("statut")));
+			
+				 return new User(Integer.parseInt(user.getJSONObject(0).getString("id")),user.getJSONObject(0).getString("nom"), user.getJSONObject(0).getString("prenom"), user.getJSONObject(0).getString("login"), user.getJSONObject(0).getString("password"), user.getJSONObject(0).getString("avatar"),Integer.parseInt(user.getJSONObject(0).getString("statut")));
 				
 				}
-				}
-			}
-		
+				
+    	    }
 		
 		return null;
 	
@@ -80,7 +78,20 @@ public class Repository {
 	
 	// D'autres méthodes utiles seront ajoutés
 	// (obtention des posts, des commentaires, des utilisateurs, des groupes, etc.)
-	private String MD5(String md5) {
+	
+	public void getNews(int idUser) throws InterruptedException, ExecutionException, JSONException
+	{
+	
+			String UrlNews=this.UrlAPINews+"&userId="+idUser;
+			Log.v("NEWS","getNews");
+		    this.News=	new JSONParser(this.context, UrlNews).execute().get();
+		    Log.v("NEWS",News.toString());
+			//Log.v("NEWS1",News.getJSONObject(1).toString());
+			//Log.v("NEWS2",News.getJSONObject(1).getString("id").toString());
+	
+	}
+	
+	private String md5(String md5) {
 		   try {
 		        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
 		        byte[] array = md.digest(md5.getBytes());
