@@ -7,16 +7,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.format.Time;
 import android.util.Log;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
 
+import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.bl.User;
 import com.esgi.studyingfurther.dal.Repository;
+import com.esgi.studyingfurther.vm.MainViewModel;
 
 import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,30 +35,31 @@ public class NewsFeed extends Activity {
 	private ListView maListViewPerso;
 	private int userId;
 	private Bundle bundle;
-
-	// Within which the entire activity is enclosed
-	private DrawerLayout mDrawerLayout;
-	 
-	// ListView represents Navigation Drawer
-	private ListView mDrawerList;
-	
+	MainViewModel Manager=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		maListViewPerso = (ListView) findViewById(R.id.listviewperso);
-        try {
+	
+
+			try {
+			Manager=new MainViewModel(new Factory(this));
 			getNews();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 	}
 
 	/*
@@ -64,36 +71,52 @@ public class NewsFeed extends Activity {
 	
 	
  
-private void getNews() throws InterruptedException, ExecutionException, JSONException
+private void getNews() throws InterruptedException, ExecutionException, JSONException, IOException
    {
 
-		
 	
 		  this.userId=getIntent().getExtras().getInt("userId", 0);
-		 // Log.v("NEWS",userId+"");
-		  new Repository(this).getNews(userId);
-		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+		  String urlavatar=getIntent().getExtras().getString("avatar");
+		  Log.v("avatar",urlavatar);
+		 
+		
+		//********************************************
+		//  new Repository(this).getNews(userId);
+		  
+		  //******************************************
+	/*	ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
 		HashMap<String, String> map;
 
 		for (int i = 1; i < 20; i++) {
 			map = new HashMap<String, String>();
 			map.put("titre", getResources().getString(R.string.Title));
-			map.put("description",
-					getResources().getString(R.string.Description));
-			map.put("img", String.valueOf(R.drawable.android));
-			if (i % 2 == 0) {
-				map.put("newspic", String.valueOf(R.drawable.bout));
-			}
+			map.put("description",getResources().getString(R.string.Description));
+			map.put("img", String.valueOf(avatar.toString()));
+			map.put("newspic", String.valueOf(R.drawable.bout));
 			map.put("heurPub", Time.MONTH_DAY + ":" + Time.HOUR);
 			listItem.add(map);
 
 		}
+*/
+		  	ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
-		SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(),
-				listItem, R.layout.activity_item_news_feed, new String[] {
-						"img", "titre", "description", "newspic", "heurPub" },
-				new int[] { R.id.list_image, R.id.title, R.id.news,R.id.newspic, R.id.heurPub }
+			HashMap<String, String> map;
+
+			for (int i = 1; i < 20; i++) {
+				map = new HashMap<String, String>();
+				map.put("titre", getResources().getString(R.string.Title));
+				map.put("description",getResources().getString(R.string.Description));
+				map.put("img", String.valueOf(R.drawable.android));
+				map.put("newspic", String.valueOf(R.drawable.bout));
+				map.put("heurPub", Time.MONTH_DAY + ":" + Time.HOUR);
+				listItem.add(map);
+
+			}
+		SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(),listItem, R.layout.activity_item_news_feed, 
+				
+				new String[] {"img", "titre", "description", "newspic", "heurPub" },
+				new int[] { R.id.avatar, R.id.title, R.id.news,R.id.newspic, R.id.heurPub }
 		);
 		 maListViewPerso.setAdapter(mSchedule);
 

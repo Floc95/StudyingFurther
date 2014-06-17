@@ -1,9 +1,13 @@
 package com.esgi.studyingfurther.vm;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.esgi.studyingfurther.bl.Factory;
@@ -37,4 +41,20 @@ public class MainViewModel {
 	{
 		return this.currentUser.getId();
 	}
+	public String getAvatar()
+	{
+		return this.currentUser.getAvatar();
+	}
+	
+	public Bitmap LoadImageFromWebOperations(String url){
+        try{
+          String encodedurl = url.replace(" ", "%20");
+          InputStream is = (InputStream) new URL(encodedurl).getContent();
+          Bitmap d = BitmapFactory.decodeStream(is);
+          return d;
+        }catch (Exception e) {
+         e.printStackTrace();
+         return null;
+        }
+      }
 }

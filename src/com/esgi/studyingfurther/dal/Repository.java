@@ -79,16 +79,14 @@ public class Repository {
 	// D'autres méthodes utiles seront ajoutés
 	// (obtention des posts, des commentaires, des utilisateurs, des groupes, etc.)
 	
-	public void getNews(int idUser) throws InterruptedException, ExecutionException, JSONException
+	public JSONArray getNews(int idUser) throws InterruptedException, ExecutionException, JSONException
 	{
 	
 			String UrlNews=this.UrlAPINews+"&userId="+idUser;
-			Log.v("NEWS","getNews");
 		    this.News=	new JSONParser(this.context, UrlNews).execute().get();
-		    Log.v("NEWS",News.toString());
-			//Log.v("NEWS1",News.getJSONObject(1).toString());
-			//Log.v("NEWS2",News.getJSONObject(1).getString("id").toString());
-	
+		    
+		    return this.News;
+			
 	}
 	
 	private String md5(String md5) {
