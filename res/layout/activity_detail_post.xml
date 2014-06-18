@@ -11,7 +11,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/HeurPub"
             android:layout_width="134dp"
             android:layout_height="wrap_content"
             android:text="name" />

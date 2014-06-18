@@ -35,12 +35,12 @@
             android:text="@string/Title"
             android:textSize="18dp" />
 
-        <TextClock
+        <TextView
             android:id="@+id/heurPub"
-            android:gravity="right"
-            android:paddingRight="10dp"
-            android:text="00:00"
-            tools:ignore="NewApi" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..." />
+
     </TableRow>
 
     <!-- Row 2 with 2 columns -->
@@ -51,7 +51,7 @@
         android:textColor="#000000" >
 
         <TextView
-            android:id="@+id/news"
+            android:id="@+id/contenu"
             android:layout_height="150dp"
             android:layout_marginTop="6dp"
             android:layout_span="3"

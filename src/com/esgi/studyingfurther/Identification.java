@@ -51,8 +51,7 @@ public class Identification extends Activity {
 		return true;
 	}
 
-	public void seConnecter(View v) throws InterruptedException,
-			ExecutionException, JSONException, IOException {
+	public void seConnecter(View v) throws InterruptedException,ExecutionException, JSONException, IOException {
 
 		ManagerUser = new MainViewModel(new Factory(this));
 		String username = UserName.getText().toString();
@@ -63,7 +62,6 @@ public class Identification extends Activity {
             
 			Intent intent = new Intent(this, NewsFeed.class);
 		    intent.putExtra("userId",ManagerUser.getCurrentUserId());
-		    intent.putExtra("avatar", ManagerUser.getAvatar());
 			startActivity(intent);
 			
 		} else {

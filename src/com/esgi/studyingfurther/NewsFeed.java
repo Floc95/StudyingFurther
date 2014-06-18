@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.bl.User;
@@ -35,31 +37,32 @@ public class NewsFeed extends Activity {
 	private ListView maListViewPerso;
 	private int userId;
 	private Bundle bundle;
-	MainViewModel Manager=null;
+	MainViewModel Manager = null;
+	JSONArray News;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		maListViewPerso = (ListView) findViewById(R.id.listviewperso);
-	
 
-			try {
-			Manager=new MainViewModel(new Factory(this));
+		try {
+			Manager = new MainViewModel(new Factory(this));
 			getNews();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	/*
@@ -67,60 +70,61 @@ public class NewsFeed extends Activity {
 	 * 
 	 * @param item
 	 */
-	  /* Called whenever we call invalidateOptionsMenu() */  
-	
-	
- 
-private void getNews() throws InterruptedException, ExecutionException, JSONException, IOException
-   {
+	/* Called whenever we call invalidateOptionsMenu() */
 
-	
-		  this.userId=getIntent().getExtras().getInt("userId", 0);
-		  String urlavatar=getIntent().getExtras().getString("avatar");
-		  Log.v("avatar",urlavatar);
-		 
+	private void getNews() throws InterruptedException, ExecutionException,JSONException, IOException {
+
+		this.userId = getIntent().getExtras().getInt("userId", 0);
 		
-		//********************************************
-		//  new Repository(this).getNews(userId);
-		  
-		  //******************************************
-	/*	ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
-		HashMap<String, String> map;
+		// ********************************************
 
-		for (int i = 1; i < 20; i++) {
-			map = new HashMap<String, String>();
-			map.put("titre", getResources().getString(R.string.Title));
-			map.put("description",getResources().getString(R.string.Description));
-			map.put("img", String.valueOf(avatar.toString()));
-			map.put("newspic", String.valueOf(R.drawable.bout));
-			map.put("heurPub", Time.MONTH_DAY + ":" + Time.HOUR);
-			listItem.add(map);
+		/*
+		 * ArrayList<HashMap<String, String>> listItem = new
+		 * ArrayList<HashMap<String, String>>();
+		 * 
+		 * HashMap<String, String> map;
+		 * 
+		 * for (int i = 1; i < 20; i++) { map = new HashMap<String, String>();
+		 * map.put("titre", getResources().getString(R.string.Title));
+		 * map.put("description"
+		 * ,getResources().getString(R.string.Description)); map.put("img",
+		 * String.valueOf(avatar.toString())); map.put("newspic",
+		 * String.valueOf(R.drawable.bout)); map.put("heurPub", Time.MONTH_DAY +
+		 * ":" + Time.HOUR); listItem.add(map);
+		 * 
+		 * }
+		 */// **********************************************************************
+		this.News = new Repository(this).getNews(userId);
+		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
-		}
-*/
-		  	ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+		for (int i = 0; i < this.News.length(); i++) {
+			JSONObject row = this.News.getJSONObject(i);
+			Log.v("row", row.toString());
+			Log.v("row","*****************************************************");
 
 			HashMap<String, String> map;
 
-			for (int i = 1; i < 20; i++) {
-				map = new HashMap<String, String>();
-				map.put("titre", getResources().getString(R.string.Title));
-				map.put("description",getResources().getString(R.string.Description));
-				map.put("img", String.valueOf(R.drawable.android));
-				map.put("newspic", String.valueOf(R.drawable.bout));
-				map.put("heurPub", Time.MONTH_DAY + ":" + Time.HOUR);
-				listItem.add(map);
+			map = new HashMap<String, String>();
+			map.put("titre", row.getString("titre"));
+			map.put("contenu",row.getString("contenu"));
+			map.put("img", String.valueOf(R.drawable.android));
+			map.put("newspic", String.valueOf(R.drawable.bout));
+			map.put("heurPub", row.getString("dateCreation"));
+			listItem.add(map);
 
-			}
-		SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(),listItem, R.layout.activity_item_news_feed, 
+		}
+
+		SimpleAdapter mSchedule = new SimpleAdapter(
 				
-				new String[] {"img", "titre", "description", "newspic", "heurPub" },
-				new int[] { R.id.avatar, R.id.title, R.id.news,R.id.newspic, R.id.heurPub }
+				this.getBaseContext(),listItem, R.layout.activity_item_news_feed,
+				new String[] { "img", "titre", "contenu", "newspic","heurPub" }, 
+				new int[] { R.id.avatar, R.id.title,R.id.contenu, R.id.newspic, R.id.heurPub }
 		);
-		 maListViewPerso.setAdapter(mSchedule);
+		maListViewPerso.setAdapter(mSchedule);
 
-   }
+	}
+
 	public void modification(View v) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		adb.setTitle("Button Modifier");
