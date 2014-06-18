@@ -99,9 +99,9 @@ public class NewsFeed extends Activity {
 			//***************************************************************
 			
 			// URL pictureURL = new URL(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
-			Log.v("xxx",this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
-			 Bitmap bm = Manager.LoadImageFromWebOperations(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
-			// Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.bout);
+		//	Log.v("xxx",this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
+		//	 Bitmap bm = Manager.LoadImageFromWebOperations(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
+			  Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.bout);
 			 Bitmap resized = Bitmap.createScaledBitmap(bm, 100, 100, true);
 			 Bitmap conv_bm =getRoundedCornerImage(resized);
 	        
