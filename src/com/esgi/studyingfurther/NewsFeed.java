@@ -92,13 +92,16 @@ public class NewsFeed extends Activity {
 //**************************************** Boucle sur la listeview
 		
 		for (int i = 0; i < this.News.length(); i++) {
+			
 			JSONObject row = this.News.getJSONObject(i);
 			HashMap<String, Object> map=new HashMap<String, Object>();
 		
 			//***************************************************************
-			 URL pictureURL = new URL(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
-			 Bitmap bm = BitmapFactory.decodeStream(pictureURL.openStream());
-			 //Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.bout);
+			
+			// URL pictureURL = new URL(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
+			Log.v("xxx",this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
+			 Bitmap bm = Manager.LoadImageFromWebOperations(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
+			// Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.bout);
 			 Bitmap resized = Bitmap.createScaledBitmap(bm, 100, 100, true);
 			 Bitmap conv_bm =getRoundedCornerImage(resized);
 	        
@@ -108,7 +111,7 @@ public class NewsFeed extends Activity {
 			map.put("titre", row.getString("titre"));
 			map.put("contenu",row.getString("contenu"));
 			map.put("img", conv_bm);
-			map.put("newspic", String.valueOf(R.drawable.bout));
+			map.put("newspic", "");
 			map.put("heurPub", row.getString("dateCreation"));
 			listItem.add(map);
 
@@ -153,8 +156,7 @@ public class NewsFeed extends Activity {
       
 	public static Bitmap getRoundedCornerImage(Bitmap bitmap) {
 		
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-		    bitmap.getHeight(), Config.ARGB_8888);
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), Config.ARGB_8888);
 		Canvas canvas = new Canvas(output);
 
 		final int color = 0xff424242;
