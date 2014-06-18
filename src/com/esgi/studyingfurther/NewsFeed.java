@@ -21,14 +21,23 @@ import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.bl.User;
 import com.esgi.studyingfurther.dal.Repository;
 import com.esgi.studyingfurther.vm.MainViewModel;
+import com.esgi.studyingfurther.vm.MyViewBinder;
 
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Bitmap.Config;
+import android.graphics.PorterDuff.Mode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -39,11 +48,12 @@ public class NewsFeed extends Activity {
 	private Bundle bundle;
 	MainViewModel Manager = null;
 	JSONArray News;
-
+    private String PrefixurlPic="http://www.your-groups.com";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
+		
 		maListViewPerso = (ListView) findViewById(R.id.listviewperso);
 
 		try {
@@ -75,52 +85,43 @@ public class NewsFeed extends Activity {
 	private void getNews() throws InterruptedException, ExecutionException,JSONException, IOException {
 
 		this.userId = getIntent().getExtras().getInt("userId", 0);
-		
-
-		// ********************************************
-
-		/*
-		 * ArrayList<HashMap<String, String>> listItem = new
-		 * ArrayList<HashMap<String, String>>();
-		 * 
-		 * HashMap<String, String> map;
-		 * 
-		 * for (int i = 1; i < 20; i++) { map = new HashMap<String, String>();
-		 * map.put("titre", getResources().getString(R.string.Title));
-		 * map.put("description"
-		 * ,getResources().getString(R.string.Description)); map.put("img",
-		 * String.valueOf(avatar.toString())); map.put("newspic",
-		 * String.valueOf(R.drawable.bout)); map.put("heurPub", Time.MONTH_DAY +
-		 * ":" + Time.HOUR); listItem.add(map);
-		 * 
-		 * }
-		 */// **********************************************************************
 		this.News = new Repository(this).getNews(userId);
-		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-
+		
+		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
+		
+//**************************************** Boucle sur la listeview
+		
 		for (int i = 0; i < this.News.length(); i++) {
 			JSONObject row = this.News.getJSONObject(i);
-			Log.v("row", row.toString());
-			Log.v("row","*****************************************************");
+			HashMap<String, Object> map=new HashMap<String, Object>();
+		
+			//***************************************************************
+			 URL pictureURL = new URL(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
+			 Bitmap bm = BitmapFactory.decodeStream(pictureURL.openStream());
+			 //Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.bout);
+			 Bitmap resized = Bitmap.createScaledBitmap(bm, 100, 100, true);
+			 Bitmap conv_bm =getRoundedCornerImage(resized);
+	        
+			 
+			 //**************************************************************
 
-			HashMap<String, String> map;
-
-			map = new HashMap<String, String>();
 			map.put("titre", row.getString("titre"));
 			map.put("contenu",row.getString("contenu"));
-			map.put("img", String.valueOf(R.drawable.android));
+			map.put("img", conv_bm);
 			map.put("newspic", String.valueOf(R.drawable.bout));
 			map.put("heurPub", row.getString("dateCreation"));
 			listItem.add(map);
 
 		}
-
+		
+//*************************************Fin de la  boucle
 		SimpleAdapter mSchedule = new SimpleAdapter(
 				
 				this.getBaseContext(),listItem, R.layout.activity_item_news_feed,
 				new String[] { "img", "titre", "contenu", "newspic","heurPub" }, 
 				new int[] { R.id.avatar, R.id.title,R.id.contenu, R.id.newspic, R.id.heurPub }
 		);
+		mSchedule.setViewBinder(new MyViewBinder());
 		maListViewPerso.setAdapter(mSchedule);
 
 	}
@@ -149,5 +150,29 @@ public class NewsFeed extends Activity {
 		adb.setPositiveButton("Ok", null);
 		adb.show();
 	}
+      
+	public static Bitmap getRoundedCornerImage(Bitmap bitmap) {
+		
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+		    bitmap.getHeight(), Config.ARGB_8888);
+		Canvas canvas = new Canvas(output);
 
+		final int color = 0xff424242;
+		final Paint paint = new Paint();
+		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+		final RectF rectF = new RectF(rect);
+		final float roundPx = 100;
+
+		paint.setAntiAlias(true);
+		canvas.drawARGB(0, 0, 0, 0);
+		paint.setColor(color);
+		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+		canvas.drawBitmap(bitmap, rect, rect, paint);
+
+		return output;
+
+		}
+	
 }

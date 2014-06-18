@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="17" />
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
      <uses-permission android:name="android.permission.INTERNET"/>
@@ -63,6 +63,5 @@
         </activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

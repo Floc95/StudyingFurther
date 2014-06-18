@@ -18,7 +18,14 @@ import android.os.Parcelable;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -42,6 +49,9 @@ public class Identification extends Activity {
 		this.UserName = ((EditText) findViewById(R.id.username));
 		this.PassWord = ((EditText) findViewById(R.id.password));
 		iv= (ImageView)findViewById(R.id.imageView1);
+		
+		
+		
 	}
 
 	@Override
@@ -70,6 +80,7 @@ public class Identification extends Activity {
 		}
 
 	}
+	
 	
 
 }

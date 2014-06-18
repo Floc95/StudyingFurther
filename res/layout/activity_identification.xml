@@ -66,4 +66,6 @@
         android:onClick="seConnecter"
         android:text="@string/connect" />
 
+   
+
 </LinearLayout>
