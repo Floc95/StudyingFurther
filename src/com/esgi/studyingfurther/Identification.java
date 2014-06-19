@@ -63,7 +63,7 @@ public class Identification extends Activity {
 
 	public void seConnecter(View v) throws InterruptedException,ExecutionException, JSONException, IOException {
 
-		ManagerUser = new MainViewModel(new Factory(this));
+		ManagerUser = new MainViewModel(new Factory());
 		String username = UserName.getText().toString();
 		String Password = PassWord.getText().toString();
        //j new Repository(this).getClass();

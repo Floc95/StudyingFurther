@@ -37,6 +37,7 @@ import android.graphics.PorterDuff.Mode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -58,7 +59,7 @@ public class NewsFeed extends Activity {
 		maListViewPerso = (ListView) findViewById(R.id.listviewperso);
 
 		try {
-			Manager = new MainViewModel(new Factory(this));
+			Manager = new MainViewModel(new Factory());
 			getNews();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -86,7 +87,7 @@ public class NewsFeed extends Activity {
 	private void getNews() throws InterruptedException, ExecutionException,JSONException, IOException {
 
 		this.userId = getIntent().getExtras().getInt("userId", 0);
-		this.News = new Repository(this).getNews(userId);
+		this.News = new Repository().getNews(userId);
 		
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 		
@@ -106,11 +107,12 @@ public class NewsFeed extends Activity {
 			 
 			 //**************************************************************
 
-			map.put("titre", row.getString("titre"));
-			map.put("contenu",row.getString("contenu"));
+			map.put("titre", Manager.decodeString(row.getString("titre")));
+			map.put("contenu",Manager.decodeString(row.getString("contenu")));
+			map.put("nbcommentaires", row.getJSONArray("commentaires").length());
 			map.put("img", conv_bm);
 			map.put("newspic", R.drawable.bout);
-			map.put("heurPub", row.getString("dateCreation"));
+			map.put("heurPub",Manager.decodeString(row.getString("dateCreation")));
 			listItem.add(map);
 
 		}
@@ -119,13 +121,19 @@ public class NewsFeed extends Activity {
 		SimpleAdapter mSchedule = new SimpleAdapter(
 				
 				this.getBaseContext(),listItem, R.layout.activity_item_news_feed,
-				new String[] { "img", "titre", "contenu", "newspic","heurPub" }, 
-				new int[] { R.id.avatar, R.id.title,R.id.contenu, R.id.newspic, R.id.heurPub }
+				new String[] { "img", "titre", "contenu", "newspic","heurPub","nbcommentaires" }, 
+				new int[] { R.id.avatar, R.id.title,R.id.contenu, R.id.newspic, R.id.heurPub,R.id.nbcommentaires }
 		);
 		mSchedule.setViewBinder(new MyViewBinder());
 		maListViewPerso.setAdapter(mSchedule);
+		
+		//******* Action onClick sur un item de la liste view
+		
+		
 
 	}
+	
+
 
 	public void modification(View v) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -136,7 +144,7 @@ public class NewsFeed extends Activity {
 
 	}
 
-	public void pub(View v) {
+	public void commentaire(View v) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		adb.setTitle("Button Publier");
 		adb.setMessage("Vous avez appuiez sur le button Publier");

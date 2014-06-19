@@ -32,8 +32,7 @@ import android.widget.Toast;
 	public class JSONParser extends AsyncTask<String, String, JSONArray> {
 		
 		
-		private ProgressDialog pDialog;
-		private Context thiscontext;
+	
 		private String url;
 		static InputStream is = null;
 		static JSONArray jArray = null;
@@ -42,10 +41,10 @@ import android.widget.Toast;
 
 		
 		
-		public JSONParser(Context c,String url)
+		public JSONParser(String url)
 		{
 		
-			this.thiscontext=c;
+			
 			this.url=url;
 			jArray=new JSONArray();
 			
@@ -56,11 +55,7 @@ import android.widget.Toast;
 		protected void onPreExecute() {
 			super.onPreExecute();
 		//	Toast.makeText(this.thiscontext,"Connecting....",Toast.LENGTH_SHORT).show();
-			pDialog = new ProgressDialog(this.thiscontext);
-			pDialog.setMessage("Getting Data ...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
-			pDialog.show();
+		
 		
 		}
 
@@ -77,7 +72,6 @@ import android.widget.Toast;
 		@Override
 		protected void onPostExecute(JSONArray jsArray) {
 		
-			pDialog.dismiss();
 		    
 			 Log.v("NEWS:",jsArray.toString());
 		

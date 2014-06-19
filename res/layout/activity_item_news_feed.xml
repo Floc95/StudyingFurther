@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#413232"
     android:scrollbarAlwaysDrawVerticalTrack="false"
     android:shrinkColumns="*"
     android:stretchColumns="*"
@@ -120,7 +120,7 @@
             android:adjustViewBounds="false"
             android:background="@drawable/equal"
             android:baselineAlignBottom="false"
-            android:onClick="Pub"
+            android:onClick="commentaire"
             android:scaleType="center" />
 
         <TextView

@@ -29,15 +29,9 @@ public class Repository {
    private String UrlAPIIdentification = "http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264";
    private String UrlAPINews="http://www.your-groups.com/API/GetNewsFeed?key=7e2a3a18cd00ca322f60c28393c43264";
 	private JSONArray user;
-	Context context=null;
 	private JSONArray News;
 	//JSONObject JsonObjectAuthentification =null;
     
-    public Repository(Context thiscontext) throws InterruptedException, ExecutionException
-	{
-    	this.context=thiscontext;
-	}
-	
 	public User getUser(int id) throws NumberFormatException, JSONException
 	{
 		// TODO getUser
@@ -60,7 +54,7 @@ public class Repository {
 		// Retourne Null s'il n'existe pas
 		     String UrlUser=this.UrlAPIIdentification+"&username="+login+"&password="+md5(password)+"";
 		 	Log.v("NEWS","getuser");
-    	    user= new JSONParser(context,UrlUser).execute().get();
+    	    user= new JSONParser(UrlUser).execute().get();
     	    if(user!=null)
     	    {
 				if(user.getJSONObject(0).getString("login").equals(login) && user.getJSONObject(0).getString("password").equals(md5(password)) )
@@ -83,7 +77,7 @@ public class Repository {
 	{
 	
 			String UrlNews=this.UrlAPINews+"&userId="+idUser;
-		    this.News=	new JSONParser(this.context, UrlNews).execute().get();
+		    this.News=	new JSONParser( UrlNews).execute().get();
 		    
 		    return this.News;
 			

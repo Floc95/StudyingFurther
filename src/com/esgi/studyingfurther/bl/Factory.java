@@ -12,9 +12,9 @@ public class Factory {
 
 	private Repository repository;
 	
-	public Factory(Context thisContext) throws InterruptedException, ExecutionException
+	public Factory() throws InterruptedException, ExecutionException
 	{
-		repository = new Repository(thisContext);
+		repository = new Repository();
 	}
 	
 	public User getUser(String user, String password) throws InterruptedException, ExecutionException, JSONException

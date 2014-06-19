@@ -22,14 +22,18 @@
     <string name="Prenom">Prénom</string>
     <string name="Nom">Nom</string>
     <string name="title_activity_gerer_class">GererClass</string>
-    <string name="title_activity_parameter">Parameter</string>
+    <string name="title_activity_parameter">Parameter</string>
     <string name="Description">L Ecole Superieure de Genie Informatique (ESGI) est une ecole privee d enseignement superieur en informatique située à Paris et fondée en 1983</string>
     <string name="Title">ESGI</string>
     <string name="title_activity_item_news_feed">ItemNewsFeed</string>
-      <string-array name="menu">
+
+    <string-array name="menu">
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        </string-array>
-        <string name="plusun">+1</string>
+    </string-array>
+
+    <string name="plusun">+1</string>
+    <string name="title_activity_comments">Comments</string>
+
 </resources>
