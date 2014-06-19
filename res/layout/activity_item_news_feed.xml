@@ -13,26 +13,37 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="left|center"
         android:background="#d3d3d3"
         android:gravity="left"
         android:textColor="#000000" >
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_weight="0" />
 
         <TextView
             android:id="@+id/title"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:layout_weight="0"
             android:gravity="left"
             android:text="@string/Title"
             android:textSize="12dp" />
 
         <TextView
             android:id="@+id/heurPub"
+            android:layout_width="1dp"
+            android:layout_gravity="right|center|top"
+            android:layout_weight="0"
             android:gravity="left"
             android:text="30/06/2014 18:45"
             android:textSize="10dp" />
+
     </TableRow>
 
     <!-- Row 2 with 2 columns -->
@@ -44,15 +55,19 @@
 
         <TextView
             android:id="@+id/contenu"
-            android:layout_height="150dp"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_marginBottom="6dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:layout_marginTop="6dp"
             android:layout_span="3"
+            android:layout_weight="0"
             android:maxHeight="150dp"
             android:text="@string/Description"
             android:textSize="16dp" />
+
     </TableRow>
 
     <TableRow
@@ -62,7 +77,16 @@
 
         <ImageView
             android:id="@+id/newspic"
-            android:layout_span="3" />
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_span="3"
+            android:layout_weight="0" />
+
     </TableRow>
 
     <TableRow android:layout_marginTop="1dp" />
@@ -78,36 +102,40 @@
 
         <ToggleButton
             android:id="@+id/toggleButton1"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="left|center"
+            android:layout_weight="0"
             android:textOff="@string/plusun"
             android:textOn="@string/plusun" />
 
         <ImageButton
             android:id="@+id/plus"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:layout_marginLeft="150dp"
-            android:layout_weight="1"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="-100dp"
+            android:layout_weight="0"
             android:adjustViewBounds="false"
             android:background="@drawable/equal"
+            android:baselineAlignBottom="false"
             android:onClick="Pub"
-            android:scaleType="fitCenter" />
+            android:scaleType="center" />
 
         <TextView
             android:id="@+id/nbcommentaires"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:text="11"
             android:textAlignment="viewEnd"
             android:textSize="18sp" />
+
     </TableRow>
 
-    <TableRow android:layout_marginTop="2dp" />
+    <TableRow android:layout_marginTop="6dp" />
 
 
 </TableLayout>

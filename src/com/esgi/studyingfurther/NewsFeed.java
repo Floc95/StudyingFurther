@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.bl.User;
 import com.esgi.studyingfurther.dal.Repository;
+import com.esgi.studyingfurther.vm.DownloadImageTask;
 import com.esgi.studyingfurther.vm.MainViewModel;
 import com.esgi.studyingfurther.vm.MyViewBinder;
 
@@ -98,10 +99,7 @@ public class NewsFeed extends Activity {
 		
 			//***************************************************************
 			
-			// URL pictureURL = new URL(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
-		//	Log.v("xxx",this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
-		//	 Bitmap bm = Manager.LoadImageFromWebOperations(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar"));
-			  Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.bout);
+			 Bitmap bm = new DownloadImageTask().execute(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar")).get();
 			 Bitmap resized = Bitmap.createScaledBitmap(bm, 100, 100, true);
 			 Bitmap conv_bm =getRoundedCornerImage(resized);
 	        
@@ -111,7 +109,7 @@ public class NewsFeed extends Activity {
 			map.put("titre", row.getString("titre"));
 			map.put("contenu",row.getString("contenu"));
 			map.put("img", conv_bm);
-			map.put("newspic", "");
+			map.put("newspic", R.drawable.bout);
 			map.put("heurPub", row.getString("dateCreation"));
 			listItem.add(map);
 
