@@ -61,6 +61,10 @@
             android:name="com.esgi.studyingfurther.Comments"
             android:label="@string/title_activity_comments" >
         </activity>
+        <activity
+            android:name="com.esgi.studyingfurther.Commentaires"
+            android:label="@string/title_activity_commentaires" >
+        </activity>
     </application>
 
 </manifest>
