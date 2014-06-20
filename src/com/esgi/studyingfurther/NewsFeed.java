@@ -22,9 +22,11 @@ import com.esgi.studyingfurther.bl.User;
 import com.esgi.studyingfurther.dal.Repository;
 import com.esgi.studyingfurther.vm.DownloadImageTask;
 import com.esgi.studyingfurther.vm.MainViewModel;
+import com.esgi.studyingfurther.vm.ManagerURL;
 import com.esgi.studyingfurther.vm.MyViewBinder;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -46,11 +48,10 @@ import android.widget.SimpleAdapter;
 public class NewsFeed extends Activity {
 
 	private ListView maListViewPerso;
-	private int userId;
-	private Bundle bundle;
+	private JSONObject currentUser;
 	MainViewModel Manager = null;
-	JSONArray News;
-    private String PrefixurlPic="http://www.your-groups.com";
+	JSONArray news;
+	ArrayList<JSONObject> comments;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,23 +87,22 @@ public class NewsFeed extends Activity {
 
 	private void getNews() throws InterruptedException, ExecutionException,JSONException, IOException {
 
-		this.userId = getIntent().getExtras().getInt("userId", 0);
-		this.News = new Repository().getNews(userId);
-		
+		this.currentUser =new JSONObject(getIntent().getExtras().getString("currentUser"));
+		this.news = new Repository().getNews(this.currentUser.getInt("id"));
+		this.comments=new ArrayList<JSONObject>();
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 		
 //**************************************** Boucle sur la listeview
 		
-		for (int i = 0; i < this.News.length(); i++) {
+		for (int i = 0; i < this.news.length(); i++) {
 			
-			JSONObject row = this.News.getJSONObject(i);
+			JSONObject row = this.news.getJSONObject(i);
+			this.comments.add(row);
 			HashMap<String, Object> map=new HashMap<String, Object>();
 		
 			//***************************************************************
 			
-			 Bitmap bm = new DownloadImageTask().execute(this.PrefixurlPic+row.getJSONObject("utilisateur").getString("avatar")).get();
-			 Bitmap resized = Bitmap.createScaledBitmap(bm, 100, 100, true);
-			 Bitmap conv_bm =getRoundedCornerImage(resized);
+			 Bitmap conv_bm =MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+row.getJSONObject("utilisateur").getString("avatar"));
 	        
 			 
 			 //**************************************************************
@@ -111,7 +111,7 @@ public class NewsFeed extends Activity {
 			map.put("contenu",Manager.decodeString(row.getString("contenu")));
 			map.put("nbcommentaires", row.getJSONArray("commentaires").length());
 			map.put("img", conv_bm);
-			map.put("newspic", R.drawable.bout);
+			map.put("newspic","");// R.drawable.bout);
 			map.put("heurPub",Manager.decodeString(row.getString("dateCreation")));
 			listItem.add(map);
 
@@ -122,18 +122,25 @@ public class NewsFeed extends Activity {
 				
 				this.getBaseContext(),listItem, R.layout.activity_item_news_feed,
 				new String[] { "img", "titre", "contenu", "newspic","heurPub","nbcommentaires" }, 
-				new int[] { R.id.avatar, R.id.title,R.id.contenu, R.id.newspic, R.id.heurPub,R.id.nbcommentaires }
+				new int[] { R.id.avatarP, R.id.titleP,R.id.contenu, R.id.newspic, R.id.heurPubP,R.id.nbcommentaires }
 		);
+		
 		mSchedule.setViewBinder(new MyViewBinder());
 		maListViewPerso.setAdapter(mSchedule);
-		
-		//******* Action onClick sur un item de la liste view
 		
 		
 
 	}
 	
 
+
+    public void comment(View v) {
+		
+	   Intent intent = new Intent(getBaseContext(), Comments.class);
+	   intent.putExtra("comments", this.comments.get(maListViewPerso.getPositionForView(v)).toString());
+	   intent.putExtra("currentUser", this.currentUser.toString());
+	   startActivity(intent);
+	}
 
 	public void modification(View v) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -144,43 +151,15 @@ public class NewsFeed extends Activity {
 
 	}
 
-	public void commentaire(View v) {
-		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-		adb.setTitle("Button Publier");
-		adb.setMessage("Vous avez appuiez sur le button Publier");
-		adb.setPositiveButton("Ok", null);
-		adb.show();
-	}
+	
 
 	public void write(View v) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		adb.setTitle("Button Write");
-		adb.setMessage("Vous avez appuiez sur le button Write");
+		adb.setMessage(""+this.comments.get(maListViewPerso.getPositionForView(v)).toString());
 		adb.setPositiveButton("Ok", null);
 		adb.show();
 	}
       
-	public static Bitmap getRoundedCornerImage(Bitmap bitmap) {
-		
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), Config.ARGB_8888);
-		Canvas canvas = new Canvas(output);
-
-		final int color = 0xff424242;
-		final Paint paint = new Paint();
-		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-		final RectF rectF = new RectF(rect);
-		final float roundPx = 100;
-
-		paint.setAntiAlias(true);
-		canvas.drawARGB(0, 0, 0, 0);
-		paint.setColor(color);
-		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-
-		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-		canvas.drawBitmap(bitmap, rect, rect, paint);
-
-		return output;
-
-		}
 	
 }

@@ -3,6 +3,7 @@ package com.esgi.studyingfurther.bl;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 
@@ -17,7 +18,7 @@ public class Factory {
 		repository = new Repository();
 	}
 	
-	public User getUser(String user, String password) throws InterruptedException, ExecutionException, JSONException
+	public JSONObject getUser(String user, String password) throws InterruptedException, ExecutionException, JSONException
 	{
 		return this.repository.getUser(user, password);
 	}

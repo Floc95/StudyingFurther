@@ -13,40 +13,109 @@
       android:layout_alignParentLeft="false"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="false"
-      android:layout_centerInParent="false"
-      android:background="#AFA7EF" >
+      android:layout_centerInParent="false" >
 
+			<ImageView
+			    android:id="@+id/avatarP"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_alignParentTop="true"
+			    android:layout_weight="0" />
+			
+        <TextView
+            android:id="@+id/titleP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:text="@string/Title"
+            android:textSize="12dp" />
+        
+                <TextView
+                    android:id="@+id/heurPubP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="30/06/2014 18:45"
+                    android:textSize="10dp" />
+                
+            <TextView
+                android:id="@+id/contenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="100dp"
+                android:linksClickable="true"
+                android:maxHeight="150dp"
+                android:text="@string/Description"
+                android:textSize="16dp" />
      
   </RelativeLayout>
+  
+ 
 
   <!-- Footer aligned to bottom -->
 
- 
   <RelativeLayout
-    android:id="@+id/footer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:background="#6AED83"
-    android:gravity="center" >
-
-    <TextView
-      android:layout_width="wrap_content"
+      android:id="@+id/footer"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="5dp"
-      android:text="Footer"
-      android:textColor="#000000"
-      android:textSize="20sp" />
+      android:layout_alignParentBottom="true"
+      android:gravity="center"
+      android:scrollbarAlwaysDrawVerticalTrack="true"
+      android:scrollbars="vertical" >
+
+      <MultiAutoCompleteTextView
+          android:id="@+id/commentText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentTop="true"
+          android:ems="10"
+          android:scrollHorizontally="true"
+          android:scrollbars="vertical"
+          android:text="your comment is her" >
+
+          <requestFocus />
+      </MultiAutoCompleteTextView>
+
+      <Button
+          android:id="@+id/button1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/commentText"
+          android:layout_alignParentBottom="false"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentTop="true"
+          android:layout_centerVertical="true"
+          android:background="@drawable/diffusion"
+          android:maxHeight="30dp"
+          android:maxWidth="30dp"
+          android:minHeight="0dp"
+          android:onClick="addComment" />
+
   </RelativeLayout>
 
   <!-- Scrollable Content below header and above footer -->
-  <ScrollView
-    android:id="@+id/container"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_above="@id/footer"
-    android:layout_below="@id/header" >
 
-  </ScrollView>
+  <RelativeLayout
+      android:id="@+id/container"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_above="@id/footer"
+      android:layout_below="@id/header" >
+
+      <ListView
+          android:id="@+id/listviewComments"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawSelectorOnTop="false" >
+
+      </ListView>
+
+  </RelativeLayout>
 
 </RelativeLayout>

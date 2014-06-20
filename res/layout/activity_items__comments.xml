@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#413232"
-    android:clickable="true"
     android:scrollbarAlwaysDrawVerticalTrack="false"
     android:shrinkColumns="*"
     android:stretchColumns="*"
@@ -16,9 +15,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left|center"
         android:background="#d3d3d3"
-        android:clickable="true"
         android:gravity="left"
-        android:onClick="comment"
         android:textColor="#000000" >
 
         <ImageView
@@ -27,16 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:layout_weight="0" />
-
-        <TextView
-            android:id="@+id/titleP"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|top"
-            android:layout_weight="0"
-            android:gravity="left"
-            android:text="@string/Title"
-            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/heurPubP"
@@ -54,9 +41,6 @@
     <TableRow
         android:id="@+id/tableRow1"
         android:background="#d3d3d3"
-        android:clickable="true"
-        android:longClickable="true"
-        android:onClick="comment"
         android:textColor="#000000" >
 
         <TextView
@@ -70,34 +54,9 @@
             android:layout_marginTop="6dp"
             android:layout_span="3"
             android:layout_weight="0"
-            android:clickable="true"
-            android:longClickable="true"
             android:maxHeight="150dp"
-            android:onClick="comment"
             android:text="@string/Description"
             android:textSize="16dp" />
-
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow10"
-        android:background="#d3d3d3"
-        android:textColor="#000000" >
-
-        <ImageView
-            android:id="@+id/newspic"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_span="3"
-            android:layout_weight="0"
-            android:clickable="true"
-            android:longClickable="true"
-            android:onClick="comment" />
 
     </TableRow>
 
@@ -120,30 +79,6 @@
             android:layout_weight="0"
             android:textOff="@string/plusun"
             android:textOn="@string/plusun" />
-
-        <ImageButton
-            android:id="@+id/plus"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="-100dp"
-            android:layout_weight="0"
-            android:adjustViewBounds="false"
-            android:background="@drawable/equal"
-            android:baselineAlignBottom="false"
-            android:onClick="comment"
-            android:scaleType="center" />
-
-        <TextView
-            android:id="@+id/nbcommentaires"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center"
-            android:layout_weight="0"
-            android:text="11"
-            android:textAlignment="viewEnd"
-            android:textSize="18sp" />
 
     </TableRow>
 

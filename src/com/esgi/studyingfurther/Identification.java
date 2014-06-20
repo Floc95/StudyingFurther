@@ -48,7 +48,7 @@ public class Identification extends Activity {
 		setContentView(R.layout.activity_identification);
 		this.UserName = ((EditText) findViewById(R.id.username));
 		this.PassWord = ((EditText) findViewById(R.id.password));
-		iv= (ImageView)findViewById(R.id.imageView1);
+		iv= (ImageView)findViewById(R.id.avatarUser);
 		
 		
 		
@@ -71,7 +71,7 @@ public class Identification extends Activity {
 		if (ManagerUser.authenticate(username, Password) == true) {
             
 			Intent intent = new Intent(this, NewsFeed.class);
-		    intent.putExtra("userId",ManagerUser.getCurrentUserId());
+		    intent.putExtra("currentUser",ManagerUser.getCurrentUser().toString() );
 			startActivity(intent);
 			
 		} else {

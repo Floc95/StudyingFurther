@@ -36,5 +36,6 @@
     <string name="plusun">+1</string>
     <string name="title_activity_comments">Comments</string>
     <string name="title_activity_commentaires">Commentaires</string>
+    <string name="title_activity_items__comments">Items_Comments</string>
 
 </resources>
