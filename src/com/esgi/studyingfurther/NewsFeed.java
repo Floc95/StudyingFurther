@@ -1,5 +1,6 @@
 package com.esgi.studyingfurther;
 
+import android.R.anim;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -25,6 +26,7 @@ import com.esgi.studyingfurther.vm.MainViewModel;
 import com.esgi.studyingfurther.vm.MyViewBinder;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -34,6 +36,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,6 +55,7 @@ public class NewsFeed extends Activity {
 	MainViewModel Manager = null;
 	JSONArray News;
     private String PrefixurlPic="http://www.your-groups.com";
+    private static final int ONE_ID = Menu.FIRST+1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -183,4 +188,22 @@ public class NewsFeed extends Activity {
 
 		}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		menu.add(Menu.NONE, ONE_ID, Menu.NONE,"Parametre");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		if (item.getItemId() == ONE_ID) {
+			Intent intent = new Intent(this, Parameter.class);
+			startActivity(intent);
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+
 }

@@ -28,8 +28,12 @@ public class Repository {
   //  String UrlUser="http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
    private String UrlAPIIdentification = "http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264";
    private String UrlAPINews="http://www.your-groups.com/API/GetNewsFeed?key=7e2a3a18cd00ca322f60c28393c43264";
+   private String UrlAPIGroup="http://www.your-groups.com/API/GetGroups?key=7e2a3a18cd00ca322f60c28393c43264";
+   private String urlAPIUsersOfGroup = "http://www.your-groups.com/API/GetUsersOfGroup?key=7e2a3a18cd00ca322f60c28393c43264";
 	private JSONArray user;
 	private JSONArray News;
+	private JSONArray Groups;
+	private JSONArray UsersOfGroup;
 	//JSONObject JsonObjectAuthentification =null;
     
 	public User getUser(int id) throws NumberFormatException, JSONException
@@ -81,6 +85,27 @@ public class Repository {
 		    
 		    return this.News;
 			
+	}
+	
+	/**
+	 * Get the groups with the user id
+	 * @param idUser
+	 * @return an array of group
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public JSONArray getGroup(int idUser) throws InterruptedException, ExecutionException
+	{
+		String UrlGroup = this.UrlAPIGroup+"&userId="+idUser;
+		this.Groups = new JSONParser(UrlGroup).execute().get();
+		return this.Groups;
+	}
+	
+	public JSONArray getGroupUsers(int idGroup) throws InterruptedException, ExecutionException
+	{
+		String UrlUserOfGroup = this.urlAPIUsersOfGroup+"&groupId="+idGroup;
+		this.UsersOfGroup = new JSONParser(UrlUserOfGroup).execute().get();
+		return this.UsersOfGroup;
 	}
 	
 	private String md5(String md5) {

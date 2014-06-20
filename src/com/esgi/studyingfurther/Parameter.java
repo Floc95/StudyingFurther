@@ -21,6 +21,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -64,7 +65,6 @@ public class Parameter extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) 
 				{
-//					getServerData(url);
 					addNotificaction();
 				}
 				else {
@@ -86,9 +86,20 @@ public class Parameter extends Activity {
 				else
 				{
 					new AlertDialog.Builder(Parameter.this)
-					.setTitle("Warning")
-					.setMessage("deco")
-					.setPositiveButton("OK", null)
+					.setTitle("Attention")
+					.setMessage("Are you sure to log out?")
+					.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent intent = new Intent(Parameter.this, Identification.class);
+					        intent.putExtra("finish", true);
+					        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
+					        startActivity(intent);
+					        finish();
+						}
+					})
+					.setNegativeButton("NO", null)
 					.show();
 					
 				}
@@ -103,41 +114,7 @@ public class Parameter extends Activity {
 		getMenuInflater().inflate(R.menu.parameter, menu);
 		return true;
 	}
-	/*
-	private void getServerData(String url)
-	{
-		url += "?username=123456";
-		HttpClient client = new DefaultHttpClient();
-		HttpPost request; 
-		try 
-		{
-			request = new HttpPost(new URI(url));
-			HttpResponse response=client.execute(request);
-			
-			if(response.getStatusLine().getStatusCode()==200)
-			{
-				HttpEntity entity=response.getEntity();
-				if(entity!=null)
-				{
-					String out = EntityUtils.toString(entity);
-					new AlertDialog.Builder(this).setMessage(out).create().show();
-				}
-			}
-		}
-		catch (URISyntaxException e) 
-		{
-			e.printStackTrace();
-		}
-		catch (ClientProtocolException e) 
-		{
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-	}
-	*/
+
 	
 	@SuppressWarnings("deprecation")
 	private void addNotificaction() 
