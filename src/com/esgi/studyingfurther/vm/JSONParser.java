@@ -34,11 +34,12 @@ public class JSONParser extends AsyncTask<String, String, JSONArray> {
 	static JSONArray jArray = null;
 	static String json = "";
 	JSONObject jsonobjet = null;
-
+ 
 	public JSONParser(String url) {
 
 		this.url = url;
 		jArray = new JSONArray();
+	
 
 	}
 
@@ -66,7 +67,7 @@ public class JSONParser extends AsyncTask<String, String, JSONArray> {
 	}
 
 	private JSONArray getJSONFromUrl(String url) {
-
+		
 		// Making HTTP request
 		try {
 
@@ -113,9 +114,13 @@ public class JSONParser extends AsyncTask<String, String, JSONArray> {
 		} catch (JSONException e) {
 			Log.e("JSON Parser", "Error parsing data " + e.toString());
 		}
-
+		
+		
 		// return JSON String
 		return jArray;
+		
+		
 	}
+		
 
 }

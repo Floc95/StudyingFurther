@@ -12,16 +12,16 @@ import org.json.JSONObject;
 import com.esgi.studyingfurther.bl.Comment;
 import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.dal.Repository;
-import com.esgi.studyingfurther.vm.AddCommentTask;
+
 import com.esgi.studyingfurther.vm.MainViewModel;
 import com.esgi.studyingfurther.vm.ManagerURL;
 import com.esgi.studyingfurther.vm.MyViewBinder;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Comments extends Activity {
 
@@ -59,7 +60,14 @@ public class Comments extends Activity {
 		commentText = (AutoCompleteTextView) findViewById(R.id.commentText);
 		try {
 			Manager = new MainViewModel(new Factory());
+			if(MainViewModel.isNetworkAvailable(this))
+			{
 			getComments();
+			}
+			else{
+				MainViewModel.alertNetwork(this);
+			}
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,7 +98,7 @@ public class Comments extends Activity {
 		avatarPost.setImageBitmap(conv_bm);
 		title.setText(this.jsonObjectFromFeedNews.getString("titre"));
 		heurPub.setText(this.jsonObjectFromFeedNews.getString("dateCreation"));
-		contenu.setText(this.jsonObjectFromFeedNews.getString("contenu"));
+		contenu.setText(MainViewModel.decodeString(this.jsonObjectFromFeedNews.getString("contenu")));
 		// ************************************************************
 
 		 listItem = new ArrayList<HashMap<String, Object>>();
@@ -129,8 +137,30 @@ public class Comments extends Activity {
 
 	public void addComment(View v) throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException  {
 	 
-	 Comment.addComment(this.currentUser.getInt("id"), this.jsonObjectFromFeedNews.getInt("id"), this.commentText.getText().toString());
-	 getComments();
+	if( Comment.addComment(this.currentUser.getInt("id"), this.jsonObjectFromFeedNews.getInt("id"), this.commentText.getText().toString()).equals("86"))
+	{
+		
+		if(MainViewModel.isNetworkAvailable(this))
+		{
+		Toast.makeText(getBaseContext(),"Comment is added", Toast.LENGTH_LONG).show();
+		 getComments();
+		}else
+		{
+			MainViewModel.alertNetwork(this);
+		}
+		 this.commentText.setText("");
+	}
+	else 
+	{
+		
+		Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_LONG).show();
+	}
+	
+
+		
+		
+
+	
 	}
 
 	public void pullToRefresh() throws InterruptedException, ExecutionException, JSONException

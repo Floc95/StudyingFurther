@@ -62,7 +62,9 @@ public class Identification extends Activity {
 
 	public void seConnecter(View v) throws InterruptedException,
 			ExecutionException, JSONException, IOException {
-
+		if(MainViewModel.isNetworkAvailable(this))
+		{
+		
 		ManagerUser = new MainViewModel(new Factory());
 		String username = UserName.getText().toString();
 		String Password = PassWord.getText().toString();
@@ -79,7 +81,14 @@ public class Identification extends Activity {
 			this.UserName.setFocusable(true);
 			this.UserName.requestFocus();
 		}
-
+		}
+	else
+	{
+		MainViewModel.alertNetwork(this);
 	}
+
+	
+
+}
 
 }

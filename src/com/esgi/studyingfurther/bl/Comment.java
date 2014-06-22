@@ -25,7 +25,7 @@ public class Comment {
 		this.modificationDate = modificationDate;
 		this.owner = owner;
 	}
-	public static void addComment(int idUser,int postId,String Content) throws InterruptedException, ExecutionException
+	public static String addComment(int idUser,int postId,String Content) throws InterruptedException, ExecutionException
 	{
 		
 		String requestAddComment = ManagerURL.urlAddComment+ "&userId="
@@ -34,7 +34,8 @@ public class Comment {
 				+ postId
 				+ "&content="
 				+ Uri.encode(Content);
-	 Log.v("comment",	new AddCommentTask().execute(requestAddComment).get());
+	       return new AddCommentTask().execute(requestAddComment).get();
+	
 	}
 
 	public int getId() {

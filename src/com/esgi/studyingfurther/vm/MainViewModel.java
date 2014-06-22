@@ -10,6 +10,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -18,6 +20,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.Html;
 import android.util.Log;
 
@@ -48,11 +52,27 @@ public class MainViewModel {
 		return this.currentUser;
 	}
 
+	public static boolean isNetworkAvailable(Context myContext) {
+	    ConnectivityManager connectivityManager  = (ConnectivityManager) myContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+
 	public static String decodeString(String myString)
 			throws UnsupportedEncodingException {
 		String tempString = new String(myString.getBytes("ISO-8859-1"), "UTF-8");
 		return Html.fromHtml(tempString).toString();
 
+	}
+	public static void alertNetwork(Context c)
+	{
+		AlertDialog.Builder adb = new AlertDialog.Builder(c);
+		adb.setTitle("No NetWork");
+		adb.setMessage("Your mobile is not connected,Please check your wifi/cellulaire network.");
+		adb.setPositiveButton("Ok", null);
+		adb.show();
+		
 	}
 
 	public static Bitmap getRoundedCornerImage(String url)

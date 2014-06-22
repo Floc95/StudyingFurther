@@ -62,7 +62,14 @@ public class NewsFeed extends Activity {
 
 		try {
 			Manager = new MainViewModel(new Factory());
+			if(MainViewModel.isNetworkAvailable(this))
+			{
 			getNews();
+			}
+			else
+			{
+				MainViewModel.alertNetwork(this);
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,13 +119,13 @@ public class NewsFeed extends Activity {
 
 			// **************************************************************
 
-			map.put("titre", Manager.decodeString(row.getString("titre")));
-			map.put("contenu", Manager.decodeString(row.getString("contenu")));
+			map.put("titre", MainViewModel.decodeString(row.getString("titre")));
+			map.put("contenu", MainViewModel.decodeString(row.getString("contenu")));
 			map.put("nbcommentaires", row.getJSONArray("commentaires").length());
 			map.put("img", conv_bm);
 			map.put("newspic", "");// R.drawable.bout);
 			map.put("heurPub",
-					Manager.decodeString(row.getString("dateCreation")));
+					MainViewModel.decodeString(row.getString("dateCreation")));
 			listItem.add(map);
 
 		}
