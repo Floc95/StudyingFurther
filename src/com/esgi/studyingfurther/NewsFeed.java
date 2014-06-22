@@ -52,11 +52,12 @@ public class NewsFeed extends Activity {
 	MainViewModel Manager = null;
 	JSONArray news;
 	ArrayList<JSONObject> comments;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
-		
+
 		maListViewPerso = (ListView) findViewById(R.id.listviewperso);
 
 		try {
@@ -85,61 +86,65 @@ public class NewsFeed extends Activity {
 	 */
 	/* Called whenever we call invalidateOptionsMenu() */
 
-	private void getNews() throws InterruptedException, ExecutionException,JSONException, IOException {
+	private void getNews() throws InterruptedException, ExecutionException,
+			JSONException, IOException {
 
-		this.currentUser =new JSONObject(getIntent().getExtras().getString("currentUser"));
+		this.currentUser = new JSONObject(getIntent().getExtras().getString(
+				"currentUser"));
 		this.news = new Repository().getNews(this.currentUser.getInt("id"));
-		this.comments=new ArrayList<JSONObject>();
+		this.comments = new ArrayList<JSONObject>();
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
-		
-//**************************************** Boucle sur la listeview
-		
+
+		// **************************************** Boucle sur la listeview
+
 		for (int i = 0; i < this.news.length(); i++) {
-			
+
 			JSONObject row = this.news.getJSONObject(i);
 			this.comments.add(row);
-			HashMap<String, Object> map=new HashMap<String, Object>();
-		
-			//***************************************************************
-			
-			 Bitmap conv_bm =MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+row.getJSONObject("utilisateur").getString("avatar"));
-	        
-			 
-			 //**************************************************************
+			HashMap<String, Object> map = new HashMap<String, Object>();
+
+			// ***************************************************************
+
+			Bitmap conv_bm = MainViewModel
+					.getRoundedCornerImage(ManagerURL.urlGetAvatar
+							+ row.getJSONObject("utilisateur").getString(
+									"avatar"));
+
+			// **************************************************************
 
 			map.put("titre", Manager.decodeString(row.getString("titre")));
-			map.put("contenu",Manager.decodeString(row.getString("contenu")));
+			map.put("contenu", Manager.decodeString(row.getString("contenu")));
 			map.put("nbcommentaires", row.getJSONArray("commentaires").length());
 			map.put("img", conv_bm);
-			map.put("newspic","");// R.drawable.bout);
-			map.put("heurPub",Manager.decodeString(row.getString("dateCreation")));
+			map.put("newspic", "");// R.drawable.bout);
+			map.put("heurPub",
+					Manager.decodeString(row.getString("dateCreation")));
 			listItem.add(map);
 
 		}
-		
-//*************************************Fin de la  boucle
+
+		// *************************************Fin de la boucle
 		SimpleAdapter mSchedule = new SimpleAdapter(
-				
-				this.getBaseContext(),listItem, R.layout.activity_item_news_feed,
-				new String[] { "img", "titre", "contenu", "newspic","heurPub","nbcommentaires" }, 
-				new int[] { R.id.avatarP, R.id.titleP,R.id.contenu, R.id.newspic, R.id.heurPubP,R.id.nbcommentaires }
-		);
-		
+
+		this.getBaseContext(), listItem, R.layout.activity_item_news_feed,
+				new String[] { "img", "titre", "contenu", "newspic", "heurPub",
+						"nbcommentaires" }, new int[] { R.id.avatarP,
+						R.id.titleP, R.id.contenu, R.id.newspic, R.id.heurPubP,
+						R.id.nbcommentaires });
+
 		mSchedule.setViewBinder(new MyViewBinder());
 		maListViewPerso.setAdapter(mSchedule);
-		
-		
 
 	}
-	
 
+	public void comment(View v) {
 
-    public void comment(View v) {
-		
-	   Intent intent = new Intent(getBaseContext(), Comments.class);
-	   intent.putExtra("comments", this.comments.get(maListViewPerso.getPositionForView(v)).toString());
-	   intent.putExtra("currentUser", this.currentUser.toString());
-	   startActivity(intent);
+		Intent intent = new Intent(getBaseContext(), Comments.class);
+		intent.putExtra("comments",
+				this.comments.get(maListViewPerso.getPositionForView(v))
+						.toString());
+		intent.putExtra("currentUser", this.currentUser.toString());
+		startActivity(intent);
 	}
 
 	public void modification(View v) {
@@ -151,15 +156,14 @@ public class NewsFeed extends Activity {
 
 	}
 
-	
-
 	public void write(View v) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		adb.setTitle("Button Write");
-		adb.setMessage(""+this.comments.get(maListViewPerso.getPositionForView(v)).toString());
+		adb.setMessage(""
+				+ this.comments.get(maListViewPerso.getPositionForView(v))
+						.toString());
 		adb.setPositiveButton("Ok", null);
 		adb.show();
 	}
-      
-	
+
 }

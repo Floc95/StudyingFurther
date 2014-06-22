@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 public class Items_Comments extends Activity {
 
 	@Override
@@ -15,7 +14,6 @@ public class Items_Comments extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_items__comments);
 
-	
 	}
 
 	@Override
@@ -38,5 +36,4 @@ public class Items_Comments extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	
 }

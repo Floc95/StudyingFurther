@@ -39,6 +39,7 @@ public class Identification extends Activity {
 	private EditText UserName;
 	private EditText PassWord;
 	ImageView iv;
+
 	// String UrlUser =
 	// "http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
 
@@ -48,10 +49,8 @@ public class Identification extends Activity {
 		setContentView(R.layout.activity_identification);
 		this.UserName = ((EditText) findViewById(R.id.username));
 		this.PassWord = ((EditText) findViewById(R.id.password));
-		iv= (ImageView)findViewById(R.id.avatarUser);
-		
-		
-		
+		iv = (ImageView) findViewById(R.id.avatarUser);
+
 	}
 
 	@Override
@@ -61,26 +60,26 @@ public class Identification extends Activity {
 		return true;
 	}
 
-	public void seConnecter(View v) throws InterruptedException,ExecutionException, JSONException, IOException {
+	public void seConnecter(View v) throws InterruptedException,
+			ExecutionException, JSONException, IOException {
 
 		ManagerUser = new MainViewModel(new Factory());
 		String username = UserName.getText().toString();
 		String Password = PassWord.getText().toString();
-       //j new Repository(this).getClass();
-        
+		// j new Repository(this).getClass();
+
 		if (ManagerUser.authenticate(username, Password) == true) {
-            
+
 			Intent intent = new Intent(this, NewsFeed.class);
-		    intent.putExtra("currentUser",ManagerUser.getCurrentUser().toString() );
+			intent.putExtra("currentUser", ManagerUser.getCurrentUser()
+					.toString());
 			startActivity(intent);
-			
+
 		} else {
 			this.UserName.setFocusable(true);
 			this.UserName.requestFocus();
 		}
 
 	}
-	
-	
 
 }

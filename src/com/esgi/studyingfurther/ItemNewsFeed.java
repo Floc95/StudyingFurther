@@ -1,7 +1,5 @@
 package com.esgi.studyingfurther;
 
-
-
 import java.util.concurrent.ExecutionException;
 
 import com.esgi.studyingfurther.bl.Factory;
@@ -18,17 +16,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-
-
 public class ItemNewsFeed extends Activity {
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_news_feed);
-		Log.v("itemsnew","*******");
-		
+		Log.v("itemsnew", "*******");
+
 	}
 
 	@Override
@@ -37,7 +32,5 @@ public class ItemNewsFeed extends Activity {
 		getMenuInflater().inflate(R.menu.item_news_feed, menu);
 		return true;
 	}
-
-
 
 }

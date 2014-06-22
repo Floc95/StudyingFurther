@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#413232"
+    android:background="#A977EA"
     android:clickable="true"
     android:scrollbarAlwaysDrawVerticalTrack="false"
     android:shrinkColumns="*"
@@ -118,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:layout_weight="0"
+            android:minHeight="0dp"
             android:textOff="@string/plusun"
             android:textOn="@string/plusun" />
 

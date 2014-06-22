@@ -3,7 +3,6 @@ package com.esgi.studyingfurther;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -23,143 +22,138 @@ import android.widget.TextView;
 
 public class AffichageItem extends Activity {
 
-    TextView titre;
-    TextView description;
-    TextView owner;
-    TextView time;
-    Button button, download;
-    SimpleAdapter listItemAdapter;
-    ArrayList<HashMap<String, Object>> listItem;
-    private ListView myList;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_post);
-      
-        myList = (ListView)findViewById(R.id.listviewperso);
-        button = (Button)findViewById(R.id.send);
-        button.setEnabled(false);
-        titre = (TextView)this.findViewById(R.id.titre);
-        description = (TextView)this.findViewById(R.id.description);
+	TextView titre;
+	TextView description;
+	TextView owner;
+	TextView time;
+	Button button, download;
+	SimpleAdapter listItemAdapter;
+	ArrayList<HashMap<String, Object>> listItem;
+	private ListView myList;
 
-        listItem = new ArrayList<HashMap<String, Object>>();
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_detail_post);
 
+		myList = (ListView) findViewById(R.id.listviewperso);
+		button = (Button) findViewById(R.id.send);
+		button.setEnabled(false);
+		titre = (TextView) this.findViewById(R.id.titre);
+		description = (TextView) this.findViewById(R.id.description);
 
-        HashMap<String, Object> map = new HashMap<String, Object>();
+		listItem = new ArrayList<HashMap<String, Object>>();
 
-        map.put("title", "Comment "+ listItem.size());
+		HashMap<String, Object> map = new HashMap<String, Object>();
 
-        listItem.add(map);
-        addItem("titile1","content1");
-        addItem("owner1","content2");
-        addItem("owner2","content3");
-        addItem("owner3","content3");
-        addItem("owner4","content3");
-        addItem("owner5","content3");
-        addItem("owner6","content3");
-        addItem("owner7","content3");
-        addItem("owner8","content3");
-        addItem("owner9","content3");
-        addItem("owner10","content3");
-        addItem("owner11","content3");
-        addItem("owner12","content3");
+		map.put("title", "Comment " + listItem.size());
 
-        HashMap<String, Object> tmp = new HashMap<String, Object>();
-        tmp.put("title", "Comment  "+ (listItem.size()-1));
-        listItem.set(0, tmp);
+		listItem.add(map);
+		addItem("titile1", "content1");
+		addItem("owner1", "content2");
+		addItem("owner2", "content3");
+		addItem("owner3", "content3");
+		addItem("owner4", "content3");
+		addItem("owner5", "content3");
+		addItem("owner6", "content3");
+		addItem("owner7", "content3");
+		addItem("owner8", "content3");
+		addItem("owner9", "content3");
+		addItem("owner10", "content3");
+		addItem("owner11", "content3");
+		addItem("owner12", "content3");
 
-        listItemAdapter = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.activity_affichageitem, new String[]{"image", "title", "text"}, new int[]{R.id.img, R.id.titre, R.id.description});
-        myList.setAdapter(listItemAdapter);
+		HashMap<String, Object> tmp = new HashMap<String, Object>();
+		tmp.put("title", "Comment  " + (listItem.size() - 1));
+		listItem.set(0, tmp);
 
+		listItemAdapter = new SimpleAdapter(this.getBaseContext(), listItem,
+				R.layout.activity_affichageitem, new String[] { "image",
+						"title", "text" }, new int[] { R.id.img, R.id.titre,
+						R.id.description });
+		myList.setAdapter(listItemAdapter);
 
-        myList.setOnTouchListener(new OnTouchListener() {
+		myList.setOnTouchListener(new OnTouchListener() {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(AffichageItem.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                button.setEnabled(false);
-                return false;
-            }
-        });
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+						.hideSoftInputFromWindow(AffichageItem.this
+								.getCurrentFocus().getWindowToken(),
+								InputMethodManager.HIDE_NOT_ALWAYS);
+				button.setEnabled(false);
+				return false;
+			}
+		});
 
+		final EditText coment = (EditText) findViewById(R.id.editText1);
+		coment.setOnTouchListener(new OnTouchListener() {
 
-        final EditText coment = (EditText)findViewById(R.id.editText1);
-        coment.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				button.setEnabled(true);
+				return false;
+			}
+		});
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                button.setEnabled(true);
-                return false;
-            }
-        });
+		coment.setOnFocusChangeListener(new OnFocusChangeListener() {
 
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+							.showSoftInput(coment, 0);
+				}
 
-        coment.setOnFocusChangeListener(new OnFocusChangeListener() {
+			}
+		});
 
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus)
-                {
-                    ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(coment, 0);
-                }
+		button.setOnClickListener(new OnClickListener() {
 
-            }
-        });
+			@Override
+			public void onClick(View v) {
+				if (!coment.getText().toString().trim().equals("")) {
+					addItem("new", coment.getText().toString());
+					coment.setText("");
+					listItemAdapter.notifyDataSetChanged();
+				} else {
+					new AlertDialog.Builder(AffichageItem.this)
+							.setTitle("Warning")
+							.setMessage("Comment can't be empty")
+							.setPositiveButton("OK", null).show();
+				}
 
+			}
+		});
 
-        button.setOnClickListener(new OnClickListener() {
+		download = (Button) findViewById(R.id.download);
+		download.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if (!coment.getText().toString().trim().equals(""))
-                {
-                    addItem("new",coment.getText().toString());
-                    coment.setText("");
-                    listItemAdapter.notifyDataSetChanged();
-                }
-                else {
-                    new AlertDialog.Builder(AffichageItem.this)
-                            .setTitle("Warning")
-                            .setMessage("Comment can't be empty")
-                            .setPositiveButton("OK", null)
-                            .show();
-                }
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AffichageItem.this, Parameter.class);
+				startActivity(intent);
 
+			}
+		});
 
-            }
-        });
+	}
 
-        download = (Button)findViewById(R.id.download);
-        download.setOnClickListener(new OnClickListener() {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AffichageItem.this, Parameter.class);
-                startActivity(intent);
-
-            }
-        });
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    private void addItem(String title, String text)
-    {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("image", R.drawable.android);
-        map.put("title", title);
-        map.put("text", text);
-        listItem.add(map);
-//        listItemAdapter.notifyDataSetChanged();
-    }
-
+	private void addItem(String title, String text) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("image", R.drawable.android);
+		map.put("title", title);
+		map.put("text", text);
+		listItem.add(map);
+		// listItemAdapter.notifyDataSetChanged();
+	}
 
 }
