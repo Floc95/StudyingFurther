@@ -25,6 +25,10 @@ public class Comment {
 		this.modificationDate = modificationDate;
 		this.owner = owner;
 	}
+	public static void modificationComment()
+	{
+		
+	}
 	public static String addComment(int idUser,int postId,String Content) throws InterruptedException, ExecutionException
 	{
 		

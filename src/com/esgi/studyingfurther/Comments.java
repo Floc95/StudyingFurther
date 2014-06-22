@@ -135,6 +135,10 @@ public class Comments extends Activity {
 
 	}
 
+	public void modificationComments(View v)
+	{
+		
+	}
 	public void addComment(View v) throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException  {
 	 
 	if( Comment.addComment(this.currentUser.getInt("id"), this.jsonObjectFromFeedNews.getInt("id"), this.commentText.getText().toString()).equals("86"))

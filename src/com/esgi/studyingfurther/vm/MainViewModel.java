@@ -86,8 +86,7 @@ public class MainViewModel {
 
 		final int color = 0xff424242;
 		final Paint paint = new Paint();
-		final Rect rect = new Rect(0, 0, resized.getWidth(),
-				resized.getHeight());
+		final Rect rect = new Rect(0, 0, resized.getWidth(),resized.getHeight());
 		final RectF rectF = new RectF(rect);
 		final float roundPx = 100;
 

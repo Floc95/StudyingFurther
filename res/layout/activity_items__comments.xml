@@ -43,7 +43,7 @@
         android:background="#d3d3d3"
         android:textColor="#000000" >
 
-        <TextView
+        <MultiAutoCompleteTextView
             android:id="@+id/contenu"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -54,9 +54,14 @@
             android:layout_marginTop="6dp"
             android:layout_span="3"
             android:layout_weight="0"
-            android:maxHeight="150dp"
+            android:autoLink="email|web|phone|all"
+            android:gravity="center_vertical|top"
+            android:linksClickable="true"
+            android:scrollHorizontally="true"
             android:text="@string/Description"
-            android:textSize="16dp" />
+            android:textSize="16dp" 
+            android:editable="false"
+            />
 
     </TableRow>
 
@@ -64,8 +69,8 @@
 
     <TableRow
         android:id="@+id/tableRow2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="#d3d3d3"
         android:gravity="center_vertical"
         android:scrollbars="horizontal"
@@ -80,6 +85,20 @@
             android:minHeight="0dp"
             android:textOff="@string/plusun"
             android:textOn="@string/plusun" />
+
+        <Button
+            android:id="@+id/switchTocomment"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="right"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/modifier"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingLeft="0dp"
+            android:visibility="invisible" />
 
     </TableRow>
 

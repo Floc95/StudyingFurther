@@ -47,12 +47,19 @@ public class Repository {
 		// Chargement d'un utilisateur en fonction d'un login et d'un mo t de
 		// passe
 		// Retourne Null s'il n'existe pas
-		String UrlUser = ManagerURL.urlAuthentificate + "&username=" + login
-				+ "&password=" + md5(password) + "";
-		user = new JSONParser(UrlUser).execute().get();
-		if (user != null) {
+		String UrlUser = ManagerURL.urlAuthentificate + "&username=" + login+ "&password=" + md5(password) + "";
+		try
+		{
+			user = new JSONParser(UrlUser).execute().get();
+		}
+		catch (Exception ex)
+		{
+			return null;
+		}
+	
+		if (user != null) 
+		{
 			return this.user.getJSONObject(0);
-
 		}
 
 		return null;

@@ -124,13 +124,13 @@ public class NewsFeed extends Activity {
 			map.put("nbcommentaires", row.getJSONArray("commentaires").length());
 			map.put("img", conv_bm);
 			map.put("newspic", "");// R.drawable.bout);
-			map.put("heurPub",
-					MainViewModel.decodeString(row.getString("dateCreation")));
+			map.put("heurPub",MainViewModel.decodeString(row.getString("dateCreation")));
 			listItem.add(map);
 
 		}
 
 		// *************************************Fin de la boucle
+		
 		SimpleAdapter mSchedule = new SimpleAdapter(
 
 		this.getBaseContext(), listItem, R.layout.activity_item_news_feed,
