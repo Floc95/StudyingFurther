@@ -75,6 +75,7 @@
           android:layout_alignParentLeft="true"
           android:layout_alignParentTop="true"
           android:ems="10"
+          android:inputType="textMultiLine"
           android:scrollHorizontally="true"
           android:scrollbars="vertical"
           android:text="your comment is her" >
@@ -91,9 +92,7 @@
           android:layout_alignParentRight="true"
           android:layout_alignParentTop="true"
           android:layout_centerVertical="true"
-          android:maxHeight="30dp"
-          android:maxWidth="30dp"
-          android:minHeight="0dp"
+          android:maxHeight="60dp"
           android:onClick="addComment"
           android:text="Send" />
 
