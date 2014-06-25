@@ -86,20 +86,6 @@
             android:textOff="@string/plusun"
             android:textOn="@string/plusun" />
 
-        <Button
-            android:id="@+id/switchTocomment"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="right"
-            android:layout_marginLeft="60dp"
-            android:background="@drawable/modifier"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:paddingLeft="0dp"
-            android:visibility="invisible" />
-
     </TableRow>
 
     <TableRow android:layout_marginTop="6dp" />

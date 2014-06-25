@@ -31,10 +31,9 @@ public class Repository {
 
 	private JSONArray user;
 	private JSONArray News;
-   
+	
 	// JSONObject JsonObjectAuthentification =null;
    
- 
 
 	public User getUser(int id) throws NumberFormatException, JSONException {
 

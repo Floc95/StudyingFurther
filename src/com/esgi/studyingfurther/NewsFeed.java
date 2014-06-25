@@ -96,9 +96,10 @@ public class NewsFeed extends Activity {
 	private void getNews() throws InterruptedException, ExecutionException,
 			JSONException, IOException {
 
-		this.currentUser = new JSONObject(getIntent().getExtras().getString(
-				"currentUser"));
+		this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
+		
 		this.news = new Repository().getNews(this.currentUser.getInt("id"));
+		
 		this.comments = new ArrayList<JSONObject>();
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 

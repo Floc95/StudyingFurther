@@ -33,7 +33,7 @@ public class MainViewModel {
 	private Factory factory;
 	private JSONObject currentUser;
 	private FeedManager feedManager;
-
+  
 	public MainViewModel(Factory factory) {
 		this.factory = factory;
 		this.feedManager = new FeedManager(factory);
@@ -69,7 +69,7 @@ public class MainViewModel {
 	{
 		AlertDialog.Builder adb = new AlertDialog.Builder(c);
 		adb.setTitle("No NetWork");
-		adb.setMessage("Your mobile is not connected,Please check your wifi/cellulaire network.");
+		adb.setMessage("Your mobile is not connected,Please cheeck your wifi/cellulaire network.");
 		adb.setPositiveButton("Ok", null);
 		adb.show();
 		

@@ -12,20 +12,19 @@ import org.json.JSONObject;
 import com.esgi.studyingfurther.bl.Comment;
 import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.dal.Repository;
-
 import com.esgi.studyingfurther.vm.MainViewModel;
 import com.esgi.studyingfurther.vm.ManagerURL;
 import com.esgi.studyingfurther.vm.MyViewBinder;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-
 import android.os.Bundle;
-
+import android.transition.Visibility;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -45,6 +44,7 @@ public class Comments extends Activity {
 	private JSONObject currentUser = null;
 	private ArrayList<HashMap<String, Object>> listItem;
 	private SimpleAdapter mSchedule;
+
 	MainViewModel Manager = null;
 
 	@Override
@@ -58,6 +58,7 @@ public class Comments extends Activity {
 		heurPub = (TextView) findViewById(R.id.heurPubP);
 		contenu = (TextView) findViewById(R.id.contenu);
 		commentText = (AutoCompleteTextView) findViewById(R.id.commentText);
+	
 		try {
 			Manager = new MainViewModel(new Factory());
 			if(MainViewModel.isNetworkAvailable(this))
@@ -103,8 +104,8 @@ public class Comments extends Activity {
 
 		 listItem = new ArrayList<HashMap<String, Object>>();
 
-		// **************************************** Boucle sur la listeview
-
+		// ****************************************Foreach my ListView
+   
 		for (int i = 0; i < this.comments.length(); i++) {
 
 			JSONObject row = this.comments.getJSONObject(i);
@@ -116,6 +117,7 @@ public class Comments extends Activity {
 			conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ row.getJSONObject("user").getString("avatar"));
 
 			// **************************************************************
+			
 			map.put("img", conv_bm);
 			map.put("heurPub",MainViewModel.decodeString(row.getString("dateCreation")));
 			map.put("contenu", MainViewModel.decodeString(row.getString("contenu")));
@@ -128,10 +130,11 @@ public class Comments extends Activity {
 
 		this.getBaseContext(), listItem, R.layout.activity_items__comments,
 				new String[] { "img", "contenu", "heurPub", "nbcommentaires" },
-				new int[] { R.id.avatarP, R.id.contenu, R.id.heurPubP, });
+				new int[] { R.id.avatarP, R.id.contenu, R.id.heurPubP });
 
 		mSchedule.setViewBinder(new MyViewBinder());
 		listViewComment.setAdapter(mSchedule);
+		
 
 	}
 

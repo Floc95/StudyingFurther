@@ -21,6 +21,7 @@ import org.json.JSONTokener;
 
 import com.esgi.studyingfurther.MainActivity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -29,14 +30,16 @@ import android.widget.Toast;
 
 public class JSONParser extends AsyncTask<String, String, JSONArray> {
 
+	 ProgressDialog progress;
+	
 	private String url;
 	static InputStream is = null;
 	static JSONArray jArray = null;
 	static String json = "";
 	JSONObject jsonobjet = null;
- 
+	
 	public JSONParser(String url) {
-
+		
 		this.url = url;
 		jArray = new JSONArray();
 	
@@ -46,6 +49,8 @@ public class JSONParser extends AsyncTask<String, String, JSONArray> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
+		
+
 		// Toast.makeText(this.thiscontext,"Connecting....",Toast.LENGTH_SHORT).show();
 
 	}
@@ -54,15 +59,15 @@ public class JSONParser extends AsyncTask<String, String, JSONArray> {
 	protected JSONArray doInBackground(String... args) {
 		// JSONParser jParser = new JSONParser();
 		// Getting JSON from URL
-		Log.v("NEWS", this.url);
+
 		return getJSONFromUrl(this.url);
 
 	}
 
 	@Override
 	protected void onPostExecute(JSONArray jsArray) {
-
-		Log.v("NEWS:", jsArray.toString());
+		
+		//Log.v("NEWS:", jsArray.toString());
 
 	}
 
@@ -78,11 +83,11 @@ public class JSONParser extends AsyncTask<String, String, JSONArray> {
 			HttpEntity httpEntity = httpResponse.getEntity();
 			is = httpEntity.getContent();
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			return null;
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
-			e.printStackTrace();
+			return null;
 		}
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -96,23 +101,35 @@ public class JSONParser extends AsyncTask<String, String, JSONArray> {
 			json = sb.toString();
 			// Log.e("json",json);
 		} catch (Exception e) {
-			Log.e("Buffer Error", "Error converting result " + e.toString());
+			return null;
 		}
 		// try parse the string to a JSON object
 		try {
 			Object json_ = new JSONTokener(json).nextValue();
-
+			if(!(json_  instanceof JSONArray) && !(json_  instanceof JSONObject))
+			{
+				
+				return null;
+			}
+			
 			if (json_ instanceof JSONObject) {
-
-				jArray = new JSONArray()
-						.put(0, new JSONObject(json.toString()));
+               
+				jArray = new JSONArray().put(0, new JSONObject(json.toString()));
 				return jArray;
 			}
-
-			jArray = new JSONArray(json);
+			if(json_ instanceof JSONArray)
+			{
+				
+				jArray = new JSONArray(json);
+				return jArray;
+			}
+			
+			
+		
+			
 
 		} catch (JSONException e) {
-			Log.e("JSON Parser", "Error parsing data " + e.toString());
+			return null;
 		}
 		
 		

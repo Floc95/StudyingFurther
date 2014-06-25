@@ -12,10 +12,12 @@ import com.esgi.studyingfurther.dal.Repository;
 public class Factory {
 
 	private Repository repository;
-
-	public Factory() throws InterruptedException, ExecutionException {
-		repository = new Repository();
-	}
+   // private Context currentContext;
+	  
+	 public Factory()  {
+			repository = new Repository();
+		}
+	 
 
 	public JSONObject getUser(String user, String password)
 			throws InterruptedException, ExecutionException, JSONException {

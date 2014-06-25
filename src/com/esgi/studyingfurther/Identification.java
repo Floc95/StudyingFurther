@@ -17,10 +17,12 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
@@ -38,7 +40,7 @@ public class Identification extends Activity {
 	private MainViewModel ManagerUser;
 	private EditText UserName;
 	private EditText PassWord;
-	ImageView iv;
+	
 
 	// String UrlUser =
 	// "http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
@@ -49,7 +51,7 @@ public class Identification extends Activity {
 		setContentView(R.layout.activity_identification);
 		this.UserName = ((EditText) findViewById(R.id.username));
 		this.PassWord = ((EditText) findViewById(R.id.password));
-		iv = (ImageView) findViewById(R.id.avatarUser);
+	
 
 	}
 
@@ -62,22 +64,29 @@ public class Identification extends Activity {
 
 	public void seConnecter(View v) throws InterruptedException,
 			ExecutionException, JSONException, IOException {
+		
+		
+		
 		if(MainViewModel.isNetworkAvailable(this))
 		{
-		
+			Toast.makeText(getApplicationContext(),"Connecting...Please wait",Toast.LENGTH_LONG).show();
 		ManagerUser = new MainViewModel(new Factory());
 		String username = UserName.getText().toString();
 		String Password = PassWord.getText().toString();
 		// j new Repository(this).getClass();
 
 		if (ManagerUser.authenticate(username, Password) == true) {
-
+			
 			Intent intent = new Intent(this, NewsFeed.class);
 			intent.putExtra("currentUser", ManagerUser.getCurrentUser()
 					.toString());
 			startActivity(intent);
 
-		} else {
+		} 
+		else {
+			Toast.makeText(this,"Error Please Check your Username/Password",Toast.LENGTH_LONG).show();
+			this.UserName.setTextColor(Color.parseColor("#F01414"));
+			this.UserName.setTextColor(Color.parseColor("#F01414"));
 			this.UserName.setFocusable(true);
 			this.UserName.requestFocus();
 		}
