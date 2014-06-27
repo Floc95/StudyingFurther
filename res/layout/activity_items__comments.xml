@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A977EA"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
     android:scrollbarAlwaysDrawVerticalTrack="false"
     android:shrinkColumns="*"
     android:stretchColumns="*"
@@ -13,8 +15,8 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
         android:layout_weight="0"
-        android:background="#d3d3d3"
         android:gravity="left"
         android:textColor="#000000" >
 
@@ -40,7 +42,6 @@
 
     <TableRow
         android:id="@+id/tableRow1"
-        android:background="#d3d3d3"
         android:textColor="#000000" >
 
         <MultiAutoCompleteTextView
@@ -71,7 +72,6 @@
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d3d3d3"
         android:gravity="center_vertical"
         android:scrollbars="horizontal"
         android:textColor="#000000" >
@@ -87,8 +87,5 @@
             android:textOn="@string/plusun" />
 
     </TableRow>
-
-    <TableRow android:layout_marginTop="6dp" />
-
 
 </TableLayout>

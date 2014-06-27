@@ -1,14 +1,6 @@
 package com.esgi.studyingfurther;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
-import android.text.format.Time;
-import android.util.Log;
-
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -17,33 +9,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.esgi.studyingfurther.bl.Factory;
-import com.esgi.studyingfurther.bl.User;
-import com.esgi.studyingfurther.dal.Repository;
-import com.esgi.studyingfurther.vm.DownloadImageTask;
-import com.esgi.studyingfurther.vm.MainViewModel;
-import com.esgi.studyingfurther.vm.ManagerURL;
-import com.esgi.studyingfurther.vm.MyViewBinder;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Bitmap.Config;
-import android.graphics.PorterDuff.Mode;
-import android.view.MenuItem;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.esgi.studyingfurther.bl.Factory;
+import com.esgi.studyingfurther.dal.Repository;
+import com.esgi.studyingfurther.vm.MainViewModel;
+import com.esgi.studyingfurther.vm.ManagerURL;
+import com.esgi.studyingfurther.vm.MyViewBinder;
 
 public class NewsFeed extends Activity {
 
@@ -53,36 +32,45 @@ public class NewsFeed extends Activity {
 	JSONArray news;
 	ArrayList<JSONObject> comments;
 
+	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
-
+		
 		maListViewPerso = (ListView) findViewById(R.id.listviewperso);
-
-		try {
-			Manager = new MainViewModel(new Factory());
-			if(MainViewModel.isNetworkAvailable(this))
-			{
-			getNews();
+		Manager = new MainViewModel(new Factory());
+		if(MainViewModel.isNetworkAvailable(this))
+		{
+			
+			try {
+				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
+				MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
+				getNews();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else
-			{
-				MainViewModel.alertNetwork(this);
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+				
 		}
+		else
+		{
+			MainViewModel.alertNetwork(this);
+		}
+	
+
 
 	}
 
@@ -96,14 +84,13 @@ public class NewsFeed extends Activity {
 	private void getNews() throws InterruptedException, ExecutionException,
 			JSONException, IOException {
 
-		this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
 		
+		// Get News Feed from the Repository , we used the id of the current user
 		this.news = new Repository().getNews(this.currentUser.getInt("id"));
-		
 		this.comments = new ArrayList<JSONObject>();
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 
-		// **************************************** Boucle sur la listeview
+		// Loop on the listeview
 
 		for (int i = 0; i < this.news.length(); i++) {
 
@@ -113,10 +100,7 @@ public class NewsFeed extends Activity {
 
 			// ***************************************************************
 
-			Bitmap conv_bm = MainViewModel
-					.getRoundedCornerImage(ManagerURL.urlGetAvatar
-							+ row.getJSONObject("utilisateur").getString(
-									"avatar"));
+			Bitmap conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ row.getJSONObject("utilisateur").getString("avatar"));
 
 			// **************************************************************
 
@@ -124,7 +108,7 @@ public class NewsFeed extends Activity {
 			map.put("contenu", MainViewModel.decodeString(row.getString("contenu")));
 			map.put("nbcommentaires", row.getJSONArray("commentaires").length());
 			map.put("img", conv_bm);
-			map.put("newspic", "");// R.drawable.bout);
+			map.put("newspic", R.drawable.bout);
 			map.put("heurPub",MainViewModel.decodeString(row.getString("dateCreation")));
 			listItem.add(map);
 
@@ -145,6 +129,7 @@ public class NewsFeed extends Activity {
 
 	}
 
+	
 	public void comment(View v) {
 
 		Intent intent = new Intent(getBaseContext(), Comments.class);

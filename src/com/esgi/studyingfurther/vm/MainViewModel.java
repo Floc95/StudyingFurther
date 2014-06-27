@@ -3,13 +3,10 @@ package com.esgi.studyingfurther.vm;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,23 +17,36 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.Html;
-import android.util.Log;
 
+
+import com.esgi.studyingfurther.R;
 import com.esgi.studyingfurther.bl.Factory;
-import com.esgi.studyingfurther.bl.User;
+
 
 public class MainViewModel {
 
 	private Factory factory;
 	private JSONObject currentUser;
-	private FeedManager feedManager;
+	
   
 	public MainViewModel(Factory factory) {
 		this.factory = factory;
-		this.feedManager = new FeedManager(factory);
+		
+	}
+	
+	public static void changeActionBarWithValueOfCurrentUser(Context c,ActionBar actionBar,JSONObject currentUser) throws InterruptedException, ExecutionException, JSONException
+	{
+		actionBar.setTitle("   Hello >:"+currentUser.getString("prenom"));
+		Bitmap avatar = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
+	    Drawable btmpDrawable=new BitmapDrawable(c.getResources(), avatar);
+		actionBar.setIcon(btmpDrawable);
+		actionBar.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.bg));
+		
 	}
 
 	public boolean authenticate(String login, String password)

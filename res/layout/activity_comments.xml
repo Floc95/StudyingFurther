@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg" >
 
   <!-- Header aligned to top -->
 
   <RelativeLayout
       android:id="@+id/header"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="130dp"
       android:layout_alignParentLeft="false"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="false"
-      android:layout_centerInParent="false" >
+      android:layout_centerInParent="false"
+      android:layout_marginTop="5dp" >
 
 			<ImageView
 			    android:id="@+id/avatarP"
@@ -52,7 +54,7 @@
                 android:maxHeight="150dp"
                 android:text="@string/Description"
                 android:textSize="16dp" />
-     
+
   </RelativeLayout>
   
  
@@ -62,7 +64,7 @@
   <RelativeLayout
       android:id="@+id/footer"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="45dp"
       android:layout_alignParentBottom="true"
       android:gravity="center"
       android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -107,10 +109,19 @@
       android:layout_above="@id/footer"
       android:layout_below="@id/header" >
 
+      <TableRow
+          android:id="@+id/tableRow1"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/light_grey" >
+
+      </TableRow>
+
       <ListView
           android:id="@+id/listviewComments"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
           android:drawSelectorOnTop="false" >
 
       </ListView>

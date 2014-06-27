@@ -1,39 +1,21 @@
 package com.esgi.studyingfurther;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
 
-import com.esgi.studyingfurther.bl.Factory;
-import com.esgi.studyingfurther.dal.Repository;
-import com.esgi.studyingfurther.vm.MainViewModel;
-
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.esgi.studyingfurther.bl.Factory;
+import com.esgi.studyingfurther.vm.MainViewModel;
 
 public class Identification extends Activity {
 

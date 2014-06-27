@@ -63,7 +63,10 @@ public class Comments extends Activity {
 			Manager = new MainViewModel(new Factory());
 			if(MainViewModel.isNetworkAvailable(this))
 			{
-			getComments();
+				this.jsonObjectFromFeedNews = new JSONObject(getIntent().getExtras().getString("comments"));
+				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
+				MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
+				getComments();
 			}
 			else{
 				MainViewModel.alertNetwork(this);
@@ -88,8 +91,7 @@ public class Comments extends Activity {
 	private void getComments() throws UnsupportedEncodingException,
 			InterruptedException, ExecutionException, JSONException {
           
-		this.jsonObjectFromFeedNews = new JSONObject(getIntent().getExtras().getString("comments"));
-		this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
+		
 		pullToRefresh();
 		this.comments = jsonObjectFromFeedNews.getJSONArray("commentaires");
 
