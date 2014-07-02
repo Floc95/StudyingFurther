@@ -38,7 +38,6 @@ import com.esgi.studyingfurther.bl.Factory;
 public class MainViewModel {
 
 
-	private static final HashMap<String, SoftReference<Bitmap>> cache=new HashMap<String, SoftReference<Bitmap>>();
 	private Factory factory;
 	private JSONObject currentUser;
 	
@@ -53,6 +52,7 @@ public class MainViewModel {
 	public static void changeActionBarWithValueOfCurrentUser(Context c,ActionBar actionBar,JSONObject currentUser) throws InterruptedException, ExecutionException, JSONException
 	{
 		Bitmap avatar;
+		 HashMap<String, SoftReference<Bitmap>> cache=new HashMap<String, SoftReference<Bitmap>>();
 		
 		SoftReference<Bitmap> reference = cache.get(currentUser.getString("avatar")); 
 		if(reference != null) { 

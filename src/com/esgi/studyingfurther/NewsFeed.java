@@ -52,7 +52,6 @@ public class NewsFeed extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		maListViewPerso = (ListView) findViewById(R.id.listviewperso);
-		Manager = new MainViewModel(new Factory());
 
 		if (MainViewModel.isNetworkAvailable(this)) {
 
@@ -88,16 +87,24 @@ public class NewsFeed extends Activity {
 			}
 
 		} else {
-			
+			MainViewModel.alertNetwork(this);
 			android.content.SharedPreferences prefs = getSharedPreferences("news", 0);
 		    String news = prefs.getString("news","");
 		    try {
+		    
+		    	if(!news.isEmpty())
+		    	{
+		    		Log.v("news",news);
 				this.news=new JSONArray(news);
 				android.content.SharedPreferences prefc = getSharedPreferences("UserData", 0);
 			    String currentUser = prefc.getString("currentuser","");
 				this.currentUser = new JSONObject(currentUser);
-				CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
+				
+				MainViewModel.changeActionBarWithValueOfCurrentUser(this,this.getActionBar(), this.currentUser);
+
+		    	CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
 				maListViewPerso.setAdapter(adapter);
+		    	}
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
