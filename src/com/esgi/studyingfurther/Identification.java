@@ -70,8 +70,7 @@ public class Identification extends Activity {
 		if (ManagerUser.authenticate(username, Password) == true) {
 			
 			Intent intent = new Intent(this, NewsFeed.class);
-			intent.putExtra("currentUser", ManagerUser.getCurrentUser()
-					.toString());
+			intent.putExtra("currentUser", ManagerUser.getCurrentUser().toString());
 			startActivity(intent);
 
 			android.content.SharedPreferences prefs = getSharedPreferences("UserData", 0);

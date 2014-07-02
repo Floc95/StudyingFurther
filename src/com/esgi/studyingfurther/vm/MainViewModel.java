@@ -1,6 +1,8 @@
 package com.esgi.studyingfurther.vm;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.SoftReference;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
@@ -24,12 +26,18 @@ import android.net.NetworkInfo;
 import android.text.Html;
 
 
+
+
+import android.util.Log;
+
 import com.esgi.studyingfurther.R;
 import com.esgi.studyingfurther.bl.Factory;
 
 
 public class MainViewModel {
 
+
+	private static final HashMap<String, SoftReference<Bitmap>> cache=new HashMap<String, SoftReference<Bitmap>>();
 	private Factory factory;
 	private JSONObject currentUser;
 	
@@ -43,10 +51,23 @@ public class MainViewModel {
 	
 	public static void changeActionBarWithValueOfCurrentUser(Context c,ActionBar actionBar,JSONObject currentUser) throws InterruptedException, ExecutionException, JSONException
 	{
-		actionBar.setTitle(" "+currentUser.getString("prenom"));
-		Bitmap avatar =new DownloadImageTask().execute(ManagerURL.urlGetAvatar+currentUser.getString("avatar")).get();// MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
-	    Drawable btmpDrawable=new BitmapDrawable(c.getResources(), avatar);
-		actionBar.setIcon(btmpDrawable);
+		Bitmap avatar;
+		
+		SoftReference<Bitmap> reference = cache.get(currentUser.getString("avatar")); 
+		if(reference != null) { 
+		    // The bitmap is cached with SoftReference 
+		    avatar = reference.get(); 
+		    Log.v("cach","ok");
+		}else
+		{
+		avatar =new DownloadImageTask().execute(ManagerURL.urlGetAvatar+currentUser.getString("avatar")).get();// MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
+		cache.put(currentUser.getString("avatar"),  new SoftReference<Bitmap>(avatar));
+		}
+		Drawable btmpDrawable=new BitmapDrawable(c.getResources(), avatar); 
+	    actionBar.setTitle(" "+currentUser.getString("prenom"));
+	    actionBar.setIcon(btmpDrawable);
+		
+		
 	//	actionBar.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.bg));
 		
 	}
