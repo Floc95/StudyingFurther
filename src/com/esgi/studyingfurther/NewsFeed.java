@@ -104,7 +104,7 @@ public class NewsFeed extends Activity {
 
 			// **************************************************************
 
-			String nom = this.currentUser.getString("prenom") + " " + this.currentUser.getString("nom");
+			String nom = row.getJSONObject("utilisateur").getString("prenom") + " " + row.getJSONObject("utilisateur").getString("nom");
 			
 			map.put("titre", MainViewModel.decodeString(nom));
 			map.put("contenu", MainViewModel.decodeString(row.getString("contenu")));

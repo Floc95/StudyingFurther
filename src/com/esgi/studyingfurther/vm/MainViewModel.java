@@ -77,8 +77,8 @@ public class MainViewModel {
 	public static void alertNetwork(Context c)
 	{
 		AlertDialog.Builder adb = new AlertDialog.Builder(c);
-		adb.setTitle("No NetWork");
-		adb.setMessage("Your mobile is not connected,Please cheeck your wifi/cellulaire network.");
+		adb.setTitle("No Network");
+		adb.setMessage("Your mobile is not connected. Please check your wifi/cellular network.");
 		adb.setPositiveButton("Ok", null);
 		adb.show();
 		

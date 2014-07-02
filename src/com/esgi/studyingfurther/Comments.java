@@ -18,27 +18,34 @@ import com.esgi.studyingfurther.vm.MyViewBinder;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class Comments extends Activity {
 
-	private ListView listViewComment = null;
+	//private ListView listViewComment = null;
+	private LinearLayout linearLayoutComments = null;
 	private ImageView avatarPost = null;
 	private TextView title = null;
 	private TextView heurPub = null;
 	private TextView contenu = null;
-	private AutoCompleteTextView commentText = null;
+	private EditText commentText = null;
 	private JSONObject jsonObjectFromFeedNews;
 	private JSONArray comments;
 	private JSONObject currentUser = null;
@@ -52,12 +59,13 @@ public class Comments extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comments);
 
-		listViewComment = (ListView) findViewById(R.id.listviewComments);
+		//listViewComment = (ListView) findViewById(R.id.listviewComments);
+		linearLayoutComments = (LinearLayout) findViewById(R.id.linearLayourComments);
 		avatarPost = (ImageView) findViewById(R.id.avatarP);
 		title = (TextView) findViewById(R.id.titleP);
 		heurPub = (TextView) findViewById(R.id.heurPubP);
 		contenu = (TextView) findViewById(R.id.contenu);
-		commentText = (AutoCompleteTextView) findViewById(R.id.commentText);
+		commentText = (EditText) findViewById(R.id.commentText);
 	
 		try {
 			Manager = new MainViewModel(new Factory());
@@ -99,45 +107,91 @@ public class Comments extends Activity {
 
 		Bitmap conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ jsonObjectFromFeedNews.getJSONObject("utilisateur").getString("avatar"));
 		avatarPost.setImageBitmap(conv_bm);
-		title.setText(this.jsonObjectFromFeedNews.getString("titre"));
+		String userName = jsonObjectFromFeedNews.getJSONObject("utilisateur").getString("prenom") + " " + jsonObjectFromFeedNews.getJSONObject("utilisateur").getString("nom");
+		title.setText(userName);
 		heurPub.setText(this.jsonObjectFromFeedNews.getString("dateCreation"));
 		contenu.setText(MainViewModel.decodeString(this.jsonObjectFromFeedNews.getString("contenu")));
 		// ************************************************************
 
 		 listItem = new ArrayList<HashMap<String, Object>>();
 
-		// ****************************************Foreach my ListView
    
 		for (int i = 0; i < this.comments.length(); i++) {
 
 			JSONObject row = this.comments.getJSONObject(i);
-
-			HashMap<String, Object> map = new HashMap<String, Object>();
-
-			// ***************************************************************
-
-			conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ row.getJSONObject("user").getString("avatar"));
-
-			// **************************************************************
 			
-			map.put("img", conv_bm);
-			map.put("heurPub",MainViewModel.decodeString(row.getString("dateCreation")));
-			map.put("contenu", MainViewModel.decodeString(row.getString("contenu")));
-			listItem.add(map);
+			LinearLayout commentLayout = new LinearLayout(this);
+			commentLayout.setOrientation(LinearLayout.VERTICAL);
+			commentLayout.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.black_line));
+			
+			// Header
+			LinearLayout headerLayout = new LinearLayout(this);
+			headerLayout.setOrientation(LinearLayout.HORIZONTAL);
+			
+			// Avatar
+			ImageView avatar = new ImageView(this);
+			conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ row.getJSONObject("user").getString("avatar"));
+			avatar.setImageBitmap(conv_bm);
+			LinearLayout.LayoutParams lpAvatar = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			//lpAvatar.weight = 1.0f;
+			lpAvatar.setMargins(0, 0, 6, 0);
+			lpAvatar.gravity = Gravity.LEFT;
+			headerLayout.addView(avatar, lpAvatar);
+			
+			// Nom + Date
+			
+			LinearLayout stackedText = new LinearLayout(this);
+			stackedText.setOrientation(LinearLayout.VERTICAL);
+			
+			TextView tvNom = new TextView(this);
+			tvNom.setTextSize(16);
+			tvNom.setTypeface(Typeface.DEFAULT_BOLD);
+			String nom = row.getJSONObject("user").getString("prenom") + " " + row.getJSONObject("user").getString("nom");
+			tvNom.setText(nom);
+			LinearLayout.LayoutParams lpTvNom = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lpTvNom.weight = 1.0f;
+			stackedText.addView(tvNom, lpTvNom);
+			
+			TextView tvDate = new TextView(this);
+			tvDate.setTextSize(12);
+			tvDate.setText(MainViewModel.decodeString(row.getString("dateCreation")));
+			LinearLayout.LayoutParams lpTvDate = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lpTvDate.weight = 1.0f;
+			stackedText.addView(tvDate, lpTvDate);
+			
+			LinearLayout.LayoutParams lpStacked = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lpStacked.weight = 1.0f;
+			lpStacked.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
+			headerLayout.addView(stackedText, lpStacked);
+			
+			LinearLayout.LayoutParams lpHeader = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lpHeader.weight = 1.0f;
+			lpHeader.setMargins(6, 6, 6, 6);
+			commentLayout.addView(headerLayout, lpHeader);
+			
+			// Contenu
+			
+			TextView tvComment = new TextView(this);
+			tvComment.setTextSize(16);
+			tvComment.setText(MainViewModel.decodeString(row.getString("contenu")));
+			LinearLayout.LayoutParams lpTvComment = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lpTvComment.weight = 1.0f;
+			lpTvComment.setMargins(6, 6, 6, 6);
+			commentLayout.addView(tvComment, lpTvComment);
+			
+			ToggleButton plusOneButton = new ToggleButton(this);
+			plusOneButton.setText("+1");
+			LinearLayout.LayoutParams lpBtn = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lpBtn.weight = 1.0f;
+			commentLayout.addView(plusOneButton, lpBtn);
+			
+			// Ajout au layout final
+			
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lp.weight = 1.0f;
+			linearLayoutComments.addView(commentLayout, lp);
 
 		}
-
-		// *************************************Fin de la boucle
-		 mSchedule = new SimpleAdapter(
-
-		this.getBaseContext(), listItem, R.layout.activity_items__comments,
-				new String[] { "img", "contenu", "heurPub", "nbcommentaires" },
-				new int[] { R.id.avatarP, R.id.contenu, R.id.heurPubP });
-
-		mSchedule.setViewBinder(new MyViewBinder());
-		listViewComment.setAdapter(mSchedule);
-		
-
 	}
 
 	public void modificationComments(View v)
