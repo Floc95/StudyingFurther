@@ -44,7 +44,6 @@ public class NewsFeed extends Activity {
 	private JSONObject currentUser;
 	MainViewModel Manager = null;
 	JSONArray news;
-	//ArrayList<JSONObject> comments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
