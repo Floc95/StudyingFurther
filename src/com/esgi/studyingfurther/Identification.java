@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -23,18 +24,15 @@ public class Identification extends Activity {
 	private EditText UserName;
 	private EditText PassWord;
 	
-
-	// String UrlUser =
-	// "http://www.your-groups.com/API/Ident?key=7e2a3a18cd00ca322f60c28393c43264&username=Floc&password=5f4dcc3b5aa765d61d8327deb882cf99";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_identification);
 		this.UserName = ((EditText) findViewById(R.id.username));
 		this.PassWord = ((EditText) findViewById(R.id.password));
-	
-
+		 this.UserName.setText("");
+	     this.PassWord.setText("");
 	}
 
 	@Override
@@ -51,7 +49,7 @@ public class Identification extends Activity {
 		
 		if(MainViewModel.isNetworkAvailable(this))
 		{
-			Toast.makeText(getApplicationContext(),"Connecting...Please wait",Toast.LENGTH_LONG).show();
+	    Toast.makeText(getApplicationContext(),"Connecting...Please wait",Toast.LENGTH_LONG).show();
 		ManagerUser = new MainViewModel(new Factory());
 		String username = UserName.getText().toString();
 		String Password = PassWord.getText().toString();

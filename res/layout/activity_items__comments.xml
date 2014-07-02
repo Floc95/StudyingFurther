@@ -25,12 +25,13 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0" />
 
         <TextView
             android:id="@+id/heurPubP"
             android:layout_gravity="right"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginRight="3dp"
             android:gravity="right"
             android:text="30/06/2014 18:45"
@@ -44,7 +45,7 @@
         android:id="@+id/tableRow1"
         android:textColor="#000000" >
 
-        <MultiAutoCompleteTextView
+        <TextView
             android:id="@+id/contenu"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -66,7 +67,9 @@
 
     </TableRow>
 
-    <TableRow android:layout_marginTop="1dp" />
+    <TableRow android:layout_marginTop="1dp" >
+
+    </TableRow>
 
     <TableRow
         android:id="@+id/tableRow2"
@@ -77,7 +80,7 @@
         android:textColor="#000000" >
 
         <ToggleButton
-            android:id="@+id/toggleButton1"
+            android:id="@+id/plusun"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
@@ -85,6 +88,9 @@
             android:minHeight="0dp"
             android:textOff="@string/plusun"
             android:textOn="@string/plusun" />
+
+    </TableRow>
+     <TableRow android:layout_marginTop="1dp" >
 
     </TableRow>
 

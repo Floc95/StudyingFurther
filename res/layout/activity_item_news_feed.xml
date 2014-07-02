@@ -21,7 +21,7 @@
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:gravity="left"
-        android:onClick="comment"
+        android:onClick="showDetailsPost"
         android:textColor="#000000" >
 
         <ImageView
@@ -29,6 +29,7 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0" />
 
         <TextView
@@ -44,7 +45,7 @@
         <TextView
             android:id="@+id/heurPubP"
             android:layout_width="1dp"
-            android:layout_gravity="right|center|top"
+            android:layout_marginRight="2dp"
             android:layout_weight="0"
             android:gravity="left"
             android:text="30/06/2014 18:45"
@@ -58,7 +59,7 @@
         android:id="@+id/tableRow1"
         android:clickable="true"
         android:longClickable="true"
-        android:onClick="comment"
+        android:onClick="showDetailsPost"
         android:textColor="#000000" >
 
         <TextView
@@ -75,7 +76,7 @@
             android:clickable="true"
             android:longClickable="true"
             android:maxHeight="150dp"
-            android:onClick="comment"
+            android:onClick="showDetailsPost"
             android:text="@string/Description"
             android:textSize="16dp" />
 
@@ -83,11 +84,10 @@
 
     <TableRow
         android:id="@+id/tableRow10"
-        android:background="#d3d3d3"
         android:textColor="#000000" >
 
         <ImageView
-            android:id="@+id/newspic"
+            android:id="@+id/newspicdetails"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -114,17 +114,19 @@
         android:textColor="#000000" >
 
         <ToggleButton
-            android:id="@+id/toggleButton1"
+            android:id="@+id/plusun"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:layout_weight="0"
             android:minHeight="0dp"
+            android:onClick="plusun"
             android:textOff="@string/plusun"
-            android:textOn="@string/plusun" />
+            android:textOn="@string/plusun"
+            android:visibility="invisible" />
 
         <ImageButton
-            android:id="@+id/plus"
+            android:id="@+id/comment"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
@@ -134,7 +136,7 @@
             android:adjustViewBounds="false"
             android:background="@drawable/equal"
             android:baselineAlignBottom="false"
-            android:onClick="comment"
+            android:onClick="showDetailsPost"
             android:scaleType="center" />
 
         <TextView
@@ -148,7 +150,5 @@
             android:textSize="18sp" />
 
     </TableRow>
-
-    <TableRow android:layout_marginTop="6dp" />
 
 </TableLayout>

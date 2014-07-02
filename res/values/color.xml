@@ -2,6 +2,6 @@
 <resources>
 
         <color name="light_grey">#cccccc</color>
-
-
+        <color name="forlistview">#F8FAFA</color>
+        <color name="black">#0C0C0C</color>
 </resources>

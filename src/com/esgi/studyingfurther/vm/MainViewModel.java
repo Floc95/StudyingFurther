@@ -41,16 +41,17 @@ public class MainViewModel {
 	
 	public static void changeActionBarWithValueOfCurrentUser(Context c,ActionBar actionBar,JSONObject currentUser) throws InterruptedException, ExecutionException, JSONException
 	{
-		actionBar.setTitle("   Hello >:"+currentUser.getString("prenom"));
-		Bitmap avatar = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
+		actionBar.setTitle(" "+currentUser.getString("prenom"));
+		Bitmap avatar =new DownloadImageTask().execute(ManagerURL.urlGetAvatar+currentUser.getString("avatar")).get();// MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
 	    Drawable btmpDrawable=new BitmapDrawable(c.getResources(), avatar);
 		actionBar.setIcon(btmpDrawable);
-		actionBar.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.bg));
+	//	actionBar.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.bg));
 		
 	}
+	
+	
 
-	public boolean authenticate(String login, String password)
-			throws InterruptedException, ExecutionException, JSONException {
+	public boolean authenticate(String login, String password) throws InterruptedException, ExecutionException, JSONException {
 
 		this.currentUser = this.factory.getUser(login, password);
 		return this.currentUser != null ? true : false;

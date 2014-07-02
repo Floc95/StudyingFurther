@@ -9,7 +9,8 @@ import android.util.Log;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
-	protected Bitmap doInBackground(String... urls) {
+	protected Bitmap doInBackground(String... urls) 
+	{
 		// get url of image
 		String urldisplay = urls[0];
 		// create Bitmap variable

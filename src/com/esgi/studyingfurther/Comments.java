@@ -4,20 +4,24 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.esgi.studyingfurther.bl.Comment;
 import com.esgi.studyingfurther.bl.Factory;
+import com.esgi.studyingfurther.bl.Post;
 import com.esgi.studyingfurther.dal.Repository;
+import com.esgi.studyingfurther.vm.CustomAdapter;
+import com.esgi.studyingfurther.vm.CustomAdapterDetailsPost;
+import com.esgi.studyingfurther.vm.DownloadImageTask;
 import com.esgi.studyingfurther.vm.MainViewModel;
 import com.esgi.studyingfurther.vm.ManagerURL;
 import com.esgi.studyingfurther.vm.MyViewBinder;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.transition.Visibility;
 import android.view.Menu;
@@ -30,20 +34,27 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class Comments extends Activity {
 
+	// header of my view
+	    public  ToggleButton plusun;
+	    public  TextView titleP;
+	    public  TextView contenu;
+	    public  TextView heurPubP;
+	    public  ImageView newspic;
+	    public  ImageView avatarP;
+	
+	//
+	
+	
 	private ListView listViewComment = null;
-	private ImageView avatarPost = null;
-	private TextView title = null;
-	private TextView heurPub = null;
-	private TextView contenu = null;
-	private AutoCompleteTextView commentText = null;
-	private JSONObject jsonObjectFromFeedNews;
-	private JSONArray comments;
+	private TextView commentText = null;
+	private JSONObject jsonobjectFromFeedNews;
+	//private JSONArray comments;
 	private JSONObject currentUser = null;
-	private ArrayList<HashMap<String, Object>> listItem;
-	private SimpleAdapter mSchedule;
+
 
 	MainViewModel Manager = null;
 
@@ -51,22 +62,32 @@ public class Comments extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comments);
-
+         
+		
 		listViewComment = (ListView) findViewById(R.id.listviewComments);
-		avatarPost = (ImageView) findViewById(R.id.avatarP);
-		title = (TextView) findViewById(R.id.titleP);
-		heurPub = (TextView) findViewById(R.id.heurPubP);
-		contenu = (TextView) findViewById(R.id.contenu);
-		commentText = (AutoCompleteTextView) findViewById(R.id.commentText);
+		commentText = (TextView) findViewById(R.id.commentText);
+		plusun = (ToggleButton) findViewById(R.id.plusun);
+    	titleP = (TextView) findViewById(R.id.titleP);
+    	contenu = (TextView) findViewById(R.id.contenu);
+    	heurPubP = (TextView) findViewById(R.id.heurPubP);
+    	newspic = (ImageView) findViewById(R.id.newspicdetails);
+    	avatarP = (ImageView) findViewById(R.id.avatarP);
 	
-		try {
-			Manager = new MainViewModel(new Factory());
+	try {
+			
 			if(MainViewModel.isNetworkAvailable(this))
 			{
-				this.jsonObjectFromFeedNews = new JSONObject(getIntent().getExtras().getString("comments"));
+				this.jsonobjectFromFeedNews = new JSONObject(getIntent().getExtras().getString("news"));
 				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
 				MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
-				getComments();
+				// 
+				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews);
+				
+				//get all comment
+				CustomAdapterDetailsPost adapter = new CustomAdapterDetailsPost(this,new Comment().getComment(this.jsonobjectFromFeedNews,this.currentUser.getInt("statut")));
+
+				listViewComment.setAdapter(adapter);
+
 			}
 			else{
 				MainViewModel.alertNetwork(this);
@@ -78,81 +99,40 @@ public class Comments extends Activity {
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
+		}  catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	private void getComments() throws UnsupportedEncodingException,
-			InterruptedException, ExecutionException, JSONException {
-          
-		
-		pullToRefresh();
-		this.comments = jsonObjectFromFeedNews.getJSONArray("commentaires");
-
-		// ************ get Comment, avatar,date,tite and avatar of user
-
-		Bitmap conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ jsonObjectFromFeedNews.getJSONObject("utilisateur").getString("avatar"));
-		avatarPost.setImageBitmap(conv_bm);
-		title.setText(this.jsonObjectFromFeedNews.getString("titre"));
-		heurPub.setText(this.jsonObjectFromFeedNews.getString("dateCreation"));
-		contenu.setText(MainViewModel.decodeString(this.jsonObjectFromFeedNews.getString("contenu")));
-		// ************************************************************
-
-		 listItem = new ArrayList<HashMap<String, Object>>();
-
-		// ****************************************Foreach my ListView
-   
-		for (int i = 0; i < this.comments.length(); i++) {
-
-			JSONObject row = this.comments.getJSONObject(i);
-
-			HashMap<String, Object> map = new HashMap<String, Object>();
-
-			// ***************************************************************
-
-			conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ row.getJSONObject("user").getString("avatar"));
-
-			// **************************************************************
-			
-			map.put("img", conv_bm);
-			map.put("heurPub",MainViewModel.decodeString(row.getString("dateCreation")));
-			map.put("contenu", MainViewModel.decodeString(row.getString("contenu")));
-			listItem.add(map);
-
-		}
-
-		// *************************************Fin de la boucle
-		 mSchedule = new SimpleAdapter(
-
-		this.getBaseContext(), listItem, R.layout.activity_items__comments,
-				new String[] { "img", "contenu", "heurPub", "nbcommentaires" },
-				new int[] { R.id.avatarP, R.id.contenu, R.id.heurPubP });
-
-		mSchedule.setViewBinder(new MyViewBinder());
-		listViewComment.setAdapter(mSchedule);
-		
-
-	}
-
-	public void modificationComments(View v)
+	@SuppressLint("NewApi")
+	private void setValuetheHeaderofListView(JSONObject post) throws InterruptedException, ExecutionException, JSONException
 	{
+		   
+			
+		    
+		Drawable avatar=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(ManagerURL.urlGetNews+post.getJSONObject("utilisateur").getString("avatar")).get());
+		Drawable newspic=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(post.getString("image")).get());
+	
+		this.avatarP.setBackground(avatar);
+		this.titleP.setText(post.getString("titre"));
+		this.heurPubP.setText(post.getString("dateCreation"));
+		this.contenu.setText("contenu");
+		this.newspic.setBackground(newspic);
+		
 		
 	}
+	
 	public void addComment(View v) throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException  {
 	 
-	if( Comment.addComment(this.currentUser.getInt("id"), this.jsonObjectFromFeedNews.getInt("id"), this.commentText.getText().toString()).equals("86"))
+	if( Comment.addComment(this.currentUser.getInt("id"), this.jsonobjectFromFeedNews.getInt("id"), this.commentText.getText().toString()).equals("86"))
 	{
 		
 		if(MainViewModel.isNetworkAvailable(this))
 		{
 		Toast.makeText(getBaseContext(),"Comment is added", Toast.LENGTH_LONG).show();
-		 getComments();
+		//getComments();
 		}else
 		{
 			MainViewModel.alertNetwork(this);
@@ -166,10 +146,6 @@ public class Comments extends Activity {
 	}
 	
 
-		
-		
-
-	
 	}
 
 	public void pullToRefresh() throws InterruptedException, ExecutionException, JSONException
@@ -179,10 +155,10 @@ public class Comments extends Activity {
 		{
 
 			JSONObject row = getNewsForUpdate.getJSONObject(i);
-			if(row.getInt("id")==this.jsonObjectFromFeedNews.getInt("id"))
+			if(row.getInt("id")==this.jsonobjectFromFeedNews.getInt("id"))
 			{
-				this.jsonObjectFromFeedNews=new JSONObject();
-				this.jsonObjectFromFeedNews=row;
+				this.jsonobjectFromFeedNews=new JSONObject();
+				this.jsonobjectFromFeedNews=row;
 				
 				break;
 			}
@@ -210,5 +186,8 @@ public class Comments extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	
+	
 }
+
+

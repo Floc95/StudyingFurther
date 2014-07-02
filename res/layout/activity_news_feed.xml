@@ -10,14 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg"
         android:choiceMode="singleChoice"
         android:clickable="true"
+        android:dividerHeight="10dp"
         android:longClickable="true" >
-
     </ListView>
      
     </LinearLayout>

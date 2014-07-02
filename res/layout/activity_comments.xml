@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg" >
+    android:id="@+id/newspicdetails"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginTop="2dp" >
 
   <!-- Header aligned to top -->
 
@@ -14,16 +18,18 @@
       android:layout_alignParentLeft="false"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="false"
-      android:layout_centerInParent="false"
-      android:layout_marginTop="5dp" >
+      android:layout_centerInParent="false" >
 
 			<ImageView
+			    
 			    android:id="@+id/avatarP"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_alignParentLeft="true"
 			    android:layout_alignParentTop="true"
-			    android:layout_weight="0" />
+			    android:layout_marginLeft="10dp"
+			    android:layout_marginTop="10dp"
+			     />
 			
         <TextView
             android:id="@+id/titleP"
@@ -31,16 +37,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
             android:text="@string/Title"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
         
                 <TextView
                     android:id="@+id/heurPubP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="30/06/2014 18:45"
-                    android:textSize="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp" />
                 
             <TextView
                 android:id="@+id/contenu"
@@ -49,11 +56,11 @@
                 android:layout_marginBottom="6dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:linksClickable="true"
                 android:maxHeight="150dp"
                 android:text="@string/Description"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
   </RelativeLayout>
   
@@ -77,16 +84,17 @@
           android:layout_alignParentLeft="true"
           android:layout_alignParentTop="true"
           android:ems="10"
+          android:focusable="false"
           android:inputType="textMultiLine"
           android:scrollHorizontally="true"
-          android:scrollbars="vertical"
-          android:text="your comment is her" >
+          android:scrollbars="vertical" >
 
-          <requestFocus />
+          <requestFocus android:layout_width="wrap_content" />
+
       </MultiAutoCompleteTextView>
 
       <Button
-          android:id="@+id/switchTocomment"
+          android:id="@+id/addcomment"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignBottom="@+id/commentText"
@@ -96,7 +104,7 @@
           android:layout_centerVertical="true"
           android:maxHeight="60dp"
           android:onClick="addComment"
-          android:text="Send" />
+          android:text="@string/comment" />
 
   </RelativeLayout>
 
@@ -111,9 +119,16 @@
 
       <TableRow
           android:id="@+id/tableRow1"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/light_grey" >
+          android:layout_width="match_parent"
+          android:layout_height="10dp"
+          android:background="@color/forlistview"
+          android:minHeight="60dp" >
+
+          <ImageView
+              android:id="@+id/newspicdetails"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:maxHeight="60dp" />
 
       </TableRow>
 
@@ -121,8 +136,14 @@
           android:id="@+id/listviewComments"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
           android:layout_marginTop="20dp"
-          android:drawSelectorOnTop="false" >
+          android:dividerHeight="15dp"
+          android:focusable="true"
+          android:footerDividersEnabled="false"
+          android:headerDividersEnabled="false" >
 
       </ListView>
 

@@ -26,7 +26,7 @@
     <string name="Description">L Ecole Superieure de Genie Informatique (ESGI) est une ecole privee d enseignement superieur en informatique située à Paris et fondée en 1983</string>
     <string name="Title">ESGI</string>
     <string name="title_activity_item_news_feed">ItemNewsFeed</string>
-
+    <string name="comment">Comment</string>
     <string-array name="menu">
         <item>1</item>
         <item>2</item>

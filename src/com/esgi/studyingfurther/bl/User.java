@@ -10,8 +10,8 @@ public class User {
 	private String avatar;
 	private UserStatus status;
 
-	public User(int id, String firstName, String lastName, String login,
-			String password, String avatar, int status) {
+	public User(int id, String firstName, String lastName, String login,String password, String avatar, int status)
+	{
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -23,35 +23,43 @@ public class User {
 
 	// Get / Set
 
-	public int getId() {
+	public int getId() 
+	{
 		return id;
 	}
 
-	public String getFirstName() {
+	public String getFirstName() 
+	{
 		return firstName;
 	}
 
-	public String getLastName() {
+	public String getLastName() 
+	{
 		return lastName;
 	}
 
-	public String getNomComplet() {
+	public String getNomComplet()
+	{
 		return lastName + " " + firstName;
 	}
 
-	public String getLogin() {
+	public String getLogin() 
+	{
 		return login;
 	}
 
-	public String getPassword() {
+	public String getPassword() 
+	{
 		return password;
 	}
 
-	public String getAvatar() {
+	public String getAvatar() 
+	{
 		return avatar;
 	}
 
-	public UserStatus getStatus() {
+	public UserStatus getStatus() 
+	{
 		return status;
 	}
 
