@@ -41,11 +41,10 @@ public class MainViewModel {
 	
 	public static void changeActionBarWithValueOfCurrentUser(Context c,ActionBar actionBar,JSONObject currentUser) throws InterruptedException, ExecutionException, JSONException
 	{
-		actionBar.setTitle("   Hello >:"+currentUser.getString("prenom"));
+		actionBar.setTitle("Studying Further");
 		Bitmap avatar = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
 	    Drawable btmpDrawable=new BitmapDrawable(c.getResources(), avatar);
 		actionBar.setIcon(btmpDrawable);
-		actionBar.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.bg));
 		
 	}
 

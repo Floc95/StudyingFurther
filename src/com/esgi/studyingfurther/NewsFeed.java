@@ -104,7 +104,9 @@ public class NewsFeed extends Activity {
 
 			// **************************************************************
 
-			map.put("titre", MainViewModel.decodeString(row.getString("titre")));
+			String nom = this.currentUser.getString("prenom") + " " + this.currentUser.getString("nom");
+			
+			map.put("titre", MainViewModel.decodeString(nom));
 			map.put("contenu", MainViewModel.decodeString(row.getString("contenu")));
 			map.put("nbcommentaires", row.getJSONArray("commentaires").length());
 			map.put("img", conv_bm);

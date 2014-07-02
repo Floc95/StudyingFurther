@@ -3,17 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
     android:orientation="vertical"
+    android:background="#e5e5e5"
     >
 
     <ListView
         android:id="@+id/listviewperso"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg"
+        android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"
+		android:divider="@null"
+		android:dividerHeight="0dp"
         android:choiceMode="singleChoice"
         android:clickable="true"
         android:longClickable="true" >
