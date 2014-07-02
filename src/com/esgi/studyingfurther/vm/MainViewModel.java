@@ -39,6 +39,8 @@ public class MainViewModel {
 		
 	}
 	
+
+	
 	public static void changeActionBarWithValueOfCurrentUser(Context c,ActionBar actionBar,JSONObject currentUser) throws InterruptedException, ExecutionException, JSONException
 	{
 		actionBar.setTitle(" "+currentUser.getString("prenom"));

@@ -25,24 +25,24 @@ public class Comment {
 	private String modificationDate;
 	private User owner;
 	private String plusun;
-	private int idCurrentUser;
+	private int statutCurrentUser;
 	private Bitmap avatar;
 	
 	public Comment()
 	{}
 
-	public Comment(int id, String content, String creationDate,String modificationDate, User owner,String plusun,int idCurrentUser,Bitmap avatar) {
+	public Comment(int id, String content, String creationDate,String modificationDate, User owner,String plusun,int statutCurrentUser,Bitmap avatar) {
 		this.id = id;
 		this.content = content;
 		this.creationDate = creationDate;
 		this.modificationDate = modificationDate;
 		this.owner = owner;
 		this.plusun=plusun;
-		this.idCurrentUser=idCurrentUser;
+		this.statutCurrentUser=statutCurrentUser;
 		this.avatar=avatar;
 	}
 	
-	public  ArrayList<Comment> getComment(JSONObject newsFeed,int idPost) throws JSONException, InterruptedException, ExecutionException
+	public  ArrayList<Comment> getComment(JSONObject newsFeed,int statutCurrentUser) throws JSONException, InterruptedException, ExecutionException
 	{
 		
 		
@@ -80,7 +80,7 @@ public class Comment {
 		     
 		     Comment.getString("plusun"),
    
-		     newsFeed.getInt("id"),
+		     statutCurrentUser,
 		     
 		     avatar
 			);
@@ -120,12 +120,12 @@ public class Comment {
 		this.avatar = avatar;
 	}
 	
-	public int getIdCurrentUser() {
-		return idCurrentUser;
+	public int getstatutCurrentUser() {
+		return this.statutCurrentUser;
 	}
 
-	public void setIdCurrentUser(int idCurrentUser) {
-		this.idCurrentUser = idCurrentUser;
+	public void setstatutCurrentUser(int idCurrentUser) {
+		this.statutCurrentUser = idCurrentUser;
 	}
 	
 	public int getId() {

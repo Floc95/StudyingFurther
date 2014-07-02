@@ -86,6 +86,7 @@
           android:ems="10"
           android:focusable="false"
           android:inputType="textMultiLine"
+          android:linksClickable="true"
           android:scrollHorizontally="true"
           android:scrollbars="vertical" >
 
@@ -123,12 +124,6 @@
           android:layout_height="10dp"
           android:background="@color/forlistview"
           android:minHeight="60dp" >
-
-          <ImageView
-              android:id="@+id/newspicdetails"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:maxHeight="60dp" />
 
       </TableRow>
 

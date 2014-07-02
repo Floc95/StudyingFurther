@@ -33,7 +33,19 @@ public class Identification extends Activity {
 		this.PassWord = ((EditText) findViewById(R.id.password));
 		 this.UserName.setText("");
 	     this.PassWord.setText("");
+	     
+	     android.content.SharedPreferences prefs = getSharedPreferences("UserData", 0);
+	     String currentUser = prefs.getString("currentuser","");
+	   
+	    if(!currentUser.isEmpty())
+	    {
+	    	Intent intent = new Intent(this, NewsFeed.class);
+			intent.putExtra("currentUser", currentUser);
+			startActivity(intent);
+	    }
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,6 +74,10 @@ public class Identification extends Activity {
 					.toString());
 			startActivity(intent);
 
+			android.content.SharedPreferences prefs = getSharedPreferences("UserData", 0);
+			android.content.SharedPreferences.Editor editor = prefs.edit();
+			editor.putString("currentuser", ManagerUser.getCurrentUser().toString());
+			editor.commit();
 		} 
 		else {
 			Toast.makeText(this,"Error Please Check your Username/Password",Toast.LENGTH_LONG).show();

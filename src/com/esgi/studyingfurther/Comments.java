@@ -43,7 +43,6 @@ public class Comments extends Activity {
 	    public  TextView titleP;
 	    public  TextView contenu;
 	    public  TextView heurPubP;
-	    public  ImageView newspic;
 	    public  ImageView avatarP;
 	
 	//
@@ -70,7 +69,6 @@ public class Comments extends Activity {
     	titleP = (TextView) findViewById(R.id.titleP);
     	contenu = (TextView) findViewById(R.id.contenu);
     	heurPubP = (TextView) findViewById(R.id.heurPubP);
-    	newspic = (ImageView) findViewById(R.id.newspicdetails);
     	avatarP = (ImageView) findViewById(R.id.avatarP);
 	
 	try {
@@ -102,24 +100,27 @@ public class Comments extends Activity {
 		}  catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
 	@SuppressLint("NewApi")
-	private void setValuetheHeaderofListView(JSONObject post) throws InterruptedException, ExecutionException, JSONException
+	private void setValuetheHeaderofListView(JSONObject post) throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException
 	{
 		   
 			
 		    
 		Drawable avatar=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(ManagerURL.urlGetNews+post.getJSONObject("utilisateur").getString("avatar")).get());
-		Drawable newspic=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(post.getString("image")).get());
+		//Drawable newspic=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(post.getString("image")).get());
 	
 		this.avatarP.setBackground(avatar);
 		this.titleP.setText(post.getString("titre"));
 		this.heurPubP.setText(post.getString("dateCreation"));
-		this.contenu.setText("contenu");
-		this.newspic.setBackground(newspic);
+		this.contenu.setText(MainViewModel.decodeString(post.getString("contenu")));
+	//	this.newspic.setBackground(newspic);
 		
 		
 	}

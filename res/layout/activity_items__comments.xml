@@ -87,7 +87,8 @@
             android:layout_weight="0"
             android:minHeight="0dp"
             android:textOff="@string/plusun"
-            android:textOn="@string/plusun" />
+            android:textOn="@string/plusun"
+            android:visibility="invisible" />
 
     </TableRow>
      <TableRow android:layout_marginTop="1dp" >

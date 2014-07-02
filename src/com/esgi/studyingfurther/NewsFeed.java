@@ -19,6 +19,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.transition.Visibility;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -55,8 +57,7 @@ public class NewsFeed extends Activity {
 
 			try {
 
-				this.currentUser = new JSONObject(getIntent().getExtras()
-						.getString("currentUser"));
+				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
 
 				// Put the picture of the current user and our username on the
 				// header of activity
@@ -66,7 +67,12 @@ public class NewsFeed extends Activity {
 
 				// Call a function getNews for fix all post of a current user
 				this.news = new Repository().getNews(this.currentUser.getInt("id"));
-
+				// Persistance for deconnect mode
+				android.content.SharedPreferences prefs = getSharedPreferences("news", 0);
+				android.content.SharedPreferences.Editor editor = prefs.edit();
+				editor.putString("news",this.news.toString());
+				editor.commit();
+				//
 				CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
 
 				maListViewPerso.setAdapter(adapter);
@@ -82,7 +88,11 @@ public class NewsFeed extends Activity {
 			}
 
 		} else {
-			MainViewModel.alertNetwork(this);
+			
+			android.content.SharedPreferences prefs = getSharedPreferences("news", 0);
+		    String news = prefs.getString("news","");
+		    write(news);
+		    MainViewModel.alertNetwork(this);
 		}
 
 	}
@@ -93,7 +103,43 @@ public class NewsFeed extends Activity {
 	 * @param item
 	 */
 	/* Called whenever we call invalidateOptionsMenu() */
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	//	write(item.getItemId()+": " +item.getOrder());
+	    switch (item.getOrder()) {
+	        case 1:
+	        	android.content.SharedPreferences prefs = getSharedPreferences("UserData", 0);
+				android.content.SharedPreferences.Editor editor = prefs.edit();
+				editor.putString("currentuser","");
+				editor.commit();
+				
+			    prefs = getSharedPreferences("news", 0);
+			    editor = prefs.edit();
+				editor.putString("news","");
+				
+	        	Intent intent = new Intent(this, Identification.class);
+				startActivity(intent);
+				
+	            return true;
+	        case 2:
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	@Override
+	public void onBackPressed() {
+		
+	};
+	
 	public void showDetailsPost(View v) throws JSONException, InterruptedException, ExecutionException {
 
    
@@ -135,10 +181,10 @@ public class NewsFeed extends Activity {
 
 	}
 
-	public void write(View v) {
+	public void write(String value) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-		adb.setTitle("Button Write");
-		adb.setMessage("");
+		adb.setTitle("Log");
+		adb.setMessage(value);
 		adb.setPositiveButton("Ok", null);
 		adb.show();
 	}

@@ -71,7 +71,7 @@ public class CustomAdapterDetailsPost extends BaseAdapter {
 		  try {
 			 holder.contenu.setText(MainViewModel.decodeString(comment.getContent()));
 			 holder.heurPubP.setText(comment.getCreationDate());
-			  if(comment.getIdCurrentUser()==3) 
+			  if(comment.getstatutCurrentUser()==3) 
 			  {
 				  holder.plusun.setVisibility(View.VISIBLE);
 			  } 
