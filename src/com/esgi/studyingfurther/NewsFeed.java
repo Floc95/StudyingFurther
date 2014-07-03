@@ -59,11 +59,6 @@ public class NewsFeed extends Activity {
 
 				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
 
-				// Put the picture of the current user and our username on the
-				// header of activity
-
-				MainViewModel.changeActionBarWithValueOfCurrentUser(this,this.getActionBar(), this.currentUser);
-
 				// Call a function getNews for fix all post of a current user
 				this.news = new Repository().getNews(this.currentUser.getInt("id"));
 				// Persistance for deconnect mode
@@ -99,10 +94,7 @@ public class NewsFeed extends Activity {
 				android.content.SharedPreferences prefc = getSharedPreferences("UserData", 0);
 			    String currentUser = prefc.getString("currentuser","");
 				this.currentUser = new JSONObject(currentUser);
-				
-				MainViewModel.changeActionBarWithValueOfCurrentUser(this,this.getActionBar(), this.currentUser);
-
-		    	CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
+	         	CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
 				maListViewPerso.setAdapter(adapter);
 		    	}
 				
@@ -120,7 +112,6 @@ public class NewsFeed extends Activity {
 				e.printStackTrace();
 			}
 		   // write(news);
-		    MainViewModel.alertNetwork(this);
 		}
 
 	}

@@ -77,7 +77,7 @@ public class Comments extends Activity {
 			{
 				this.jsonobjectFromFeedNews = new JSONObject(getIntent().getExtras().getString("news"));
 				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
-				MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
+				//MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
 				// 
 				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews);
 				
