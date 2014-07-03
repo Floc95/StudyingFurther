@@ -1,11 +1,8 @@
 
 package com.esgi.studyingfurther;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
@@ -14,30 +11,19 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.transition.Visibility;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.esgi.studyingfurther.bl.Comment;
-import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.bl.Post;
 import com.esgi.studyingfurther.dal.Repository;
 import com.esgi.studyingfurther.vm.CustomAdapter;
-import com.esgi.studyingfurther.vm.DownloadImageTask;
 import com.esgi.studyingfurther.vm.MainViewModel;
-import com.esgi.studyingfurther.vm.ManagerURL;
-import com.esgi.studyingfurther.vm.MyViewBinder;
 
 public class NewsFeed extends Activity {
 
@@ -67,7 +53,7 @@ public class NewsFeed extends Activity {
 				editor.putString("news",this.news.toString());
 				editor.commit();
 				//
-				CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
+				CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut"),1));
 
 				maListViewPerso.setAdapter(adapter);
 
@@ -86,21 +72,15 @@ public class NewsFeed extends Activity {
 			android.content.SharedPreferences prefs = getSharedPreferences("news", 0);
 		    String news = prefs.getString("news","");
 		    try {
-		    
-		    	if(!news.isEmpty())
-		    	{
-		    		Log.v("news",news);
 				this.news=new JSONArray(news);
 				android.content.SharedPreferences prefc = getSharedPreferences("UserData", 0);
-			    String currentUser = prefc.getString("currentuser","");
+				String currentUser = prefc.getString("currentuser","");
 				this.currentUser = new JSONObject(currentUser);
-	         	CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
-				maListViewPerso.setAdapter(adapter);
-		    	}
-				
+				CustomAdapter adapter=new CustomAdapter(this, new Post().getPosts(this.news, this.currentUser.getInt("statut"),0));
+			    maListViewPerso.setAdapter(adapter);	
+			
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -111,7 +91,19 @@ public class NewsFeed extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		   // write(news);
+		    
+		 
+		    /*	if(!news.isEmpty())
+		    	{
+		    		
+				
+				 
+			
+	         	CustomAdapter adapter = new CustomAdapter(this,new Post().getPosts(this.news,this.currentUser.getInt("statut")));
+				maListViewPerso.setAdapter(adapter);
+		    	}
+				*/
+			
 		}
 
 	}
@@ -200,7 +192,7 @@ public class NewsFeed extends Activity {
 
 	}
 
-	public void write(String value) {
+	public void alert(String value) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		adb.setTitle("Log");
 		adb.setMessage(value);

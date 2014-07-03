@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ToggleButton;
@@ -60,13 +61,13 @@ public class Post {
 		this.plusun = plusun;
 	}
 
-	public ArrayList<Post> getPosts(JSONArray news, int statutCurrentUser)
+	public ArrayList<Post> getPosts(JSONArray news, int statutCurrentUser,int statutConnexion)
 			throws JSONException, InterruptedException, ExecutionException,
 			UnsupportedEncodingException {
 		
 		ArrayList<Post> listItem = new ArrayList<Post>();
 
-		// Loop on the listeview
+		// Loop on my Array List
 
 		for (int i = 0; i < news.length(); i++) {
 
@@ -79,8 +80,8 @@ public class Post {
 					ownerUser.getString("avatar"), ownerUser.getInt("statut"));
 
 			// this.comments.add(row);
-			Bitmap conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ row.getJSONObject("utilisateur").getString("avatar"));
-
+			Bitmap conv_bm = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ row.getJSONObject("utilisateur").getString("avatar"),statutConnexion);
+       //Bitmap conv_bm=null;
 			Post post = new Post(
 
 			row.getInt("id"),

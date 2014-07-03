@@ -4,9 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.esgi.studyingfurther.bl.Comment;
 import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.bl.Post;
@@ -17,6 +19,7 @@ import com.esgi.studyingfurther.vm.DownloadImageTask;
 import com.esgi.studyingfurther.vm.MainViewModel;
 import com.esgi.studyingfurther.vm.ManagerURL;
 import com.esgi.studyingfurther.vm.MyViewBinder;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -82,13 +85,24 @@ public class Comments extends Activity {
 				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews);
 				
 				//get all comment
-				CustomAdapterDetailsPost adapter = new CustomAdapterDetailsPost(this,new Comment().getComment(this.jsonobjectFromFeedNews,this.currentUser.getInt("statut")));
+				CustomAdapterDetailsPost adapter = new CustomAdapterDetailsPost(this,new Comment().getComment(this.jsonobjectFromFeedNews,this.currentUser.getInt("statut"),1));
 
 				listViewComment.setAdapter(adapter);
 
 			}
 			else{
 				MainViewModel.alertNetwork(this);
+				
+				this.jsonobjectFromFeedNews = new JSONObject(getIntent().getExtras().getString("news"));
+				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
+				//MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
+				// 
+				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews);
+				
+				//get all comment
+				CustomAdapterDetailsPost adapter = new CustomAdapterDetailsPost(this,new Comment().getComment(this.jsonobjectFromFeedNews,this.currentUser.getInt("statut"),1));
+
+				listViewComment.setAdapter(adapter);
 			}
 			
 		} catch (InterruptedException e) {

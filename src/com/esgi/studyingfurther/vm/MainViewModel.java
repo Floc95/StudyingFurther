@@ -110,13 +110,15 @@ public class MainViewModel {
 		
 	}
 
-	public static Bitmap getRoundedCornerImage(String url)
+	// StatutConnection 1 if your device is connected else  0
+	public static Bitmap getRoundedCornerImage(String url,int statutConnection)
 			throws InterruptedException, ExecutionException {
-
+       if(statutConnection==1){
 		Bitmap avatar = new DownloadImageTask().execute(url).get();
 		Bitmap resized = Bitmap.createScaledBitmap(avatar, 100, 100, true);
-		Bitmap output = Bitmap.createBitmap(resized.getWidth(),
-				resized.getHeight(), Config.ARGB_8888);
+		Bitmap output = Bitmap.createBitmap(resized.getWidth(),resized.getHeight(), Config.ARGB_8888);
+		
+				
 		Canvas canvas = new Canvas(output);
 
 		final int color = 0xff424242;
@@ -132,8 +134,9 @@ public class MainViewModel {
 
 		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(resized, rect, rect, paint);
-
 		return output;
+     }
+       return null;
 
 	}
 

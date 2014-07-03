@@ -81,6 +81,7 @@ public class CustomAdapterDetailsPost extends BaseAdapter {
 			  }
 			  Drawable BitmapDrawable=new BitmapDrawable(convertView.getResources(), comment.getAvatar());
 			  holder.avatarP.setBackground(BitmapDrawable);
+		
 			  
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
