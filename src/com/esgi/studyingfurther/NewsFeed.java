@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -69,12 +70,12 @@ public class NewsFeed extends Activity {
 
 		
 		postText = (EditText) findViewById(R.id.postText);
-		postText.setOnTouchListener(new OnTouchListener() {
+		postText.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+			public void onFocusChange(View v, boolean hasFocus) {
 				((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(postText, 0);
-				return false;
+				
 			}
 		});
 		post = (Button) findViewById(R.id.addpost);
