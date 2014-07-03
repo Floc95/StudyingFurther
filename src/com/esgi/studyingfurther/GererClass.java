@@ -29,6 +29,7 @@ import android.widget.SimpleAdapter;
 import com.esgi.studyingfurther.bl.Factory;
 import com.esgi.studyingfurther.dal.Repository;
 import com.esgi.studyingfurther.vm.MainViewModel;
+import com.esgi.studyingfurther.vm.ManagerURL;
 
 public class GererClass extends Activity {
 
@@ -43,9 +44,6 @@ public class GererClass extends Activity {
     String userIdString = "";
     JSONArray groups, groupUsers,allUsers;
     MainViewModel Manager = null;
-    private String addGroupUrl = "http://www.your-groups.com/API/AddGroup?key=7e2a3a18cd00ca322f60c28393c43264";
-    private String removeUserUrl = "http://www.your-groups.com/API/RemoveUserOfGroup?key=7e2a3a18cd00ca322f60c28393c43264";
-    private String addUserUrl = "http://www.your-groups.com/API/AddUserToGroup?key=7e2a3a18cd00ca322f60c28393c43264";
     String TAG = "GereClass";
     String[] userList;
     
@@ -120,7 +118,7 @@ public class GererClass extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								
-						        new UploadUrlTask(GererClass.this).execute("removeUser", removeUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listUsers.get(position).get("id").toString());
+						        new UploadUrlTask(GererClass.this).execute("removeUser", ManagerURL.removeUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listUsers.get(position).get("id").toString());
 
 							}
 						})
@@ -160,7 +158,7 @@ public class GererClass extends Activity {
 										
 										if (listAllUsers.get(i).get("login").toString().equals(addName.getText().toString())) 
 										{
-											new UploadUrlTask(GererClass.this).execute("addUser", addUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listAllUsers.get(i).get("id").toString());
+											new UploadUrlTask(GererClass.this).execute("addUser", ManagerURL.addUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listAllUsers.get(i).get("id").toString());
 											added = true;
 										}
 										
@@ -224,7 +222,7 @@ public class GererClass extends Activity {
 						else 
 						{
 							//new task to upload the new class
-					        new UploadUrlTask(GererClass.this).execute("addClasse", addGroupUrl, userIdString, addEditText.getText().toString());
+					        new UploadUrlTask(GererClass.this).execute("addClasse", ManagerURL.addGroupUrl, userIdString, addEditText.getText().toString());
 					        try {
 								getGroups();
 							} catch (UnsupportedEncodingException e) {
@@ -288,8 +286,8 @@ public class GererClass extends Activity {
 			JSONObject obj = groups.getJSONObject(i);
 			HashMap<String, Object> map=new HashMap<String, Object>();
 			
-			map.put("idGroupe", Manager.decodeString(obj.getString("idGroupe")));
-			map.put("libelle", Manager.decodeString(obj.getString("libelle")));
+			map.put("idGroupe", MainViewModel.decodeString(obj.getString("idGroupe")));
+			map.put("libelle", MainViewModel.decodeString(obj.getString("libelle")));
 			listItem.add(map);
 			
 		}
@@ -310,10 +308,10 @@ public class GererClass extends Activity {
 			JSONObject obj = groupUsers.getJSONObject(i);
 			HashMap<String, Object> map=new HashMap<String, Object>();
 			
-			map.put("id", Manager.decodeString(obj.getString("id")));
-			map.put("nom", Manager.decodeString(obj.getString("nom")));
-			map.put("prenom", Manager.decodeString(obj.getString("prenom")));
-			map.put("login", Manager.decodeString(obj.getString("login")));
+			map.put("id", MainViewModel.decodeString(obj.getString("id")));
+			map.put("nom", MainViewModel.decodeString(obj.getString("nom")));
+			map.put("prenom", MainViewModel.decodeString(obj.getString("prenom")));
+			map.put("login", MainViewModel.decodeString(obj.getString("login")));
 			listUsers.add(map);
 			
 		}
@@ -340,10 +338,10 @@ public class GererClass extends Activity {
 			JSONObject obj = allUsers.getJSONObject(i);
 			HashMap<String, Object> map=new HashMap<String, Object>();
 			
-			map.put("id", Manager.decodeString(obj.getString("id")));
-			map.put("nom", Manager.decodeString(obj.getString("nom")));
-			map.put("prenom", Manager.decodeString(obj.getString("prenom")));
-			map.put("login", Manager.decodeString(obj.getString("login")));
+			map.put("id", MainViewModel.decodeString(obj.getString("id")));
+			map.put("nom", MainViewModel.decodeString(obj.getString("nom")));
+			map.put("prenom", MainViewModel.decodeString(obj.getString("prenom")));
+			map.put("login", MainViewModel.decodeString(obj.getString("login")));
 			listAllUsers.add(map);
 			Log.v(TAG, listAllUsers.get(i).get("nom")+" "+listAllUsers.get(i).get("login")+" "+listAllUsers.get(i).get("id"));
 		}
