@@ -111,8 +111,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:layout_weight="0"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="10dp"
                 android:adjustViewBounds="false"
-                android:background="@drawable/equal"
+                android:background="@drawable/icon_commentaires_64"
                 android:baselineAlignBottom="false"
                 android:onClick="showDetailsPost"
                 android:scaleType="center" />
