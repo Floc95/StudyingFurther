@@ -330,7 +330,7 @@ public class NewsFeed extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				realPosition = which;
 				AlertDialog.Builder localBuilder = new AlertDialog.Builder(
-						NewsFeed.this).setTitle("Choose a photo, Click Cancel to send a text directly");
+						NewsFeed.this).setTitle("Send with a photo, Click No to send a text directly");
 					    String[] arrayOfString = new String[2];
 					    arrayOfString[0] = "Take it now";
 					    arrayOfString[1] = "Choose it from album";
@@ -350,7 +350,7 @@ public class NewsFeed extends Activity {
 							        	  break;
 						          }
 					         }
-					       }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					       }).setNegativeButton("No", new DialogInterface.OnClickListener() {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {

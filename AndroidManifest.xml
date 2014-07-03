@@ -11,6 +11,30 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <permission
+		android:name="com.esgi.studyingfurther.permission.C2D_MESSAGE"
+		android:protectionLevel="signature"/>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission
+		android:name="com.esgi.studyingfurther.permission.C2D_MESSAGE"/>
+	<uses-permission
+		android:name="com.google.android.c2dm.permission.RECEIVE"/>
+	<uses-permission
+		android:name="android.permission.INTERNET"/>
+	<uses-permission
+		android:name="android.permission.GET_ACCOUNTS"/>
+	<uses-permission
+		android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission
+		android:name="android.permission.CHANGE_NETWORK_STATE">
+	</uses-permission>
+	<uses-permission
+		android:name="android.permission.CHANGE_WIFI_STATE">
+	</uses-permission>
+
+
+	<uses-permission
+		android:name="android.permission.ACCESS_WIFI_STATE"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -70,6 +94,20 @@
             android:name="com.esgi.studyingfurther.Items_Comments"
             android:label="@string/title_activity_items__comments" >
         </activity>
+        <receiver
+			android:name="com.google.android.gcm.GCMBroadcastReceiver"
+			android:permission="com.google.android.c2dm.permission.SEND">
+			<intent-filter>
+				<action
+					android:name="com.google.android.c2dm.intent.RECEIVE"/>
+				<action
+					android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+				<category
+					android:name="com.esgi.studyingfurther"/>
+			</intent-filter>
+		</receiver>
+		<service
+			android:name=".GCMIntentService"/>
     </application>
 
 </manifest>

@@ -121,6 +121,15 @@ public class Parameter extends Activity {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							android.content.SharedPreferences prefs = getSharedPreferences("UserData", 0);
+							android.content.SharedPreferences.Editor editor = prefs.edit();
+							editor.putString("currentuser","");
+							editor.commit();
+							
+						    prefs = getSharedPreferences("news", 0);
+						    editor = prefs.edit();
+							editor.putString("news","");
+							
 							Intent intent = new Intent(Parameter.this, Identification.class);
 					        intent.putExtra("finish", true);
 					        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities

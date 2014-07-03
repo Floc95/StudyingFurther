@@ -8,22 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".GererClass" >
 
-    
-
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/linearLayout1"
-        android:layout_marginRight="50dp"
-        android:text="Delete" />
-
     <ListView
         android:id="@+id/listClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/delete"
+        android:layout_below="@+id/add"
         android:layout_centerHorizontal="true" >
 
     </ListView>
@@ -32,10 +21,9 @@
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/delete"
-        android:layout_alignBottom="@+id/delete"
-        android:layout_alignLeft="@+id/listClass"
-        android:layout_marginLeft="38dp"
-        android:text="Add" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:text="Add a Class" />
 
 </RelativeLayout>
