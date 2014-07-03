@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ import com.esgi.studyingfurther.bl.Post;
 import com.esgi.studyingfurther.dal.Repository;
 import com.esgi.studyingfurther.vm.CustomAdapter;
 import com.esgi.studyingfurther.vm.MainViewModel;
+
 
 public class NewsFeed extends Activity {
 
@@ -318,6 +320,53 @@ public class NewsFeed extends Activity {
 		  } 
 		  	catch (ActivityNotFoundException e) {
 		  	}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+	{
+		Uri mImageCaptureUri;
+		if (resultCode != RESULT_OK) 
+		{
+			return;
+		}
+		if (data != null) 
+		{
+			mImageCaptureUri = data.getData();
+			if (mImageCaptureUri != null) 
+			{
+				Bitmap image;
+				try 
+				{
+					image = MediaStore.Images.Media.getBitmap(
+					this.getContentResolver(), mImageCaptureUri);
+					if (image != null) 
+					{
+						ImgurUploadTask im = new ImgurUploadTask(mImageCaptureUri,NewsFeed.this) {};
+						im.execute();
+					}
+				} 
+				catch (Exception e) 
+				{
+					e.printStackTrace();
+				}
+			} 
+			else 
+			{
+				Bundle extras = data.getExtras();
+				if (extras != null) 
+				{
+					Bitmap image = extras.getParcelable("data");
+					if (image != null) 
+					{
+						mImageCaptureUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), image, null,null));
+						ImgurUploadTask im = new ImgurUploadTask(mImageCaptureUri,NewsFeed.this) {};
+						im.execute();
+
+					}
+				}
+			}
+		}
 	}
 	
 	
