@@ -72,9 +72,9 @@ public class MessageService extends Service {
 			{ 
 				try 
 				{
-					Thread.sleep(59000);
-					new connectWebService().execute(Url+"&deviceId="+deviceID+"&userId="+userId) ;
 					
+					new connectWebService().execute(Url+"&deviceId="+deviceID+"&userId="+userId) ;
+					Thread.sleep(59000);
 					 
 				} catch (InterruptedException e) { 
 				e.printStackTrace(); 
