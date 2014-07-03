@@ -21,7 +21,6 @@ import com.esgi.studyingfurther.vm.AddCommentTask;
 import com.esgi.studyingfurther.vm.DownloadImageTask;
 import com.esgi.studyingfurther.vm.MainViewModel;
 import com.esgi.studyingfurther.vm.ManagerURL;
-import com.google.gson.JsonObject;
 
 public class Post {
 
