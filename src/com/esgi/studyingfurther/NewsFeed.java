@@ -499,8 +499,8 @@ public class NewsFeed extends Activity {
 	        String deletehash = root.getJSONObject("data").getString("deletehash");
 
 			Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
-			imgId = id;
-			return id;
+			imgId = id+".jpg";
+			return id+".jpg";
 		}
 		
 		@Override
