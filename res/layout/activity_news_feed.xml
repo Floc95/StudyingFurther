@@ -6,36 +6,20 @@
   	android:focusableInTouchMode="true"
     android:orientation="vertical" >
 
-
-    
     <ListView
         android:id="@+id/listviewperso"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/addpost"
         android:layout_marginLeft="16dp"
-		android:layout_marginRight="16dp"
-		android:divider="@null"
-		android:dividerHeight="0dp"
+        android:layout_marginRight="16dp"
         android:choiceMode="singleChoice"
         android:clickable="true"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:longClickable="true" >
 
     </ListView>
-
-    <EditText
-        android:id="@+id/postText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/listviewperso"
-        android:layout_alignParentBottom="true"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="textMultiLine"
-        android:linksClickable="true"
-        android:scrollHorizontally="true"
-        android:scrollbars="vertical" >
-    <requestFocus android:layout_width="wrap_content" />
-	</EditText>
     <Button
         android:id="@+id/addpost"
         android:layout_width="wrap_content"
@@ -44,6 +28,19 @@
         android:layout_alignRight="@+id/listviewperso"
         android:maxHeight="60dp"
         android:text="@string/post" />
+
+    <EditText
+        android:id="@+id/postText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/listviewperso"
+        android:layout_below="@+id/listviewperso"
+        android:ems="10"
+        android:enabled="true"
+        android:inputType="textMultiLine"
+        android:linksClickable="true"
+        android:scrollHorizontally="true"
+        android:scrollbars="vertical" />
 
 </RelativeLayout>
      
