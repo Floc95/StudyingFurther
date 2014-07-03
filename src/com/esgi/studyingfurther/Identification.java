@@ -25,6 +25,12 @@ public class Identification extends Activity {
 	private EditText PassWord;
 	
 	
+	public void CreateUser(View v)
+	{
+		Intent intent=new Intent(this,Inscription.class);
+		startActivity(intent);
+		
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
