@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:orientation="vertical"
-    android:background="#e5e5e5"
-    >
+    android:layout_height="match_parent"
+    android:focusable="true"  
+  	android:focusableInTouchMode="true"
+    android:orientation="vertical" >
 
+
+    
     <ListView
         android:id="@+id/listviewperso"
         android:layout_width="match_parent"
@@ -19,5 +21,29 @@
         android:longClickable="true" >
 
     </ListView>
+
+    <EditText
+        android:id="@+id/postText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/listviewperso"
+        android:layout_alignParentBottom="true"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textMultiLine"
+        android:linksClickable="true"
+        android:scrollHorizontally="true"
+        android:scrollbars="vertical" >
+    <requestFocus android:layout_width="wrap_content" />
+	</EditText>
+    <Button
+        android:id="@+id/addpost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/listviewperso"
+        android:maxHeight="60dp"
+        android:text="@string/post" />
+
+</RelativeLayout>
      
-    </LinearLayout>
