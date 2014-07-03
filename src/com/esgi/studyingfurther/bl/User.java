@@ -9,7 +9,8 @@ public class User {
 	private String password;
 	private String avatar;
 	private UserStatus status;
-
+	private boolean isProf;
+	
 	public User(int id, String firstName, String lastName, String login,String password, String avatar, int status)
 	{
 		this.id = id;
@@ -19,6 +20,7 @@ public class User {
 		this.password = password;
 		this.avatar = avatar;
 		this.status = status == 0 ? UserStatus.Student : UserStatus.Professor;
+		this.isProf = status == 0 ? false : true;
 	}
 
 	// Get / Set
@@ -61,6 +63,10 @@ public class User {
 	public UserStatus getStatus() 
 	{
 		return status;
+	}
+	public boolean isProfessor()
+	{
+		return isProf;
 	}
 
 }

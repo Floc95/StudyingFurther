@@ -2,6 +2,7 @@
 <resources>
 
     <string name="deconnecter">Deconnecter</string>
+    <string name="parameter">Parameter</string>
     <string name="Url_authentification"></string>
     <string name="app_name">Studying Further</string>
     <string name="action_settings">Settings</string>
@@ -28,6 +29,7 @@
     <string name="Title">ESGI</string>
     <string name="title_activity_item_news_feed">ItemNewsFeed</string>
     <string name="comment">Comment</string>
+    <string name="post">Post</string>
     <string-array name="menu">
         <item>1</item>
         <item>2</item>

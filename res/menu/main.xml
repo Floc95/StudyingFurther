@@ -5,5 +5,10 @@
         android:showAsAction="never"
         android:icon="@drawable/power"
         android:title="@string/deconnecter"/>
+    <item android:id="@+id/Parameter"
+        android:orderInCategory="2"
+        android:showAsAction="never"
+        android:icon="@drawable/power"
+        android:title="@string/parameter"/>
         
 </menu>

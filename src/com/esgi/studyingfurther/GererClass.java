@@ -1,17 +1,19 @@
 package com.esgi.studyingfurther;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
-import android.R.bool;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,189 +26,240 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.esgi.studyingfurther.bl.Factory;
+import com.esgi.studyingfurther.dal.Repository;
+import com.esgi.studyingfurther.vm.MainViewModel;
+
 public class GererClass extends Activity {
 
-	Button add, delete;
+	Button add;
 	ListView myList;
 	SimpleAdapter listItemAdapter;
-	ArrayList<HashMap<String, String>> listItem;
-	EditText modify, addEditText;
-
+    ArrayList<HashMap<String, Object>> listItem, listUsers, listAllUsers;
+    EditText addEditText,addName;
+    int userId = 0;
+    int groupId = 0;
+    int realPosition;
+    String userIdString = "";
+    JSONArray groups, groupUsers,allUsers;
+    MainViewModel Manager = null;
+    private String addGroupUrl = "http://www.your-groups.com/API/AddGroup?key=7e2a3a18cd00ca322f60c28393c43264";
+    private String removeUserUrl = "http://www.your-groups.com/API/RemoveUserOfGroup?key=7e2a3a18cd00ca322f60c28393c43264";
+    private String addUserUrl = "http://www.your-groups.com/API/AddUserToGroup?key=7e2a3a18cd00ca322f60c28393c43264";
+    String TAG = "GereClass";
+    String[] userList;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gerer_class);
-
+		
 		add = (Button) findViewById(R.id.add);
-		delete = (Button) findViewById(R.id.delete);
 		myList = (ListView) findViewById(R.id.listClass);
-
-		listItem = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("class", "class1");
-		listItem.add(map);
-		map = new HashMap<String, String>();
-		map.put("class", "class2");
-		listItem.add(map);
-		map = new HashMap<String, String>();
-		map.put("class", "class3");
-		listItem.add(map);
-		map = new HashMap<String, String>();
-		map.put("class", "class4");
-		listItem.add(map);
-		map = new HashMap<String, String>();
-		map.put("class", "class5");
-		listItem.add(map);
-
-		listItemAdapter = new SimpleAdapter(this.getBaseContext(), listItem,
-				R.layout.listparameter, new String[] { "class" },
-				new int[] { R.id.textPara });
-		myList.setAdapter(listItemAdapter);
-
-		myList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					final int arg2, long arg3) {
-				modify = new EditText(GererClass.this);
-				new AlertDialog.Builder(GererClass.this)
-						.setTitle("Modifier le nom")
-						.setIcon(android.R.drawable.ic_dialog_info)
-						.setView(modify)
-						.setPositiveButton("OK", new OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								if (modify.getText().toString().trim()
-										.equals("")) {
-									new AlertDialog.Builder(GererClass.this)
-											.setTitle("Warning")
-											.setMessage("Can not be empty")
-											.setPositiveButton("OK", null)
-											.show();
-								} else {
-									HashMap<String, String> tmp = new HashMap<String, String>();
-									tmp.put("class", modify.getText()
-											.toString());
-									listItem.set(arg2, tmp);
-									listItemAdapter.notifyDataSetChanged();
-								}
-								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-								imm.hideSoftInputFromWindow(
-										modify.getWindowToken(), 0);
-							}
-						}).setNegativeButton("Cancel", new OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-								imm.hideSoftInputFromWindow(
-										modify.getWindowToken(), 0);
-							}
-						}).show();
-				modify.requestFocus();
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-			}
-		});
-
-		add.setOnClickListener(new View.OnClickListener() {
+		//TODO
+		this.userId = getIntent().getExtras().getInt("userId", 0);
+		
+		//get the groups and the users
+		try {
+			Manager = new MainViewModel(new Factory());
+			getGroups();
+			getAllUsers();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		
+        //adapter the list with the SimpleAdapter
+        listItemAdapter = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.listparameter, new String[]{"libelle"}, new int[]{R.id.textPara});
+        myList.setAdapter(listItemAdapter);
+        
+        //list onclicklistener
+        myList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onClick(View v) {
-
-				addEditText = new EditText(GererClass.this);
-				new AlertDialog.Builder(GererClass.this)
-						.setTitle("ajouter le nom")
-						.setIcon(android.R.drawable.ic_dialog_info)
-						.setView(addEditText)
-						.setPositiveButton("OK", new OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								if (addEditText.getText().toString().trim()
-										.equals("")) {
-									new AlertDialog.Builder(GererClass.this)
-											.setTitle("Warning")
-											.setMessage("Can not be empty")
-											.setPositiveButton("OK", null)
-											.show();
-								} else {
-									HashMap<String, String> tmp = new HashMap<String, String>();
-									tmp.put("class", addEditText.getText()
-											.toString());
-									listItem.add(tmp);
-									listItemAdapter.notifyDataSetChanged();
-									delete.setEnabled(true);
-								}
-								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-								imm.hideSoftInputFromWindow(
-										addEditText.getWindowToken(), 0);
-							}
-						}).setNegativeButton("Cancel", new OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-								imm.hideSoftInputFromWindow(
-										addEditText.getWindowToken(), 0);
-							}
-						}).show();
-				addEditText.requestFocus();
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-			}
-		});
-
-		delete.setOnClickListener(new View.OnClickListener() {
-			String[] it;
-			boolean[] bolIt;
-
-			@Override
-			public void onClick(View v) {
-				it = new String[listItem.size()];
-				bolIt = new boolean[listItem.size()];
-				for (int i = 0; i < it.length; i++) {
-					it[i] = listItem.get(i).get("class");
-					bolIt[i] = false;
-
+			public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, long id) 
+			{
+				if (id<0) {
+					return;
 				}
-
+				realPosition = (int)id;
+				groupId = Integer.valueOf(listItem.get(realPosition).get("idGroupe").toString());
+				try {
+					getGroupUsers();
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					Log.v(TAG, e.toString());
+					e.printStackTrace();
+				}
+				
+				//alertdialog for display the memeber of the class
 				new AlertDialog.Builder(GererClass.this)
-						.setTitle("Delet Class")
-						.setMultiChoiceItems(it, bolIt,
-								new OnMultiChoiceClickListener() {
-
-									@Override
-									public void onClick(DialogInterface arg0,
-											int arg1, boolean arg2) {
-										bolIt[arg1] = arg2;
-									}
-								})
-						.setPositiveButton("OK", new OnClickListener() {
-
+				.setTitle("Memeber of " + listItem.get(realPosition).get("libelle").toString())
+				.setItems(userList, new DialogInterface.OnClickListener() {
+					
+					//click the name for remove
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						final int position = which;
+						new AlertDialog.Builder(GererClass.this)
+						.setTitle("Attention")
+						.setMessage("Remove "+ listUsers.get(which).get("nom")+" "+listUsers.get(which).get("prenom")+" from the groupe?")
+						.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+							
 							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								for (int i = bolIt.length - 1; i >= 0; i--) {
-									if (bolIt[i]) {
-										listItem.remove(i);
+							public void onClick(DialogInterface dialog, int which) {
+								
+						        new UploadUrlTask(GererClass.this).execute("removeUser", removeUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listUsers.get(position).get("id").toString());
+
+							}
+						})
+						.setNegativeButton("NO", null)
+						.show();
+						
+					}
+				})//button add to add a new memeber to the class
+				.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						addName = new EditText(GererClass.this);
+						new AlertDialog.Builder(GererClass.this)
+						.setTitle("Input the Login of the user who you want to add")
+						.setIcon(android.R.drawable.ic_dialog_info)
+						.setView(addName)
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if (addName.getText().toString().trim().equals("")) 
+								{
+									new AlertDialog.Builder(GererClass.this)    
+					                .setTitle("Warning")  
+					                .setMessage("Can not be empty")  
+					                .setPositiveButton("OK", null)  
+					                .show();
+								}
+								else 
+								{
+									Log.v("addname", addName.getText().toString());
+									boolean added = false;
+									for (int i = 0; i < listAllUsers.size(); i++) 
+									{
+										Log.v("login", listAllUsers.get(i).get("login").toString());
+										
+										if (listAllUsers.get(i).get("login").toString().equals(addName.getText().toString())) 
+										{
+											new UploadUrlTask(GererClass.this).execute("addUser", addUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listAllUsers.get(i).get("id").toString());
+											added = true;
+										}
+										
+									}
+									if (!added) {
+										new AlertDialog.Builder(GererClass.this)
+										.setTitle("Warning")  
+						                .setMessage("User doesn't exist")
+						                .setPositiveButton("OK", null)
+										.show();
 									}
 								}
-								listItemAdapter.notifyDataSetChanged();
-								if (listItem.size() == 0) {
-									delete.setEnabled(false);
-								}
+								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		                        imm.hideSoftInputFromWindow(addName.getWindowToken(), 0);
+							
 							}
-						}).setNegativeButton("Cancel", null).show();
-
+						})
+						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		                        imm.hideSoftInputFromWindow(addName.getWindowToken(), 0);
+								
+							}
+						})
+						.show();
+	
+						
+					}
+				})
+				.setNegativeButton("Cancel", null)
+				.show();
+				
 			}
 		});
+        
+        //listenr for the button add to add a class
+        add.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				addEditText = new EditText(GererClass.this);
+				new AlertDialog.Builder(GererClass.this)  
+				.setTitle("Input the class name")  
+				.setIcon(android.R.drawable.ic_dialog_info)  
+				.setView(addEditText)  
+				.setPositiveButton("OK", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (addEditText.getText().toString().trim().equals("")) 
+						{
+							new AlertDialog.Builder(GererClass.this)    
+							                .setTitle("Warning")  
+							                .setMessage("Can not be empty")  
+							                .setPositiveButton("OK", null)  
+							                .show();  
+						}
+						else 
+						{
+							//new task to upload the new class
+					        new UploadUrlTask(GererClass.this).execute("addClasse", addGroupUrl, userIdString, addEditText.getText().toString());
+					        try {
+								getGroups();
+							} catch (UnsupportedEncodingException e) {
+								e.printStackTrace();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							} catch (ExecutionException e) {
+								e.printStackTrace();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+					        listItemAdapter = new SimpleAdapter(GererClass.this.getBaseContext(), listItem, R.layout.listparameter, new String[]{"libelle"}, new int[]{R.id.textPara});
+							myList.setAdapter(listItemAdapter);
+							listItemAdapter.notifyDataSetChanged();
+							
+						}
+						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(addEditText.getWindowToken(), 0);
+					}
+				})  
+				.setNegativeButton("Cancel", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(addEditText.getWindowToken(), 0);
+					}
+				})  
+				.show();  
+				addEditText.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+			}
+		});
+		
 	}
 
 	@Override
@@ -215,5 +268,86 @@ public class GererClass extends Activity {
 		getMenuInflater().inflate(R.menu.gerer_class, menu);
 		return true;
 	}
+	
+	/**
+	 * function to get all the groups
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws JSONException
+	 * @throws UnsupportedEncodingException
+	 */
+	public void getGroups() throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException
+	{
+		
+		userIdString = "" + userId;
+		this.groups = new Repository().getGroup(userId);
+		listItem = null;
+		listItem = new ArrayList<HashMap<String, Object>>();
+		listItem.clear();
+		for (int i = 0; i < this.groups.length(); i++) {
+			JSONObject obj = groups.getJSONObject(i);
+			HashMap<String, Object> map=new HashMap<String, Object>();
+			
+			map.put("idGroupe", Manager.decodeString(obj.getString("idGroupe")));
+			map.put("libelle", Manager.decodeString(obj.getString("libelle")));
+			listItem.add(map);
+			
+		}
+	}
+	
+	/**
+	 * function to get all the users of a group
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws JSONException
+	 * @throws UnsupportedEncodingException
+	 */
+	public void getGroupUsers() throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException
+	{
+		groupUsers = new Repository().getGroupUsers(groupId);
+		listUsers = new ArrayList<HashMap<String, Object>>();
+		for (int i = 0; i < this.groupUsers.length(); i++) {
+			JSONObject obj = groupUsers.getJSONObject(i);
+			HashMap<String, Object> map=new HashMap<String, Object>();
+			
+			map.put("id", Manager.decodeString(obj.getString("id")));
+			map.put("nom", Manager.decodeString(obj.getString("nom")));
+			map.put("prenom", Manager.decodeString(obj.getString("prenom")));
+			map.put("login", Manager.decodeString(obj.getString("login")));
+			listUsers.add(map);
+			
+		}
 
+		userList = new String[listUsers.size()];
+		for (int i = 0; i < listUsers.size(); i++) {
+			String tmp = listUsers.get(i).get("prenom").toString() +" "+ listUsers.get(i).get("nom").toString();
+			userList[i] = tmp;
+		}
+	}
+	
+	/**
+	 * function to get all the users exist
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws JSONException
+	 * @throws UnsupportedEncodingException
+	 */
+	public void getAllUsers() throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException
+	{
+		allUsers =  new Repository().getAllUssers();
+		listAllUsers = new ArrayList<HashMap<String, Object>>();
+		for (int i = 0; i < allUsers.length(); i++) {
+			JSONObject obj = allUsers.getJSONObject(i);
+			HashMap<String, Object> map=new HashMap<String, Object>();
+			
+			map.put("id", Manager.decodeString(obj.getString("id")));
+			map.put("nom", Manager.decodeString(obj.getString("nom")));
+			map.put("prenom", Manager.decodeString(obj.getString("prenom")));
+			map.put("login", Manager.decodeString(obj.getString("login")));
+			listAllUsers.add(map);
+			Log.v(TAG, listAllUsers.get(i).get("nom")+" "+listAllUsers.get(i).get("login")+" "+listAllUsers.get(i).get("id"));
+		}
+	}
+	
+	
 }

@@ -233,5 +233,31 @@ public class Post {
 	public void setComments(Collection<JSONObject> comments) {
 		this.comments = comments;
 	}
+	
+	public static String addPost(int idUser,String groupId,String Content) throws InterruptedException, ExecutionException
+	{
+		
+		String requestAddComment = ManagerURL.urlAddPost+ "&userId="
+		        + idUser
+		        + "&groupId="
+				+ groupId
+				+ "&content="
+				+ Uri.encode(Content);
+	       return new AddCommentTask().execute(requestAddComment).get();
+	}
+	
+	public static String addPostWithPhoto(int idUser,String groupId,String Content,String imgUrl) throws InterruptedException, ExecutionException
+	{
+		
+		String requestAddComment = ManagerURL.urlAddPost+ "&userId="
+		        + idUser
+		        + "&groupId="
+				+ groupId
+				+ "&content="
+				+ Uri.encode(Content)
+				+ "&documentUrl="
+				+ imgUrl;
+	       return new AddCommentTask().execute(requestAddComment).get();
+	}
 
 }

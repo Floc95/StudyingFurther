@@ -1,27 +1,19 @@
 package com.esgi.studyingfurther;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.http.*;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.Menu;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,107 +23,138 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.google.android.gcm.GCMRegistrar;
+
 public class Parameter extends Activity {
 
+	final String TAG = "Parameter";
 	private ListView myList;
 	ArrayList<HashMap<String, Object>> listItem;
 	SimpleAdapter listItemAdapter;
 	CheckBox cb;
-	private static String url = "";
-	NotificationManager m_NotificationManager;
-	Notification m_Notification;
-
+	NotificationManager m_NotificationManager;  
+    Notification m_Notification;
+    
+    private boolean isProf;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parameter);
-
-		myList = (ListView) findViewById(R.id.listPara);
-		listItem = new ArrayList<HashMap<String, Object>>();
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("title", "Gerer mes classes");
-		listItem.add(map);
-		map = new HashMap<String, Object>();
-		map.put("title", "Se deconnecter");
-		listItem.add(map);
-		listItemAdapter = new SimpleAdapter(this.getBaseContext(), listItem,
-				R.layout.listparameter, new String[] { "title" },
-				new int[] { R.id.textPara });
-		myList.setAdapter(listItemAdapter);
-
-		cb = (CheckBox) findViewById(R.id.cb);
-		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
+		
+		isProf = getIntent().getExtras().getBoolean("status");
+		myList = (ListView)findViewById(R.id.listPara);
+		listItem = new ArrayList<HashMap<String, Object>>(); 
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        if (isProf) {
+        	map.put("title", "Class Management ");
+            listItem.add(map);
+		}
+        
+        //definition of the listAdapter
+        map = new HashMap<String, Object>();
+        map.put("title", "Disconnect");
+        listItem.add(map);
+        listItemAdapter = new SimpleAdapter(this.getBaseContext(), listItem, R.layout.listparameter, new String[]{ "title"}, new int[]{R.id.textPara});
+        myList.setAdapter(listItemAdapter);
+        
+        cb = (CheckBox)findViewById(R.id.cb);
+        //if the service of notification is running, it will set the true to the checkbox as default
+		cb.setChecked(isWorked());
+		//add a listener to the checkbox
+        cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				if (isChecked) {
-					// getServerData(url);
-					addNotificaction();
-				} else {
-					m_NotificationManager.cancel(1);
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				Intent intent= new Intent(Parameter.this, com.esgi.studyingfurther.MessageService.class);
+				intent.putExtra("userId",getIntent().getExtras().getInt("userId", 0));
+				Log.v("parameter", ""+getIntent().getExtras().getInt("userId", 0));
+				if (isChecked) 
+				{
+					
+					
+					GCMRegistrar.checkDevice(Parameter.this);
+					GCMRegistrar.checkManifest(Parameter.this);
+					final String regId = GCMRegistrar.getRegistrationId(Parameter.this);
+					if (regId.equals("")) 
+					{
+						GCMRegistrar.register(Parameter.this, GCMIntentService.SENDERID);
+						Log.v(TAG, "New Device:"+ GCMRegistrar.isRegistered(Parameter.this) + " Regid= "+GCMRegistrar.getRegistrationId(Parameter.this));
+					} 
+					else 
+					{
+						Log.v(TAG, "Already registered");
+					}
+					final String deviceId = GCMRegistrar.getRegistrationId(Parameter.this);
+					intent.putExtra("deviceId", deviceId);
+					intent.setAction("com.esgi.studyingfurther.MessageService");
+					startService(intent);
+				}
+				else 
+				{
+					intent.setAction("com.esgi.studyingfurther.MessageService");
+					stopService(intent);
+					GCMRegistrar.unregister(getBaseContext());
 				}
 			}
 		});
-
-		myList.setOnItemClickListener(new OnItemClickListener() {
+        
+        //add a listener to the listadapter
+        myList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				if (arg2 == 0) {
-					Intent intent = new Intent(Parameter.this, GererClass.class);
+				//arg2 == 0 jump to the selection to manage the class
+				if (arg2 == 0) 
+				{
+					Intent intent = new Intent(Parameter.this,GererClass.class);
+					intent.putExtra("userId",getIntent().getExtras().getInt("userId", 0));
 					startActivity(intent);
-				} else {
-					new AlertDialog.Builder(Parameter.this).setTitle("Warning")
-							.setMessage("deco").setPositiveButton("OK", null)
-							.show();
-
 				}
-
+				//arg2 !=0 jump to disconnect
+				else
+				{
+					new AlertDialog.Builder(Parameter.this)
+					.setTitle("Attention")
+					.setMessage("Are you sure to log out?")
+					.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent intent = new Intent(Parameter.this, Identification.class);
+					        intent.putExtra("finish", true);
+					        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
+					        startActivity(intent);
+					        finish();
+						}
+					})
+					.setNegativeButton("NO", null)
+					.show();
+				}
 			}
 		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.parameter, menu);
-		return true;
-	}
 
-	/*
-	 * private void getServerData(String url) { url += "?username=123456";
-	 * HttpClient client = new DefaultHttpClient(); HttpPost request; try {
-	 * request = new HttpPost(new URI(url)); HttpResponse
-	 * response=client.execute(request);
-	 * 
-	 * if(response.getStatusLine().getStatusCode()==200) { HttpEntity
-	 * entity=response.getEntity(); if(entity!=null) { String out =
-	 * EntityUtils.toString(entity); new
-	 * AlertDialog.Builder(this).setMessage(out).create().show(); } } } catch
-	 * (URISyntaxException e) { e.printStackTrace(); } catch
-	 * (ClientProtocolException e) { e.printStackTrace(); } catch (IOException
-	 * e) { e.printStackTrace(); } }
+	/**
+	 * function to find the service of Notification
+	 * @return boolean
 	 */
-
-	@SuppressWarnings("deprecation")
-	private void addNotificaction() {
-		m_NotificationManager = (NotificationManager) this
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		m_Notification = new Notification();
-		m_Notification.when = System.currentTimeMillis();
-		m_Notification.icon = R.drawable.android;
-		m_Notification.tickerText = "StudyingFurther";
-		m_Notification.defaults = Notification.DEFAULT_ALL;
-		m_Notification.flags = Notification.FLAG_ONGOING_EVENT;
-
-		Intent intent = new Intent(this, AffichageItem.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-				intent, PendingIntent.FLAG_ONE_SHOT);
-		m_Notification.setLatestEventInfo(this, "NotificationTitle��",
-				"Notification Content", pendingIntent);
-		m_NotificationManager.notify(1, m_Notification);
-
+	public boolean isWorked()
+	{
+		boolean isworked = false;
+		ActivityManager myManager=(ActivityManager)Parameter.this.getSystemService(Context.ACTIVITY_SERVICE);
+		ArrayList<RunningServiceInfo> runningService = (ArrayList<RunningServiceInfo>) myManager.getRunningServices(30);
+		for(int i = 0 ; i<runningService.size();i++)
+		{
+			if(runningService.get(i).service.getClassName().toString().equals("com.esgi.studyingfurther.MessageService"))
+			{
+				isworked = true;
+				break;
+			}
+		}
+			return isworked;
 	}
+	
+	
 }
