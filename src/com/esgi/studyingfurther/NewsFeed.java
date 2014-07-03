@@ -70,6 +70,7 @@ public class NewsFeed extends Activity {
 
 		
 		postText = (EditText) findViewById(R.id.postText);
+		postText.setFocusable(true);
 		postText.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
 			@Override
@@ -86,7 +87,8 @@ public class NewsFeed extends Activity {
 				try {
 					
 					Log.v("NewsFeed", "buttonclikc");
-					if (postText.getText().toString().equals("")) {
+					Log.v("contenu de publier", postText.getText().toString());
+					if (!postText.getText().toString().equals("")) {
 						addPost(v);
 					}
 				} catch (UnsupportedEncodingException e) {
