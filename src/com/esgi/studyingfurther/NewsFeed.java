@@ -233,6 +233,15 @@ public class NewsFeed extends Activity {
 				
 	            return true;
 	        case 2:
+	        	Intent intent_1 = new Intent(this, Parameter.class);
+			try {
+				intent_1.putExtra("status", (this.currentUser.getInt("statut") != 0));
+				intent_1.putExtra("userId", userId+"");
+				startActivity(intent_1);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+	        	
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
