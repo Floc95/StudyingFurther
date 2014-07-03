@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -44,6 +45,7 @@ import com.esgi.studyingfurther.bl.Post;
 import com.esgi.studyingfurther.dal.Repository;
 import com.esgi.studyingfurther.vm.CustomAdapter;
 import com.esgi.studyingfurther.vm.MainViewModel;
+import com.esgi.studyingfurther.vm.ManagerURL;
 
 
 public class NewsFeed extends Activity {
@@ -236,7 +238,7 @@ public class NewsFeed extends Activity {
 	        	Intent intent_1 = new Intent(this, Parameter.class);
 			try {
 				intent_1.putExtra("status", (this.currentUser.getInt("statut") != 0));
-				intent_1.putExtra("userId", userId+"");
+				intent_1.putExtra("userId", userId);
 				startActivity(intent_1);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -415,7 +417,14 @@ public class NewsFeed extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								try {
-									if (Post.addPost(currentUser.getInt("id"), listGroup.get(realPosition).get("idGroupe").toString(), postText.getText().toString()).equals("86")) 
+									Log.v("id", ""+currentUser.getInt("id"));
+									Log.v("idgroup", listGroup.get(realPosition).get("idGroupe").toString());
+									Log.v("content", postText.getText().toString());
+//									new UploadUrlTask(NewsFeed.this).execute("addPost", ManagerURL.urlAddPost,
+//											userIdString , 
+//											listGroup.get(realPosition).get("idGroupe").toString(), 
+//											postText.getText().toString());
+									if (Post.addPost(currentUser.getInt("id"), Integer.parseInt(listGroup.get(realPosition).get("idGroupe").toString()), postText.getText().toString()).equals("86")) 
 									{
 										if(MainViewModel.isNetworkAvailable(NewsFeed.this))
 										{
@@ -434,13 +443,17 @@ public class NewsFeed extends Activity {
 									else {
 										Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_LONG).show();
 									}
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								} catch (ExecutionException e) {
-									e.printStackTrace();
-								} catch (JSONException e) {
+								} 
+								catch (JSONException e) {
 									e.printStackTrace();
 								} catch (UnsupportedEncodingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (ExecutionException e) {
+									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
@@ -564,8 +577,9 @@ public class NewsFeed extends Activity {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+//					new UploadUrlTask(NewsFeed.this).execute("addPostWithPhoto",ManagerURL.urlAddPost,userIdString , listGroup.get(realPosition).get("idGroupe").toString(), postText.getText().toString(), imgId);
 					try {
-						if (Post.addPostWithPhoto(currentUser.getInt("id"), listGroup.get(realPosition).get("idGroupe").toString(), postText.getText().toString(),imgId).equals("86")) 
+						if (Post.addPostWithPhoto(currentUser.getInt("id"), Integer.parseInt(listGroup.get(realPosition).get("idGroupe").toString()), postText.getText().toString(),imgId).equals("86")) 
 						{
 							if(MainViewModel.isNetworkAvailable(NewsFeed.this))
 							{

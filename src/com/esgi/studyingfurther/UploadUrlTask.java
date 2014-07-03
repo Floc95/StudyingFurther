@@ -38,6 +38,14 @@ public class UploadUrlTask extends AsyncTask<String, Void, String> {
 			{
 				UrlGenerated = UrlForRemoveUser(params[1], params[2], params[3], params[4]);
 			}
+			else if (params[0] == "addPost") {
+				UrlGenerated = UrlForAddPost(params[1], params[2], params[3], params[4]);
+				
+			}
+			else if (params[0] == "addPostWithPhoto") {
+				UrlGenerated = UrlForAddPostWithPhoto(params[1], params[2], params[3], params[4], params[5]);
+				
+			}
 				
 			
 				try {
@@ -62,6 +70,29 @@ public class UploadUrlTask extends AsyncTask<String, Void, String> {
 		return myUrl+"&userId="+userId+"&groupId="+groupId+"&userToRemoveId="+userToRemoveId;
 	}
 
+	/**
+	 * generate the Url for add a post
+	 * @param myUrl
+	 * @param userId
+	 * @param groupId
+	 * @param userToRemoveId
+	 * @return
+	 */
+	private String UrlForAddPost(String myUrl, String userId, String groupId, String content) {
+		return myUrl+"&userId="+userId+"&groupId="+groupId+"&content="+content;
+	}
+	
+	/**
+	 * generate the Url for add a post
+	 * @param myUrl
+	 * @param userId
+	 * @param groupId
+	 * @param userToRemoveId
+	 * @return
+	 */
+	private String UrlForAddPostWithPhoto(String myUrl, String userId, String groupId, String content, String imgUrl) {
+		return myUrl+"&userId="+userId+"&groupId="+groupId+"&content="+content+"&documentUrl="+imgUrl;
+	}
 	/**
 	 * generate the Url for add a user
 	 * @param myUrl

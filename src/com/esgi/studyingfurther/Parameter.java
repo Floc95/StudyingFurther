@@ -109,6 +109,7 @@ public class Parameter extends Activity {
 				{
 					Intent intent = new Intent(Parameter.this,GererClass.class);
 					intent.putExtra("userId",getIntent().getExtras().getInt("userId", 0));
+					Log.v("parameter userid", getIntent().getExtras().getInt("userId", 0)+"");
 					startActivity(intent);
 				}
 				//arg2 !=0 jump to disconnect

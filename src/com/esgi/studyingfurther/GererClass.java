@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -46,6 +47,7 @@ public class GererClass extends Activity {
     MainViewModel Manager = null;
     String TAG = "GereClass";
     String[] userList;
+    String[] allUsersList;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class GererClass extends Activity {
 		myList = (ListView) findViewById(R.id.listClass);
 		//TODO
 		this.userId = getIntent().getExtras().getInt("userId", 0);
+		Log.v("userid", userId+"");
 		
 		//get the groups and the users
 		try {
@@ -126,69 +129,103 @@ public class GererClass extends Activity {
 						.show();
 						
 					}
-				})//button add to add a new memeber to the class
+				})//button add to add a new member to the class
 				.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-					
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						addName = new EditText(GererClass.this);
+						final boolean[] selected = new boolean[allUsersList.length];
+						//initialization of the boolean[]
+						for (int i = 0; i < selected.length; i++) {
+							selected[i] = false;
+						}
 						new AlertDialog.Builder(GererClass.this)
-						.setTitle("Input the Login of the user who you want to add")
-						.setIcon(android.R.drawable.ic_dialog_info)
-						.setView(addName)
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						.setTitle("Choose the students")
+						.setMultiChoiceItems(allUsersList, selected, new OnMultiChoiceClickListener() {
 							
 							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								if (addName.getText().toString().trim().equals("")) 
-								{
-									new AlertDialog.Builder(GererClass.this)    
-					                .setTitle("Warning")  
-					                .setMessage("Can not be empty")  
-					                .setPositiveButton("OK", null)  
-					                .show();
-								}
-								else 
-								{
-									Log.v("addname", addName.getText().toString());
-									boolean added = false;
-									for (int i = 0; i < listAllUsers.size(); i++) 
-									{
-										Log.v("login", listAllUsers.get(i).get("login").toString());
-										
-										if (listAllUsers.get(i).get("login").toString().equals(addName.getText().toString())) 
-										{
-											new UploadUrlTask(GererClass.this).execute("addUser", ManagerURL.addUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listAllUsers.get(i).get("id").toString());
-											added = true;
-										}
-										
-									}
-									if (!added) {
-										new AlertDialog.Builder(GererClass.this)
-										.setTitle("Warning")  
-						                .setMessage("User doesn't exist")
-						                .setPositiveButton("OK", null)
-										.show();
-									}
-								}
-								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		                        imm.hideSoftInputFromWindow(addName.getWindowToken(), 0);
-							
-							}
-						})
-						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-							
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		                        imm.hideSoftInputFromWindow(addName.getWindowToken(), 0);
+							public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+								selected[which] = isChecked;
 								
 							}
 						})
-						.show();
-	
+						.setPositiveButton("OK", new OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								for (int i = 0; i < selected.length; i++) {
+									if (selected[i] && allUsersList[i].equalsIgnoreCase(listAllUsers.get(i).get("prenom").toString() +" "+ listAllUsers.get(i).get("nom").toString())) 
+									{
+										new UploadUrlTask(GererClass.this).execute("addUser", ManagerURL.addUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listAllUsers.get(i).get("id").toString());
+									}
+								}
+								
+							}
+						}).show();
 						
 					}
+					
+					
+//					@Override
+//					public void onClick(DialogInterface dialog, int which) {
+//						addName = new EditText(GererClass.this);
+//						new AlertDialog.Builder(GererClass.this)
+//						.setTitle("Input the Login of the user who you want to add")
+//						.setIcon(android.R.drawable.ic_dialog_info)
+//						.setView(addName)
+//						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//							
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								if (addName.getText().toString().trim().equals("")) 
+//								{
+//									new AlertDialog.Builder(GererClass.this)    
+//					                .setTitle("Warning")  
+//					                .setMessage("Can not be empty")  
+//					                .setPositiveButton("OK", null)  
+//					                .show();
+//								}
+//								else 
+//								{
+//									Log.v("addname", addName.getText().toString());
+//									boolean added = false;
+//									for (int i = 0; i < listAllUsers.size(); i++) 
+//									{
+//										Log.v("login", listAllUsers.get(i).get("login").toString());
+//										
+//										if (listAllUsers.get(i).get("login").toString().equals(addName.getText().toString())) 
+//										{
+//											new UploadUrlTask(GererClass.this).execute("addUser", ManagerURL.addUserUrl, userIdString, listItem.get(realPosition).get("idGroupe").toString(), listAllUsers.get(i).get("id").toString());
+//											added = true;
+//										}
+//										
+//									}
+//									if (!added) {
+//										new AlertDialog.Builder(GererClass.this)
+//										.setTitle("Warning")  
+//						                .setMessage("User doesn't exist")
+//						                .setPositiveButton("OK", null)
+//										.show();
+//									}
+//								}
+//								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//		                        imm.hideSoftInputFromWindow(addName.getWindowToken(), 0);
+//							
+//							}
+//						})
+//						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//							
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//		                        imm.hideSoftInputFromWindow(addName.getWindowToken(), 0);
+//								
+//							}
+//						})
+//						.show();
+//	
+//						
+//					}
 				})
 				.setNegativeButton("Cancel", null)
 				.show();
@@ -344,6 +381,12 @@ public class GererClass extends Activity {
 			map.put("login", MainViewModel.decodeString(obj.getString("login")));
 			listAllUsers.add(map);
 			Log.v(TAG, listAllUsers.get(i).get("nom")+" "+listAllUsers.get(i).get("login")+" "+listAllUsers.get(i).get("id"));
+		}
+		
+		allUsersList = new String[listAllUsers.size()];
+		for (int i = 0; i < listAllUsers.size(); i++) {
+			String tmp = listAllUsers.get(i).get("prenom").toString() +" "+ listAllUsers.get(i).get("nom").toString();
+			allUsersList[i] = tmp;
 		}
 	}
 	

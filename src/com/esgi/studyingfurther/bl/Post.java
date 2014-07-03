@@ -123,19 +123,19 @@ public class Post {
 	       return new AddCommentTask().execute(requestAddPlusOne).get();
 	}
 	
-	public static String addPost(int idUser,String groupId,String Content) throws InterruptedException, ExecutionException
+	public static String addPost(int idUser,int groupId,String Content) throws InterruptedException, ExecutionException
 	{
 		
 		String requestAddComment = ManagerURL.urlAddPost + "&userId="
 		        + idUser
-		        + "&groupId="
+		        + "&groupeId="
 				+ groupId
 				+ "&content="
 				+ Uri.encode(Content);
 	       return new AddCommentTask().execute(requestAddComment).get();
 	
 	}
-	public static String addPostWithPhoto(int idUser,String groupId,String Content, String imgUrl) throws InterruptedException, ExecutionException
+	public static String addPostWithPhoto(int idUser,int groupId,String Content, String imgUrl) throws InterruptedException, ExecutionException
 	{
 		
 		String requestAddComment = ManagerURL.urlAddPost + "&userId="
@@ -145,7 +145,7 @@ public class Post {
 				 + "&content="
 				 + Uri.encode(Content)
 				 + "&documentUrl="
-				 + imgUrl;
+				 + Uri.encode(imgUrl);
 	       return new AddCommentTask().execute(requestAddComment).get();
 
 	}
