@@ -1,6 +1,9 @@
+
 package com.esgi.studyingfurther.vm;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.SoftReference;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
@@ -24,11 +27,16 @@ import android.net.NetworkInfo;
 import android.text.Html;
 
 
+
+
+import android.util.Log;
+
 import com.esgi.studyingfurther.R;
 import com.esgi.studyingfurther.bl.Factory;
 
 
 public class MainViewModel {
+
 
 	private Factory factory;
 	private JSONObject currentUser;
@@ -43,10 +51,24 @@ public class MainViewModel {
 	
 	public static void changeActionBarWithValueOfCurrentUser(Context c,ActionBar actionBar,JSONObject currentUser) throws InterruptedException, ExecutionException, JSONException
 	{
-		actionBar.setTitle(" "+currentUser.getString("prenom"));
-		Bitmap avatar =new DownloadImageTask().execute(ManagerURL.urlGetAvatar+currentUser.getString("avatar")).get();// MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
-	    Drawable btmpDrawable=new BitmapDrawable(c.getResources(), avatar);
-		actionBar.setIcon(btmpDrawable);
+	   	Bitmap avatar;
+		 HashMap<String, SoftReference<Bitmap>> cache=new HashMap<String, SoftReference<Bitmap>>();
+		
+		SoftReference<Bitmap> reference = cache.get(currentUser.getString("avatar")); 
+		if(reference != null) { 
+		    // The bitmap is cached with SoftReference 
+		    avatar = reference.get(); 
+		    Log.v("cach","ok");
+		}else
+		{
+		avatar =new DownloadImageTask().execute(ManagerURL.urlGetAvatar+currentUser.getString("avatar")).get();// MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+currentUser.getString("avatar"));
+		cache.put(currentUser.getString("avatar"),  new SoftReference<Bitmap>(avatar));
+		}
+		Drawable btmpDrawable=new BitmapDrawable(c.getResources(), avatar); 
+	    actionBar.setTitle(" "+currentUser.getString("prenom"));
+	    actionBar.setIcon(btmpDrawable);
+		
+		
 	//	actionBar.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.bg));
 		
 	}
@@ -88,13 +110,15 @@ public class MainViewModel {
 		
 	}
 
-	public static Bitmap getRoundedCornerImage(String url)
+	// StatutConnection 1 if your device is connected else  0
+	public static Bitmap getRoundedCornerImage(String url,int statutConnection)
 			throws InterruptedException, ExecutionException {
-
+       if(statutConnection==1){
 		Bitmap avatar = new DownloadImageTask().execute(url).get();
 		Bitmap resized = Bitmap.createScaledBitmap(avatar, 100, 100, true);
-		Bitmap output = Bitmap.createBitmap(resized.getWidth(),
-				resized.getHeight(), Config.ARGB_8888);
+		Bitmap output = Bitmap.createBitmap(resized.getWidth(),resized.getHeight(), Config.ARGB_8888);
+		
+				
 		Canvas canvas = new Canvas(output);
 
 		final int color = 0xff424242;
@@ -110,8 +134,9 @@ public class MainViewModel {
 
 		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(resized, rect, rect, paint);
-
 		return output;
+     }
+       return null;
 
 	}
 

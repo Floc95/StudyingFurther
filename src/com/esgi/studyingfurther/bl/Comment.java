@@ -42,7 +42,7 @@ public class Comment {
 		this.avatar=avatar;
 	}
 	
-	public  ArrayList<Comment> getComment(JSONObject newsFeed,int statutCurrentUser) throws JSONException, InterruptedException, ExecutionException
+	public  ArrayList<Comment> getComment(JSONObject newsFeed,int statutCurrentUser,int statutConnection) throws JSONException, InterruptedException, ExecutionException
 	{
 		
 		
@@ -64,7 +64,7 @@ public class Comment {
 					ownerComment.getString("avatar"), ownerComment.getInt("statut"));
 
 			// this.comments.add(row);
-			Bitmap avatar = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ owner.getAvatar());
+			Bitmap avatar = MainViewModel.getRoundedCornerImage(ManagerURL.urlGetAvatar+ owner.getAvatar(),statutConnection);
 
 			Comment cmt = new Comment(
 

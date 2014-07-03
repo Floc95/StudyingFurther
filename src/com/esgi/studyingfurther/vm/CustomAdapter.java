@@ -88,7 +88,7 @@ public class CustomAdapter extends BaseAdapter {
 			{
 				holder.plusun.setChecked(true);
 			}
-			holder.titleP.setText(post.getTitle());
+			holder.titleP.setText(post.getOwner().getNomComplet());
 			Drawable avatar=new BitmapDrawable(convertView.getResources(), post.getAvatar());
 			holder.avatarP.setBackground(avatar);
 			

@@ -1,4 +1,139 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:onClick="plusun" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/card_background"
+        android:clickable="true"
+        android:onClick="showDetailsPost"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/avatarP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginRight="5dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:onClick="showDetailsPost"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/titleP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="showDetailsPost"
+                    android:text="@string/Title"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/heurPubP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:onClick="showDetailsPost"
+                    android:text="30/06/2014 18:45"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/contenu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="0"
+            android:clickable="true"
+            android:maxHeight="150dp"
+            android:onClick="showDetailsPost"
+            android:text="@string/Description"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/newspicdetails"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="0"
+            android:clickable="true"
+            android:longClickable="true"
+            android:onClick="comment" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ToggleButton
+                android:id="@+id/plusun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="0"
+                android:minHeight="0dp"
+                android:textOff="@string/plusun"
+                android:textOn="@string/plusun" />
+
+            <ImageButton
+                android:id="@+id/plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_weight="0"
+                android:adjustViewBounds="false"
+                android:background="@drawable/equal"
+                android:baselineAlignBottom="false"
+                android:onClick="showDetailsPost"
+                android:scaleType="center" />
+            
+            <TextView
+                android:id="@+id/nbcommentaires"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_weight="0"
+                android:clickable="true"
+                android:onClick="showDetailsPost"
+                android:text="11"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
+
+<!--<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -11,8 +146,6 @@
     android:shrinkColumns="*"
     android:stretchColumns="*"
     android:textAlignment="viewEnd" >
-
-    <!-- Row 1 with single column -->
 
     <TableRow
         android:layout_width="match_parent"
@@ -52,8 +185,6 @@
             android:textSize="10dp" />
 
     </TableRow>
-
-    <!-- Row 2 with 2 columns -->
 
     <TableRow
         android:id="@+id/tableRow1"
@@ -151,4 +282,4 @@
 
     </TableRow>
 
-</TableLayout>
+</TableLayout>-->
