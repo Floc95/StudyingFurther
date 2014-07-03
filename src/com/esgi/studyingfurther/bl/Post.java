@@ -140,7 +140,7 @@ public class Post {
 		
 		String requestAddComment = ManagerURL.urlAddPost + "&userId="
 				 + idUser
-				 + "&groupId="
+				 + "&groupeId="
 				 + groupId
 				 + "&content="
 				 + Uri.encode(Content)

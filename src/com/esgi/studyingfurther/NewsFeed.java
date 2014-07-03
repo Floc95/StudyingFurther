@@ -579,7 +579,7 @@ public class NewsFeed extends Activity {
 				public void onClick(DialogInterface dialog, int which) {
 //					new UploadUrlTask(NewsFeed.this).execute("addPostWithPhoto",ManagerURL.urlAddPost,userIdString , listGroup.get(realPosition).get("idGroupe").toString(), postText.getText().toString(), imgId);
 					try {
-						if (Post.addPostWithPhoto(currentUser.getInt("id"), Integer.parseInt(listGroup.get(realPosition).get("idGroupe").toString()), postText.getText().toString(),imgId).equals("86")) 
+						if (Post.addPostWithPhoto(currentUser.getInt("id"), Integer.parseInt(listGroup.get(realPosition).get("idGroupe").toString()), postText.getText().toString(),"http://imgur.com/"+imgId).equals("86")) 
 						{
 							if(MainViewModel.isNetworkAvailable(NewsFeed.this))
 							{

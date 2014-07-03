@@ -49,6 +49,7 @@ public class Comments extends Activity {
 	public ImageView avatarP;
 
 	//
+	CustomAdapterDetailsPost adapter;
 
 	private ListView listViewComment = null;
 	private TextView commentText = null;
@@ -104,7 +105,7 @@ public class Comments extends Activity {
 				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews, 0);
 
 				// get all comment
-				CustomAdapterDetailsPost adapter = new CustomAdapterDetailsPost(
+				 adapter = new CustomAdapterDetailsPost(
 						this, new Comment().getComment(
 								this.jsonobjectFromFeedNews,
 								this.currentUser.getInt("statut"), 1));
@@ -160,11 +161,14 @@ public class Comments extends Activity {
 		if (Comment.addComment(this.currentUser.getInt("id"),
 				this.jsonobjectFromFeedNews.getInt("id"),
 				this.commentText.getText().toString()).equals("86")) {
-
+				
 			if (MainViewModel.isNetworkAvailable(this)) {
 				Toast.makeText(getBaseContext(), "Comment is added",
 						Toast.LENGTH_LONG).show();
-				// getComments();
+				
+		
+				
+				
 			} else {
 				MainViewModel.alertNetwork(this);
 			}
