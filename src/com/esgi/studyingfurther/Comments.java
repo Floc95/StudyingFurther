@@ -82,7 +82,7 @@ public class Comments extends Activity {
 				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
 				//MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
 				// 
-				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews);
+				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews,1);
 				
 				//get all comment
 				CustomAdapterDetailsPost adapter = new CustomAdapterDetailsPost(this,new Comment().getComment(this.jsonobjectFromFeedNews,this.currentUser.getInt("statut"),1));
@@ -97,7 +97,7 @@ public class Comments extends Activity {
 				this.currentUser = new JSONObject(getIntent().getExtras().getString("currentUser"));
 				//MainViewModel.changeActionBarWithValueOfCurrentUser(this, this.getActionBar(), this.currentUser);
 				// 
-				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews);
+				this.setValuetheHeaderofListView(this.jsonobjectFromFeedNews,0);
 				
 				//get all comment
 				CustomAdapterDetailsPost adapter = new CustomAdapterDetailsPost(this,new Comment().getComment(this.jsonobjectFromFeedNews,this.currentUser.getInt("statut"),1));
@@ -122,12 +122,15 @@ public class Comments extends Activity {
 	}
 
 	@SuppressLint("NewApi")
-	private void setValuetheHeaderofListView(JSONObject post) throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException
+	// StatutConnection 0 if de mobile is not connected else 1
+	private void setValuetheHeaderofListView(JSONObject post,int statutConnection) throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException
 	{
-		   
+		Drawable avatar=null;
 			
-		    
-		Drawable avatar=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(ManagerURL.urlGetNews+post.getJSONObject("utilisateur").getString("avatar")).get());
+		    if(statutConnection==1)
+		    {
+		      avatar=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(ManagerURL.urlGetNews+post.getJSONObject("utilisateur").getString("avatar")).get());
+		    }
 		//Drawable newspic=new BitmapDrawable(this.getResources(), new DownloadImageTask().execute(post.getString("image")).get());
 	
 		this.avatarP.setBackground(avatar);
