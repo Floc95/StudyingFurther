@@ -50,7 +50,7 @@ public class NewsFeed extends Activity {
 	private ListView maListViewPerso;
 	private JSONObject currentUser;
 	MainViewModel Manager = null;
-	JSONArray news;
+	JSONArray news, groups;
 	ArrayList<HashMap<String, Object>> listGroup;
 	//ArrayList<JSONObject> comments;
 
@@ -58,8 +58,8 @@ public class NewsFeed extends Activity {
 	
 	private EditText postText = null;
 	Button post;
-	int realPosition;
-	String imgId;
+	int realPosition,userId;
+	String imgId,userIdString;
 	String[] groupStringList;
 	
 	@Override
@@ -83,6 +83,7 @@ public class NewsFeed extends Activity {
 			@Override
 			public void onClick(View v) {
 				try {
+					
 					Log.v("NewsFeed", "buttonclikc");
 					if (postText.getText().toString().equals("")) {
 						addPost(v);
@@ -115,6 +116,8 @@ public class NewsFeed extends Activity {
 
 				// Call a function getNews for fix all post of a current user
 				this.news = new Repository().getNews(this.currentUser.getInt("id"));
+				userId = this.currentUser.getInt("id");
+				getGroups();
 				// Persistance for deconnect mode
 				android.content.SharedPreferences prefs = getSharedPreferences("news", 0);
 				android.content.SharedPreferences.Editor editor = prefs.edit();
@@ -176,6 +179,38 @@ public class NewsFeed extends Activity {
 
 	}
 
+	
+	/**
+	 * function to get all the groups
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws JSONException
+	 * @throws UnsupportedEncodingException
+	 */
+	public void getGroups() throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException
+	{
+		
+		userIdString = "" + userId;
+		this.groups = new Repository().getGroup(userId);
+		listGroup = null;
+		listGroup = new ArrayList<HashMap<String, Object>>();
+		listGroup.clear();
+		for (int i = 0; i < this.groups.length(); i++) {
+			JSONObject obj = groups.getJSONObject(i);
+			HashMap<String, Object> map=new HashMap<String, Object>();
+			
+			map.put("idGroupe", MainViewModel.decodeString(obj.getString("idGroupe")));
+			map.put("libelle", MainViewModel.decodeString(obj.getString("libelle")));
+			listGroup.add(map);
+			
+		}
+		
+		groupStringList = new String[listGroup.size()];
+		for (int i = 0; i < listGroup.size(); i++) {
+			String tmp = listGroup.get(i).get("libelle").toString();
+			groupStringList[i] = tmp;
+		}
+	}
 	/*
 	 * Méthode appelée lors de la sélection d'un élément du menu
 	 * 
@@ -328,7 +363,7 @@ public class NewsFeed extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								try {
-									if (Post.addPost(currentUser.getInt("id"), listGroup.get(which).get("idGroupe").toString(), postText.getText().toString()).equals("86")) 
+									if (Post.addPost(currentUser.getInt("id"), listGroup.get(realPosition).get("idGroupe").toString(), postText.getText().toString()).equals("86")) 
 									{
 										if(MainViewModel.isNetworkAvailable(NewsFeed.this))
 										{
