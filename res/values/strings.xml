@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="deconnecter">Deconnecter</string>
-    <string name="parameter">Parameter</string>
+    <string name="deconnecter">Déconnexion</string>
+    <string name="parameter">Paramètres</string>
     <string name="Url_authentification"></string>
     <string name="app_name">Studying Further</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Paramètres</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_identification">Identification</string>
@@ -15,21 +15,21 @@
     <string name="password">Mot de passe</string>
     <string name="connect">Se connecter</string>
     <string name="title_activity_login_display">LoginDisplayActivity</string>
-    <string name="hint_mail">"Ici : L'adresse email de l'utilisateur"</string>
-    <string name="hint_pass">"Ici : Le mot de passe de l'utilisateur"</string>
+    <string name="hint_mail">Entrez votre identifiant</string>
+    <string name="hint_pass">Entrez votre mot de passe</string>
     <string name="title_activity_affichageitem">Affichageitem</string>
-    <string name="RetapezPW">Retapez vôtre password</string>
+    <string name="RetapezPW">Ressaisissez votre mot de passe.</string>
     <string name="Email">E-mail</string>
     <string name="DateDN">Date de naissance</string>
     <string name="Prenom">Prénom</string>
     <string name="Nom">Nom</string>
-    <string name="title_activity_gerer_class">GererClass</string>
-    <string name="title_activity_parameter">Parameter</string>
+    <string name="title_activity_gerer_class">Gestion des classes</string>
+    <string name="title_activity_parameter">Paramètres</string>
     <string name="Description">L Ecole Superieure de Genie Informatique (ESGI) est une ecole privee d enseignement superieur en informatique située à Paris et fondée en 1983</string>
     <string name="Title">ESGI</string>
-    <string name="title_activity_item_news_feed">ItemNewsFeed</string>
-    <string name="comment">Comment</string>
-    <string name="post">Post</string>
+    <string name="title_activity_item_news_feed">Flux d\'actualité</string>
+    <string name="comment">Envoyer</string>
+    <string name="post">Publier</string>
     <string-array name="menu">
         <item>1</item>
         <item>2</item>
@@ -37,7 +37,7 @@
     </string-array>
 
     <string name="plusun">+1</string>
-    <string name="title_activity_comments">Comments</string>
+    <string name="title_activity_comments">Commentaires</string>
     <string name="title_activity_commentaires">Commentaires</string>
     <string name="title_activity_items__comments">Items_Comments</string>
 
