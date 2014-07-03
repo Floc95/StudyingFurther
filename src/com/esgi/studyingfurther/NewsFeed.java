@@ -29,11 +29,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
-import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,16 +90,12 @@ public class NewsFeed extends Activity {
 						addPost(v);
 					}
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -156,13 +150,10 @@ public class NewsFeed extends Activity {
 			} catch (JSONException e) {
 				
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		    
@@ -392,14 +383,14 @@ public class NewsFeed extends Activity {
 								} catch (JSONException e) {
 									e.printStackTrace();
 								} catch (UnsupportedEncodingException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
 						}).show();
 		 
 	}
-		}).show();
+		}).setNegativeButton("Cancel", null)
+		.show();
 	}
 	
 	public abstract class ImgurUploadTask extends AsyncTask<Void, Void, String> {
@@ -540,24 +531,19 @@ public class NewsFeed extends Activity {
 					}
 					
 				}
-			})
-			.show();
+			}).show();
 			
 			
 			try {
 				CustomAdapter adapter = new CustomAdapter(NewsFeed.this,new Post().getPosts(NewsFeed.this.news,NewsFeed.this.currentUser.getInt("statut"),1));
 				maListViewPerso.setAdapter(adapter);
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

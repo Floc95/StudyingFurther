@@ -14,7 +14,7 @@ public class ManagerURL {
     public static String addGroupUrl = "http://www.your-groups.com/API/AddGroup?key=7e2a3a18cd00ca322f60c28393c43264";
     public static String removeUserUrl = "http://www.your-groups.com/API/RemoveUserOfGroup?key=7e2a3a18cd00ca322f60c28393c43264";
     public static String addUserUrl = "http://www.your-groups.com/API/AddUserToGroup?key=7e2a3a18cd00ca322f60c28393c43264";
-
+    public static String urlAddPost = "http://www.your-groups.com/API/AddPost?key=7e2a3a18cd00ca322f60c28393c43264";
 
 
 }

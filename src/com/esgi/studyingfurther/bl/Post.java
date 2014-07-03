@@ -126,7 +126,7 @@ public class Post {
 	public static String addPost(int idUser,String groupId,String Content) throws InterruptedException, ExecutionException
 	{
 		
-		String requestAddComment = ManagerURL.urlAddComment+ "&userId="
+		String requestAddComment = ManagerURL.urlAddPost + "&userId="
 		        + idUser
 		        + "&groupId="
 				+ groupId
@@ -138,7 +138,7 @@ public class Post {
 	public static String addPostWithPhoto(int idUser,String groupId,String Content, String imgUrl) throws InterruptedException, ExecutionException
 	{
 		
-		String requestAddComment = ManagerURL.urlAddComment+ "&userId="
+		String requestAddComment = ManagerURL.urlAddPost + "&userId="
 				 + idUser
 				 + "&groupId="
 				 + groupId
